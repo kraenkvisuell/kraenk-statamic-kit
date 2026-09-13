@@ -1,0 +1,17 @@
+<div
+    class="main w-full h-full z-1"
+    id="showreel"
+>
+    {{ partial:navi }}
+    {{ if page.has_intro }}
+        {{ partial:intro }}
+        {{ partial:awards }}{{# drawer opened by the badge in the intro #}}
+    {{ /if }}
+    {{ page.main_content scope="set" }}
+        {{ partial src="sets/{set.type}" }}
+    {{ /page.main_content }}
+
+
+    {{ partial:contact }}
+    {{ partial:footer }}
+</div>

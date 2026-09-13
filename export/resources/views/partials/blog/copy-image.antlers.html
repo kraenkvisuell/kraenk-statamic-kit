@@ -1,0 +1,8 @@
+<div class="my-7.5">
+    <img src="{{ glide :src="file" width="1600" }}" alt="{{ (file.alt or caption) | sanitize }}" class="w-full h-auto">
+    {{ if caption }}
+        <div class="italic text-[0.75rem] mt-0.75">
+            {{ caption }}
+        </div>
+    {{ /if }}
+</div>

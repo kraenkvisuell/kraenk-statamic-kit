@@ -1,0 +1,55 @@
+updatable: true
+export_paths:
+  - .bloom
+  - .env.example
+  - .npmrc
+  - app/Models/User.php
+  - app/Providers/HorizonServiceProvider.php
+  - app/StaticCaching/Invalidator.php
+  - bootstrap/providers.php
+  - config/filesystems.php
+  - config/horizon.php
+  - config/statamic/assets.php
+  - config/statamic/eloquent-driver.php
+  - config/statamic/static_caching.php
+  - config/statamic/users.php
+  - database/migrations
+  - content/assets/main.yaml
+  - content/collections/awards.yaml
+  - content/collections/blog.yaml
+  - content/collections/jobs.yaml
+  - content/collections/pages.yaml
+  - content/collections/portfolio.yaml
+  - content/collections/team.yaml
+  - content/globals/site_settings.yaml
+  - content/taxonomies/cameras.yaml
+  - content/taxonomies/categories.yaml
+  - content/taxonomies/clients.yaml
+  - content/taxonomies/directors.yaml
+  - content/taxonomies/productions.yaml
+  - content/taxonomies/tags.yaml
+  - resources
+  - lang
+  - public/images
+  - package.json
+  - package-lock.json
+  - vite.config.js
+dependencies:
+  laravel/horizon: ^5.48
+  league/flysystem-aws-s3-v3: ^3.0
+  livewire/livewire: ^4.3
+  marcorieser/statamic-livewire: ^5.3
+  statamic/eloquent-driver: ^5.11
+  statamic/seo-pro: ^7.14
+dependencies_dev:
+  fruitcake/laravel-debugbar: ^4.0
+  laravel/pint: ^1.27
+  spatie/laravel-error-solutions: ^1.1
+modules:
+  auto_alt_text:
+    prompt: 'Generate alt texts for uploaded images with a vision model (needs ANTHROPIC_API_KEY and a running queue worker)?'
+    default: true
+    export_paths:
+      - config/statamic/auto-alt-text.php
+    dependencies:
+      el-schneider/statamic-auto-alt-text: ^2.0

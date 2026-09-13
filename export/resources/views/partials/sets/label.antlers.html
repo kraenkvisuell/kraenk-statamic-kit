@@ -1,0 +1,17 @@
+{{#
+    Label of a start-page section for links back to it (entry pages' back link):
+    the navigation_title, else the headline/title, of the first main_content set
+    of the given type on the site's start page. Param: set_type (e.g.
+    "portfolio", "blog" – not "type", which inside the loop is the set's own
+    type). Outputs nothing when the start page has no such set. Use it as a
+    tag, not inside another tag's parameter (that renders empty).
+#}}
+{{ collection:pages uri:is="/" limit="1" }}
+    {{ _found = false }}
+    {{ main_content scope="set" }}
+        {{ if !_found && set:type == set_type }}
+            {{ set:navigation_title ?? set:headline ?? set:title }}
+            {{ _found = true }}
+        {{ /if }}
+    {{ /main_content }}
+{{ /collection:pages }}

@@ -1,0 +1,23 @@
+{{#
+    Job page – one jobs entry at /jobs/{slug} (collection route, template set in
+    content/collections/jobs.yaml), listed on the start page's "we are hiring"
+    card (partials/team/grid). Room for an application form later.
+    Head metadata comes from SEO Pro (layout); the navi logo shows right away (the `site` component checks the URL).
+#}}
+{{ partial:navi }}
+
+{{# below the fixed navi (50/70px) #}}
+<main class="w-full pt-12.5 tablet:pt-17.5">
+    {{ partial:page/header back_to="team" back_label="{trans:frontend.we_are_hiring}" }}
+        {{ title }}
+    {{ /partial:page/header }}
+
+    <div class="max-w-[1024px] px-5 pb-12.5 tablet:px-10 notebook:px-17.5">
+        <div class="editor-content is-faded-in leading-[1.4] [&_a]:underline">
+            {{ description }}
+        </div>
+    </div>
+
+    {{ partial:contact from='page' }}
+    {{ partial:footer }}
+</main>

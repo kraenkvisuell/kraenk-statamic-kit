@@ -1,0 +1,13 @@
+{{#
+    Section intro text (old .section-text.is-heading.editor-content).
+    Params: topline, headline. Slot: optional copy below the headline.
+#}}
+<div x-fade class="editor-content max-w-[1024px] px-5 pt-12.5 pb-0 tablet:px-10 notebook:px-17.5 {{ if less_top_padding }} pt-5 {{ /if }}">
+    {{ if topline }}
+        <p class="mb-[0.5em]">{{ topline }}</p>
+    {{ /if }}
+    {{ if headline }}
+        <h2 x-fade class="text-[2rem] notebook:text-[2.5rem] tracking-widest opacity-0 transition-all duration-800 ease-out is-faded-in:opacity-100">{{ headline }}</h2>
+    {{ /if }}
+    {{ slot }}
+</div>

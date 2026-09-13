@@ -1,0 +1,18 @@
+title: 'Set-Navigation'
+fields:
+  -
+    handle: anchor
+    field:
+      type: slug
+      display: Anker
+      instructions: 'Optional – Sprungmarke für die Navigation, z.B. "galerie" ergibt /seite#galerie. Nur Kleinbuchstaben, Ziffern und Bindestriche.'
+      width: 50
+      validate:
+        - 'regex:/^[a-z0-9-]*$/'
+  -
+    handle: navigation_title
+    field:
+      type: text
+      display: 'Titel in Navigation'
+      instructions: 'Optional – Text des Navigationspunkts, der zum Anker springt.'
+      width: 50

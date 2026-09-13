@@ -1,0 +1,11 @@
+{{#
+    Footer/contact link with a small icon on the left (old .footer-link.is-*).
+    Params: href, icon (phone|mail|facebook|instagram|vimeo|gmaps), alt ("light" for the light icon variant), target.
+    Slot: link text.
+#}}
+<a
+    href="{{ href }}"
+    {{ if target }}target="{{ target }}"{{ /if }}
+    class="inline-block pl-5.75 font-headline font-bold uppercase tracking-wider text-[0.8rem] not-italic no-underline bg-no-repeat bg-size-[auto_10px] bg-position-[0px_6px]"
+    style="background-image:url('/images/footer-icon-{{ icon }}{{ if alt == 'light' and icon != 'phone' }}-alt{{ /if }}.svg')"
+>{{ slot }}</a>

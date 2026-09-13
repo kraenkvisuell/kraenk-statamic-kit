@@ -1,0 +1,21 @@
+{{# Blog teaser, linking to the post page (/blog/{slug}). `post` is a CSS hook (h4 bar in editor-content.css). #}}
+<div x-fade class="post editor-content mb-12.5 tablet:flex">
+    {{ if image }}
+        <div class="shrink-0 mb-7.5 tablet:w-[50vw] tablet:mb-0 desktop:w-[25vw]">
+            <a href="{{ url }}">
+                <img src="{{ glide :src="image" width="1200" }}" alt="{{ (image.alt or title) | sanitize }}" class="w-full h-auto">
+            </a>
+        </div>
+    {{ /if }}
+    <div class="grow-0 max-w-[900px] px-5 tablet:px-10 notebook:px-17.5">
+        <h4>{{ title }}</h4>
+        {{ teaser }}
+        <p>
+            <a href="{{ url }}">&gt; {{ trans:frontend.learn_more }}</a>
+        </p>
+
+        {{ if downloads }}
+            {{ partial:downloads :downloads="downloads" }}
+        {{ /if }}
+    </div>
+</div>

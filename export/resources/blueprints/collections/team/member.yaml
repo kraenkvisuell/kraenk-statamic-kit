@@ -1,0 +1,89 @@
+sections:
+  main:
+    display: Main
+    fields:
+      -
+        handle: title
+        field:
+          type: text
+          width: 50
+          display: Name
+          localizable: true
+      -
+        handle: email
+        field:
+          type: text
+          width: 50
+          display: E-Mail
+      -
+        handle: published
+        field:
+          type: toggle
+          width: 50
+          display: Veröffentlicht
+      -
+        handle: show
+        field:
+          type: toggle
+          width: 50
+          display: Zeigen
+      -
+        handle: roles
+        field:
+          type: textarea
+          width: 50
+          display: Rolle(n)
+      -
+        handle: image
+        field:
+          type: assets
+          container: main
+          folder: /
+          restrict: false
+          max_files: 1
+          width: 50
+          display: Bild
+      -
+        handle: description
+        field:
+          type: bard
+          buttons:
+            - h3
+            - bold
+            - italic
+            - anchor
+            - quote
+          style: sans
+          spellcheck: true
+          allow_source: true
+          allow_internal_links: true
+          link_noopener: false
+          link_noreferrer: false
+          target_blank: false
+          semantic_elements: false
+          restrict_assets: false
+          display: Beschreibung
+          localizable: true
+      -
+        handle: details
+        field:
+          type: replicator
+          sets:
+            detail:
+              display: Detail
+              fields:
+                -
+                  handle: label
+                  field:
+                    type: text
+                    width: 50
+                    display: Label
+                -
+                  handle: value
+                  field:
+                    type: textarea
+                    width: 50
+                    display: Wert
+          display: Details
+taxonomies: false
+title: Mitarbeiter

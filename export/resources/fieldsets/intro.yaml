@@ -1,0 +1,93 @@
+title: Intro
+fields:
+  -
+    handle: has_intro
+    field:
+      type: toggle
+      display: 'Hat Intro'
+      instructions: 'Zeigt Showreel, Intro-Headline und -Text oberhalb der Sets'
+      default: true
+      localizable: false
+      width: 50
+  -
+    handle: showreel
+    field:
+      type: text
+      display: 'Showreel URL oder ID'
+      instructions: 'Vimeo-ID oder die gesamte URL inkl. "https://" am Anfang'
+      width: 50
+      localizable: false
+      if:
+        has_intro: 'equals true'
+  -
+    handle: showreel_file
+    field:
+      type: assets
+      container: main
+      folder: /
+      restrict: false
+      max_files: 1
+      width: 50
+      display: Showreel-Datei
+      instructions: 'mp4 – wird gezeigt, wenn keine Vimeo-URL eingetragen ist'
+      localizable: false
+      if:
+        has_intro: 'equals true'
+  -
+    handle: showreel_ratio
+    field:
+      type: text
+      display: Original-Seitenverhältnis
+      instructions: 'Z.B. "4:3" - nur notwendig wenn nicht 16:9'
+      width: 50
+      localizable: false
+      if:
+        has_intro: 'equals true'
+  -
+    handle: intro_headline
+    field:
+      type: textarea
+      display: 'Intro Headline'
+      localizable: true
+      if:
+        has_intro: 'equals true'
+  -
+    handle: intro_text
+    field:
+      type: bard
+      buttons:
+        - bold
+        - underline
+        - unorderedlist
+        - orderedlist
+        - removeformat
+        - anchor
+      style: sans
+      spellcheck: true
+      allow_source: true
+      allow_internal_links: true
+      link_noopener: false
+      link_noreferrer: false
+      target_blank: true
+      semantic_elements: true
+      restrict_assets: false
+      instructions: |-
+        Zeilenumbruch ohne Abstand = Shift + Enter
+
+        Absatztext wird in der Website kursiv dargestellt (hier mit "kursiv" markierter Text wird dann in der Website umgekehrt, also "nicht kursiv" dargestellt).
+      display: Introtext
+      localizable: true
+      if:
+        has_intro: 'equals true'
+  -
+    handle: downloads
+    field: downloads.downloads
+    config:
+      if:
+        has_intro: 'equals true'
+  -
+    handle: downloadscta
+    field: downloadscta.downloadscta
+    config:
+      if:
+        has_intro: 'equals true'

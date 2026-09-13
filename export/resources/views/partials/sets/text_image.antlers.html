@@ -1,0 +1,24 @@
+{{#
+    Text + image set (main_content replicator): headline, Bard text and an
+    optional single image beside it. Section id via partials/sets/anchor
+    (default "text-image-{set id}").
+#}}
+{{ _anchor = {partial:sets/anchor} }}
+
+<div class="section mb-7.5" id="{{ _anchor }}">
+    {{ partial:section/heading :headline="set:headline" }}{{ /partial:section/heading }}
+</div>
+
+<div>
+    <div x-fade class="post editor-content mb-12.5 tablet:flex tablet:justify-between">
+        <div class="grow-0 max-w-[900px] px-5 tablet:px-10 notebook:px-17.5 {{ if set:image }} tablet:pr-5 notebook:pr-10 {{ /if }}">
+            {{ set:text }}
+        </div>
+
+        {{ if set:image }}
+            <div class="shrink-0 mb-7.5 tablet:w-[50vw] tablet:mb-0">
+                <img src="{{ glide :src="set:image" width="1600" }}" alt="{{ (set:image:alt or set:headline) | sanitize }}" class="w-full h-auto">
+            </div>
+        {{ /if }}
+    </div>
+</div>

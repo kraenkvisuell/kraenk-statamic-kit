@@ -1,0 +1,29 @@
+sections:
+  main:
+    display: Main
+    fields:
+      -
+        handle: title
+        field:
+          type: text
+          container: main
+          width: 50
+          localizable: true
+      -
+        handle: published
+        field:
+          type: toggle
+          width: 50
+          display: Sichtbar
+      -
+        handle: icon
+        field:
+          type: assets
+          container: main
+          folder: /
+          restrict: false
+          max_files: 1
+          display: Icon
+          width: 50
+taxonomies: false
+title: Award

@@ -1,0 +1,23 @@
+<?php
+
+return [
+    'learn_more' => 'Weiterlesen',
+    'follow_us' => 'Folgen Sie uns',
+    'address' => 'Adresse',
+    'how_to_find_us' => 'So finden Sie uns',
+    'payment_methods' => 'Zahlungsarten',
+    'similar_films' => 'Ähnliche Filme',
+    'client' => 'Kunde',
+    'created' => 'Entstanden',
+    'camera' => 'Kamera',
+    'agency' => 'Agentur',
+    'imprint' => 'Impressum',
+    'terms_of_condition' => 'AGB',
+    'liability' => 'Haftungsausschluss',
+    'privacy' => 'Datenschutz',
+    'contact' => 'Kontakt',
+    'news' => 'Aktuelles',
+    'we_are_hiring' => 'Wir suchen',
+    'newsletter_subscription' => 'Newsletter-Abo',
+    'open_gallery' => 'Hier ist die Galerie zum Durchklicken',
+];

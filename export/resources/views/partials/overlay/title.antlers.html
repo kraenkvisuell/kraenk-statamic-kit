@@ -1,0 +1,26 @@
+{{#
+    Title bar of an overlay (legal texts, gallery): sticky at the top, with the X.
+    Params: close_to (section anchor – the no-JS fallback of the X), on_close
+    (Alpine expression for the X, e.g. "close()"). Slot: title content.
+#}}
+<div class="
+    sticky top-0 left-0 z-10 w-full h-12.5 tablet:h-17.5 bg-white
+    flex items-center pl-5 pr-15 tablet:pl-10 tablet:pr-25 notebook:pl-17.5
+    font-headline font-bold uppercase tracking-wider text-[0.8rem] tablet:text-[1.3rem]
+">
+    {{ slot }}
+
+    <a
+        href="#{{ close_to }}"
+        class="absolute top-0 right-2.75 tablet:right-5.25 notebook:right-11.5 z-10 w-12.5 tablet:w-17.5 aspect-square cursor-pointer"
+        @click.prevent="{{ on_close }}"
+    >
+        <div class="absolute inset-0 flex items-center justify-center">
+            <div class="
+                w-7.5 h-7.5 cursor-pointer
+                before:content-[''] before:absolute before:w-full before:h-1.25 before:top-[calc(50%_-_3px)] before:bg-ink before:-rotate-45
+                after:content-[''] after:absolute after:w-full after:h-1.25 after:top-[calc(50%_-_3px)] after:bg-ink after:rotate-45
+            "></div>
+        </div>
+    </a>
+</div>

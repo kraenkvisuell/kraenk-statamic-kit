@@ -1,0 +1,42 @@
+order: 1
+title: Seite
+columns:
+  - title
+  - slug
+taxonomies: true
+tabs:
+  main:
+    display: Main
+    sections:
+      -
+        fields:
+          -
+            handle: title
+            field:
+              type: text
+              required: true
+              display: Titel
+              width: 50
+              localizable: true
+              validate:
+                - required
+          -
+            import: main_content
+  intro:
+    display: Intro
+    sections:
+      -
+        fields:
+          -
+            import: intro
+  sidebar:
+    display: Sidebar
+    sections:
+      -
+        fields:
+          -
+            handle: slug
+            field:
+              type: slug
+              localizable: true
+              validate: 'max:200'

@@ -1,0 +1,73 @@
+{{#
+    Contact section. Param `from`: unset on pages (fades in on scroll, anchor
+    #kontakt), 'page' on entry pages (already faded in, anchor #kontakt – the
+    navi's Kontakt link stays on the page), 'overlay' inside the legal-text
+    overlays (already faded in, no anchor – the page has its own).
+    `is-footer` is a CSS context marker for editor-content.
+#}}
+<div
+    class="section is-footer bg-ink text-white tablet:pt-7.5 tablet:pb-32.5"
+    {{ if from != 'overlay' }} id="kontakt" {{ /if }}
+>
+    <div
+        class="absolute bottom-0 left-0 h-full w-full max-w-[640px] bg-no-repeat bg-size-[240px_auto] bg-position-[right_-80px_bottom_0] tablet:bg-position-[right_0_bottom_0] tablet:w-[56%] tl:w-1/2"
+        {{ if site_settings:contact_image }} style="background-image:url('{{ glide :src="site_settings:contact_image" width="480" }}')" {{ /if }}
+    ></div>
+
+    <div
+        x-fade
+        class="editor-content {{ if from }} is-faded-in {{ /if }} w-full px-5 pt-5 pb-0 tablet:flex tablet:px-10 tablet:pt-12.5 notebook:px-17.5"
+    >
+        <div class="flex-1 mb-12.5 pr-5 tablet:mb-0">
+            <h2 class="text-[1.3rem] tl:text-[1.9rem] mb-[0.8em]">{{ trans:frontend.contact }}</h2>
+        </div>
+    </div>
+
+    <div
+        x-fade
+        class="editor-content {{ if from }} is-faded-in {{ /if }} w-full px-5 pt-3 pb-5 tablet:flex tablet:px-10 tablet:pb-12.5 notebook:px-17.5"
+    >
+        <div class="flex-1 mb-12.5 pr-5 tablet:mb-0">
+            <p class="leading-[1.6]">
+                {{ site_settings:contact_topline | nl2br }}<br>
+                {{ partial:contact/link href="tel:{{ site_settings:phone }}" icon="phone" }}
+                    {{ site_settings:phone }}
+                {{ /partial:contact/link }}
+                <br>
+                {{ partial:contact/link href="mailto:{{ site_settings:email }}" icon="mail" }}
+                    {{ site_settings:email }}
+                {{ /partial:contact/link }}
+                <br>
+                <br>
+                {{ site_settings:second_contact_topline | nl2br }}<br>
+                {{ if site_settings:second_phone }}
+                    {{ partial:contact/link href="tel:{{ site_settings:second_phone }}" icon="phone" }}
+                        {{ site_settings:second_phone }}
+                    {{ /partial:contact/link }}
+                    <br>
+                {{ /if }}
+                {{ if site_settings:second_email }}
+                    {{ partial:contact/link href="mailto:{{ site_settings:second_email }}" icon="mail" }}
+                        {{ site_settings:second_email }}
+                    {{ /partial:contact/link }}
+                {{ /if }}
+            </p>
+        </div>
+
+        <div class="flex-1 mb-12.5 pr-5 tablet:mb-0 hidden tablet:block">
+            {{ partial:contact/columns alt="dark" }}
+        </div>
+    </div>
+</div>
+
+{{# Phone only: social links + address below the contact block, with light icons #}}
+<div class="section is-footer bg-footer-bg text-footer-text tablet:hidden">
+    <div
+        x-fade
+        class="editor-content {{ if from }} is-faded-in {{ /if }} w-full px-5 pt-3 pb-5 tablet:flex tablet:px-10 tablet:pb-12.5 notebook:px-17.5"
+    >
+        <div class="flex-1 mb-12.5 pr-5 tablet:mb-0">
+            {{ partial:contact/columns alt="light" }}
+        </div>
+    </div>
+</div>

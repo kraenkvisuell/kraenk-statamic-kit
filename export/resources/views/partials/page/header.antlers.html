@@ -1,0 +1,52 @@
+{{#
+    Header of an entry page (film, job, post): a "← Section" back link in the
+    footer-link size above the title. Params: back_to (section anchor on the
+    start page, e.g. "portfolio"), back_set (type of the start-page set the
+    link leads to – its navigation title/headline becomes the label, via
+    partials/sets/label) and/or back_label (fixed text, used when there is no
+    back_set or the start page has no enabled set of that type). Slot: the
+    <h1> content.
+    `backLink` (registered below) calls history.back() when the visitor came
+    from a start page – done client-side so the page stays static-cacheable;
+    the href is always the real URL.
+#}}
+{{ _set_label = {partial:sets/label :set_type="back_set"} }}
+<header class="px-5 py-6 tablet:px-10 tablet:py-8 notebook:px-17.5 font-headline font-bold uppercase tracking-wider">
+    <a href="{{ site:url }}#{{ back_to }}" x-data="backLink" @click="back($event)" class="inline-flex items-center gap-2 mb-4 text-[0.8rem] leading-none">
+        <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M13 7H1.5M6.5 2 1.5 7l5 5"/>
+        </svg>
+        <span>{{ if _set_label | trim }}{{ _set_label | trim }}{{ else }}{{ back_label }}{{ /if }}</span>
+    </a>
+
+    <h1 class="text-[0.8rem] tablet:text-[1.3rem] tracking-wider leading-none">
+        {{ slot }}
+    </h1>
+</header>
+
+<script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('backLink', () => ({
+            fromHome: false,
+
+            init() {
+                try {
+                    // came from a site's start page (`/` or `/{lang}`, same check as the
+                    // layout's `site` component)
+                    const referrer = new URL(document.referrer)
+                    this.fromHome = referrer.origin === location.origin
+                        && /^\/([a-z]{2}\/?)?$/.test(referrer.pathname)
+                } catch {
+                    // no or unparsable referrer: keep the href
+                }
+            },
+
+            back(event) {
+                if (! this.fromHome) return
+
+                event.preventDefault()
+                history.back()
+            },
+        }))
+    })
+</script>

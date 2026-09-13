@@ -1,0 +1,28 @@
+{{#
+    Content overlay below the navi (legal texts): drops in / rises out, locks page
+    scrolling, closes via its X, Escape or a navi link (site-close-overlays).
+    `overlay` component from resources/js/overlay.js.
+    Params: name (opened with $dispatch('overlay-open', 'name')), title,
+    close_to (section anchor – the no-JS fallback of the X). Slot: content.
+#}}
+<div
+    x-data="overlay"
+    x-show="isOpen"
+    x-cloak
+    @overlay-open.window="$event.detail === '{{ name }}' && open()"
+    @site-close-overlays.window="close()"
+    @keydown.escape.window="close()"
+    x-transition:enter="transition-transform duration-600 ease-out"
+    x-transition:enter-start="-translate-y-full"
+    x-transition:enter-end="translate-y-0"
+    x-transition:leave="transition-transform duration-600 ease-in"
+    x-transition:leave-start="translate-y-0"
+    x-transition:leave-end="-translate-y-full"
+    class="fixed left-0 top-12.5 tablet:top-17.5 z-20 w-full h-[calc(100dvh_-_50px)] tablet:h-[calc(100dvh_-_70px)] bg-white overflow-y-auto"
+>
+    {{ partial:overlay/title :close_to="close_to" on_close="close()" }}
+        <div>{{ title }}</div>
+    {{ /partial:overlay/title }}
+
+    {{ slot }}
+</div>

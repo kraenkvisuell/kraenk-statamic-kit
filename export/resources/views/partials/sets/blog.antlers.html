@@ -1,0 +1,22 @@
+{{#
+    Blog set (main_content replicator): the start-page blog section – set fields
+    topline, headline, copy (Bard) above the partials/blog/post teasers. Nothing
+    renders while the collection is empty. Section id via partials/sets/anchor
+    (default "blog").
+#}}
+{{ if {collection:count in="blog"} > 0 }}
+    <div
+        class="section mb-7.5 tablet:mb-17.5"
+        id="{{ partial:sets/anchor }}"
+    >
+        {{ partial:section/heading :topline="set:topline" :headline="set:headline" }}
+            {{ set:copy }}
+        {{ /partial:section/heading }}
+
+        <div>
+            {{ collection:blog show_future="true" }}
+                {{ partial:blog/post }}
+            {{ /collection:blog }}
+        </div>
+    </div>
+{{ /if }}

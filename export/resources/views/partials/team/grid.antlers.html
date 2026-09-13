@@ -1,0 +1,75 @@
+{{# Team cards (link to the member's email) + "we are hiring" card linking to the job pages (/jobs/{slug}). #}}
+<div class="pb-12.5">
+    <div class="tablet:grid tablet:grid-cols-2 desktop:grid-cols-4">
+        {{ collection:team show:is="true" }}
+            <div
+                x-fade
+                class="aspect-video bg-cover bg-center bg-transparent opacity-0 transition-opacity duration-1500 ease-out is-faded-in:opacity-100"
+                {{ if image }}
+            style="background-image:url('{{ glide :src="image" width="1280" height="720" fit="crop_focal" }}')"
+            {{ /if }}
+            >
+                {{ if image.alt }}
+                    <span class="sr-only">{{ image.alt | sanitize }}</span>
+                {{ /if }}
+                {{# the photo is a CSS background #}}
+                <div class="absolute inset-0">
+                    <div
+                        class="z-10 text-white transition-all duration-300 ease-in-out pt-[12%] pr-[3%] pl-5 tablet:pl-10 notebook:pl-17.5 [&_a]:underline">
+                        <div class="
+                        font-headline font-bold uppercase tracking-wider leading-[1.4] mb-[0.5em] tablet:mb-[1em]
+                        text-[1.3rem] tablet:text-[0.8rem] tl:text-[1.3rem] desktop:text-[0.8rem] cinema:text-[1.3rem] giant:text-[0.8rem]
+                    ">
+                            {{ title }}
+                        </div>
+
+                        <div
+                            class="italic leading-normal text-[0.75rem] tl:text-[0.9rem] desktop:text-[0.75rem] cinema:text-[0.9rem] giant:text-[0.75rem]">
+                            {{ roles | nl2br }}
+                        </div>
+                    </div>
+                    {{ if email }}
+                        <div
+                            class="absolute bottom-5 left-5 w-5 h-5 bg-no-repeat bg-size-[auto_10px] bg-position-[0px_6px] tablet:bottom-8.75 tablet:left-10 notebook:bottom-16.25 notebook:left-17.5"
+                            style="background-image:url('/images/footer-icon-mail.svg')"
+                        ></div>
+                    {{ /if }}
+                    {{ if email }}
+                        <a
+                            href="mailto:{{ email }}"
+                            title="write {{ title }}"
+                            class="absolute inset-0 z-10 block"
+                        >
+                        </a>
+                    {{ /if }}
+                </div>
+            </div>
+        {{ /collection:team }}
+        {{ if {collection:count in="jobs"} > 0 }}
+            <div
+                x-fade
+                class="aspect-video bg-cover bg-center bg-ink opacity-0 transition-opacity duration-1500 ease-out is-faded-in:opacity-100"
+                style="background-image:url('/images/jobs-bg.png')"
+            >
+                <div class="absolute inset-0">
+                    <div
+                        class="z-10 text-white transition-all duration-300 ease-in-out pt-[12%] pr-[3%] pl-5 tablet:pl-10 notebook:pl-17.5 [&_a]:underline">
+                        <div class="
+                        font-headline font-bold uppercase tracking-wider leading-[1.4] mb-[0.5em] tablet:mb-[1em]
+                        text-[1.3rem] tablet:text-[0.8rem] tl:text-[1.3rem] desktop:text-[0.8rem] cinema:text-[1.3rem] giant:text-[0.8rem]
+                    ">
+                            {{ trans:frontend.we_are_hiring }}
+                        </div>
+
+                        <div
+                            class="italic leading-normal text-[0.75rem] tl:text-[0.9rem] desktop:text-[0.75rem] cinema:text-[0.9rem] giant:text-[0.75rem]">
+                            {{ collection:jobs }}
+                                <a href="{{ url }}">{{ title }}</a><br>
+                            {{ /collection:jobs }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{ /if }}
+    </div>
+</div>

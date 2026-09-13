@@ -1,0 +1,138 @@
+/*
+ * `.editor-content` wraps HTML rendered from Bard/Markdown fields, so its
+ * children can't carry utility classes. Ported from _editor-content.scss,
+ * _post.scss (h4) and the blockquote rules of _popup.scss.
+ * `.is-footer` marks the footer/contact sections (lighter, smaller copy).
+ */
+@layer components {
+    .editor-content {
+        & :is(p, ul, ol, table, h1, h2, h3, h4, div) {
+            opacity: 0;
+            transition: opacity 1.5s ease-out;
+        }
+
+        &.is-faded-in :is(p, ul, ol, table, h1, h2, h3, h4, div) {
+            opacity: 1;
+        }
+
+        & :is(h1, h2, h3, h4) {
+            font-family: var(--font-headline);
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            font-size: 1.3rem;
+            line-height: 1.4;
+            margin-bottom: 1em;
+        }
+
+        & h4 {
+            font-size: 0.8rem;
+        }
+
+        :where(.is-footer) & h3 {
+            font-size: 0.8rem;
+        }
+
+        & :is(p, ul, ol, table, blockquote) {
+            font-family: var(--font-main);
+            font-weight: 300;
+            font-size: 0.9rem;
+            font-style: italic;
+            line-height: 1.5;
+            margin-bottom: 1em;
+
+            & :is(i, em) {
+                font-style: normal;
+            }
+        }
+
+        :where(.is-footer) & :is(p, ul, ol, table, blockquote) {
+            line-height: 1.6;
+            font-weight: 200;
+            letter-spacing: 0.05em;
+
+            @variant tablet {
+                font-size: 0.75rem;
+            }
+
+            @variant tl {
+                font-size: 0.9rem;
+            }
+        }
+
+        & a {
+            text-decoration: underline;
+        }
+
+        & ul {
+            padding-left: 0;
+
+            & li {
+                list-style: none;
+                padding-left: 25px;
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    top: 10px;
+                    left: 0;
+                    width: 14px;
+                    height: 1px;
+                    background-color: var(--color-ink);
+                }
+            }
+        }
+
+        & ol {
+            padding-left: 0;
+            list-style-position: inside;
+            counter-reset: item;
+
+            & li {
+                list-style: none;
+                padding-left: 25px;
+                counter-increment: item;
+
+                &::before {
+                    content: counter(item) ". ";
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                }
+            }
+        }
+
+        & :is(p, ul, ol, table) {
+            overflow-wrap: break-word;
+            hyphens: auto;
+            hyphenate-limit-chars: auto 4;
+            hyphenate-limit-lines: 3;
+        }
+    }
+
+    /* film/member/job popups: description copy with pull quotes */
+    .popup-description blockquote {
+        font-size: 1.2rem;
+        color: var(--color-important);
+        margin: 2em 0;
+
+        & p {
+            font-size: 1.2rem;
+        }
+    }
+
+    /* blog post / services copy: h4 with a bar in front */
+    .post h4 {
+        padding-left: 40px;
+
+        &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 7px;
+            width: 30px;
+            height: 5px;
+            background-color: var(--color-ink);
+        }
+    }
+}

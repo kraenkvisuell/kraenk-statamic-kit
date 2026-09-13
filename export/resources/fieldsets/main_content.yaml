@@ -1,0 +1,282 @@
+title: Hauptinhalt
+fields:
+  -
+    handle: main_content
+    field:
+      type: replicator
+      display: Inhaltsblöcke
+      localizable: true
+      collapse: accordion
+      sets:
+        neue_setgruppe:
+          display: 'Neue Setgruppe'
+          sets:
+            portfolio:
+              display: Portfolio
+              icon: fieldtype-video
+              fields:
+                -
+                  import: set_navigation
+                -
+                  handle: topline
+                  field:
+                    type: text
+                    display: Topline
+                    instructions: 'Optional – kleine Zeile über der Überschrift.'
+                    width: 50
+                    localizable: false
+                -
+                  handle: headline
+                  field:
+                    type: text
+                    display: Überschrift
+                    validate:
+                      - required
+                    width: 50
+                    localizable: false
+                -
+                  handle: copy
+                  field:
+                    type: bard
+                    display: 'Text (optional)'
+                    buttons:
+                      - bold
+                      - italic
+                      - anchor
+                    style: sans
+                    spellcheck: true
+                    allow_source: false
+                    allow_internal_links: true
+                    semantic_elements: false
+                    restrict_assets: false
+                    localizable: false
+            text_image:
+              display: 'Text + Bild'
+              icon: fieldtype-textarea
+              fields:
+                -
+                  import: set_navigation
+                -
+                  handle: headline
+                  field:
+                    type: text
+                    display: Überschrift
+                    validate:
+                      - required
+                    localizable: false
+                -
+                  handle: text
+                  field:
+                    type: bard
+                    display: Text
+                    buttons:
+                      - bold
+                      - italic
+                      - underline
+                      - anchor
+                      - unorderedlist
+                      - orderedlist
+                    style: sans
+                    spellcheck: true
+                    allow_source: false
+                    allow_internal_links: true
+                    semantic_elements: false
+                    restrict_assets: false
+                    localizable: false
+                -
+                  handle: image
+                  field:
+                    type: assets
+                    display: 'Bild (optional)'
+                    container: main
+                    folder: /
+                    max_files: 1
+                    localizable: false
+            team:
+              display: Team
+              icon: users
+              fields:
+                -
+                  import: set_navigation
+                -
+                  handle: topline
+                  field:
+                    type: text
+                    display: Topline
+                    instructions: 'Optional – kleine Zeile über der Überschrift.'
+                    width: 50
+                    localizable: false
+                -
+                  handle: headline
+                  field:
+                    type: text
+                    display: Überschrift
+                    validate:
+                      - required
+                    width: 50
+                    localizable: false
+                -
+                  handle: copy
+                  field:
+                    type: bard
+                    display: 'Text (optional)'
+                    buttons:
+                      - bold
+                      - italic
+                      - anchor
+                    style: sans
+                    spellcheck: true
+                    allow_source: false
+                    allow_internal_links: true
+                    semantic_elements: false
+                    restrict_assets: false
+                    localizable: false
+            blog:
+              display: Blog
+              icon: fieldtype-textarea
+              fields:
+                -
+                  import: set_navigation
+                -
+                  handle: topline
+                  field:
+                    type: text
+                    display: Topline
+                    instructions: 'Optional – kleine Zeile über der Überschrift.'
+                    width: 50
+                    localizable: false
+                -
+                  handle: headline
+                  field:
+                    type: text
+                    display: Überschrift
+                    validate:
+                      - required
+                    width: 50
+                    localizable: false
+                -
+                  handle: copy
+                  field:
+                    type: bard
+                    display: 'Text (optional)'
+                    buttons:
+                      - bold
+                      - italic
+                      - anchor
+                    style: sans
+                    spellcheck: true
+                    allow_source: false
+                    allow_internal_links: true
+                    semantic_elements: false
+                    restrict_assets: false
+                    localizable: false
+            faq:
+              display: 'Fragen & Antworten'
+              icon: fieldtype-toggle
+              fields:
+                -
+                  import: set_navigation
+                -
+                  handle: title
+                  field:
+                    type: text
+                    display: Titel
+                    validate:
+                      - required
+                    localizable: false
+                -
+                  handle: intro
+                  field:
+                    type: bard
+                    display: Einleitung
+                    buttons:
+                      - bold
+                      - italic
+                      - anchor
+                    style: sans
+                    spellcheck: true
+                    allow_source: false
+                    allow_internal_links: true
+                    semantic_elements: false
+                    restrict_assets: false
+                    localizable: false
+                -
+                  handle: questions
+                  field:
+                    type: replicator
+                    display: Fragen
+                    collapse: accordion
+                    localizable: false
+                    sets:
+                      question:
+                        display: Frage
+                        icon: fieldtype-toggle
+                        fields:
+                          -
+                            handle: question
+                            field:
+                              type: text
+                              display: Frage
+                              validate:
+                                - required
+                          -
+                            handle: answer
+                            field:
+                              type: bard
+                              display: Antwort
+                              buttons:
+                                - bold
+                                - italic
+                                - anchor
+                                - unorderedlist
+                                - orderedlist
+                              style: sans
+                              spellcheck: true
+                              allow_source: false
+                              allow_internal_links: true
+                              link_noopener: false
+                              link_noreferrer: false
+                              target_blank: false
+                              semantic_elements: false
+                              restrict_assets: false
+                              sets: {}
+            gallery:
+              display: Bildergalerie
+              icon: media-image-picture-gallery
+              fields:
+                -
+                  import: set_navigation
+                -
+                  handle: title
+                  field:
+                    type: text
+                    display: Titel
+                    validate:
+                      - required
+                    localizable: false
+                -
+                  handle: intro
+                  field:
+                    type: bard
+                    display: Einleitung
+                    buttons:
+                      - bold
+                      - italic
+                      - anchor
+                    style: sans
+                    spellcheck: true
+                    allow_source: false
+                    allow_internal_links: true
+                    semantic_elements: false
+                    restrict_assets: false
+                    localizable: false
+                -
+                  handle: images
+                  field:
+                    type: assets
+                    display: Bilder
+                    container: main
+                    folder: /
+                    mode: grid
+                    instructions: 'Reihenfolge per Drag & Drop, Bildausschnitt über den Fokuspunkt des Assets.'
+                    localizable: false

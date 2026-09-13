@@ -1,0 +1,10 @@
+{{# Spinner shown while a popup video loads #}}
+<div class="absolute inset-0 z-0 flex items-center justify-center">
+    <div class="inline-block w-15.5 h-15.5 tablet:w-32 tablet:h-32">
+        {{ _ring = "absolute block box-border w-12.25 h-12.25 m-1.5 tablet:w-29 tablet:h-29 rounded-full border-[3px] tablet:border-4 border-solid border-transparent border-t-black animate-ring" }}
+        <div class="{{ _ring }} [animation-delay:-0.45s]"></div>
+        <div class="{{ _ring }} [animation-delay:-0.3s]"></div>
+        <div class="{{ _ring }} [animation-delay:-0.15s]"></div>
+        <div class="{{ _ring }}"></div>
+     </div>
+</div>

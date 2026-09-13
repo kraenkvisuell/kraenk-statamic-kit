@@ -1,0 +1,206 @@
+sections:
+  main:
+    display: Main
+    fields:
+      -
+        handle: title
+        field:
+          type: text
+          display: Title
+          width: 50
+          localizable: true
+      -
+        handle: slug
+        field:
+          type: text
+          display: Text-ID
+          width: 50
+          instructions: 'Wird in der URL verwendet - am besten keine Leer- und Sonderzeichen und nur Kleinbuchstaben'
+      -
+        handle: published
+        field:
+          type: toggle
+          width: 50
+          display: Veröffentlicht
+      -
+        handle: headline
+        field:
+          type: textarea
+          display: Headline
+          instructions: 'Optional - falls vom Titel abweichend'
+          width: 50
+      -
+        handle: categories
+        field:
+          type: terms
+          max_items: 9
+          width: 50
+          display: Kategorie
+          taxonomies:
+            - categories
+      -
+        handle: clients
+        field:
+          type: terms
+          max_items: 9
+          width: 50
+          display: Kunde
+          taxonomies:
+            - clients
+      -
+        handle: own_directors
+        field:
+          type: entries
+          max_items: '99'
+          mode: tags
+          display: 'Team Directors'
+          width: 50
+          collections:
+            - team
+      -
+        handle: year
+        field:
+          type: text
+          display: 'Entstanden (Jahr)'
+          width: 50
+      -
+        handle: productions
+        field:
+          type: terms
+          max_items: 9
+          width: 50
+          display: Produktion
+          taxonomies:
+            - productions
+      -
+        handle: cameras
+        field:
+          type: terms
+          max_items: 9
+          width: 50
+          display: Kamera
+          taxonomies:
+            - cameras
+      -
+        handle: agency
+        field:
+          type: text
+          display: Agentur
+          width: 50
+      -
+        handle: description
+        field:
+          type: bard
+          buttons:
+            - h3
+            - bold
+            - italic
+            - anchor
+            - quote
+          style: sans
+          spellcheck: true
+          allow_source: true
+          allow_internal_links: true
+          link_noopener: false
+          link_noreferrer: false
+          target_blank: false
+          semantic_elements: false
+          restrict_assets: false
+          display: Beschreibung
+          localizable: true
+      -
+        import: downloads
+  film:
+    display: Film
+    fields:
+      -
+        handle: key
+        field:
+          type: text
+          instructions: 'URL inkl. "https://" am Anfang'
+          width: 50
+          display: 'Vimeo- oder Youtube-URL'
+      -
+        handle: ratio
+        field:
+          type: text
+          instructions: 'Z.B. "4:3" - nur notwendig wenn nicht 16:9'
+          width: 50
+          display: Original-Seitenverhältnis
+      -
+        handle: still
+        field:
+          type: assets
+          container: main
+          folder: /
+          restrict: false
+          max_files: 1
+          width: 50
+          display: Still
+      -
+        handle: thumb_video
+        field:
+          type: assets
+          container: main
+          folder: /
+          restrict: false
+          max_files: 1
+          width: 50
+          display: Thumb-Filmchen
+      -
+        handle: similar
+        field:
+          type: entries
+          max_items: '99'
+          mode: panes
+          display: 'Ähnliche Filme'
+          collections:
+            - portfolio
+      -
+        handle: images
+        field:
+          type: assets
+          container: main
+          folder: /
+          restrict: false
+          max_files: 99
+          display: Bilder
+  awards:
+    display: Awards
+    fields:
+      -
+        handle: awards
+        field:
+          type: replicator
+          sets:
+            award:
+              display: Award
+              fields:
+                -
+                  handle: title
+                  field:
+                    type: text
+                    display: Titel
+                -
+                  handle: small_icon
+                  field:
+                    type: assets
+                    container: main
+                    folder: /
+                    restrict: false
+                    max_files: 1
+                    width: 50
+                    display: 'Icon klein'
+                -
+                  handle: large_icon
+                  field:
+                    type: assets
+                    container: main
+                    folder: /
+                    restrict: false
+                    max_files: 1
+                    width: 50
+                    display: 'Icon groß'
+          display: Awards
+title: Film
+taxonomies: false

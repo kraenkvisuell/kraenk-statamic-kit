@@ -1,0 +1,70 @@
+{{# Imprint / terms / liability / privacy. `is-footer` is a CSS context marker for editor-content. #}}
+<div class="section is-footer bg-footer-bg text-footer-text">
+    <div x-fade class="editor-content w-full p-5 tablet:flex tablet:px-10 tablet:py-12.5 notebook:px-17.5">
+        <div class="flex-1 mb-12.5 pr-5 tablet:mb-0">
+
+            <p class="mb-0 leading-[1.6]">{{ site_settings:imprint_topline }}</p>
+            <h2 class="text-[1.3rem] tl:text-[1.9rem] mb-[0.8em]">{{ trans:frontend.imprint }}</h2>
+
+           {{ site_settings:imprint }}<br><br><br>
+
+            <p class="mb-0 leading-[1.6]">{{ site_settings:AGB_topline }}</p>
+            <h2 class="text-[1.3rem] tl:text-[1.9rem] mb-[0.8em]">{{ trans:frontend.terms_of_condition }}</h2>
+
+           {{ if site_settings.downloads }}
+                <div x-fade class="editor-content">
+                {{ partial:downloadsfooter :downloads="site_settings.downloads" }}
+                </div>
+            {{ /if }}
+
+        </div>
+
+        <div class="flex-1 mb-12.5 pr-5 tablet:mb-0">
+            <p class="mb-0 leading-[1.6]">{{ site_settings:liability_topline }}</p>
+            <h2 class="text-[1.3rem] tl:text-[1.9rem] mb-[0.8em]">{{ trans:frontend.liability }}</h2>
+            {{ site_settings:liability | safe_truncate:500:... }}
+            <p>
+                <a href="#kontakt" @click.prevent="$dispatch('overlay-open', 'haftungsausschluss')">&gt; {{ trans:frontend.learn_more }}</a>
+                <br><br><br>
+            </p>
+
+            <p class="mb-0 leading-[1.6]">{{ site_settings:privacy_topline }}</p>
+            <h2 class="text-[1.3rem] tl:text-[1.9rem] mb-[0.8em]">{{ trans:frontend.privacy }}</h2>
+            {{ site_settings:privacy | safe_truncate:500:... }}
+            <p>
+                <a href="#kontakt" @click.prevent="$dispatch('overlay-open', 'datenschutz')">&gt; {{ trans:frontend.learn_more }}</a>
+            </p>
+
+            {{# revoke the consent for third-party videos (videoConsent, resources/js/video-consent.js): only shown once accepted, clears the choice and reloads #}}
+            <div x-data="videoConsent" x-show="accepted" x-cloak class="mt-5">
+                <button
+                    type="button"
+                    @click="revoke()"
+                    class="inline-block border border-footer-text px-4 py-2.5 font-headline font-bold uppercase tracking-wider text-[0.7rem] leading-none cursor-pointer transition-colors hover:bg-footer-text hover:text-footer-bg"
+                >{{ site_settings:video_consent_revoke }}</button>
+            </div>
+            <br><br>
+        </div>
+    </div>
+</div>
+
+{{# legal texts as overlays (resources/js/overlay.js) #}}
+{{ partial:overlay name="datenschutz" title="{trans:frontend.privacy}" close_to="kontakt" }}
+    <div class="max-w-[1024px] px-5 py-12.5 tablet:px-10 notebook:px-17.5">
+        <div class="editor-content is-faded-in mb-10 pr-5 tablet:pr-0">
+            {{ site_settings:privacy }}
+        </div>
+    </div>
+
+    {{ partial:contact from='overlay' }}
+{{ /partial:overlay }}
+
+{{ partial:overlay name="haftungsausschluss" title="{trans:frontend.liability}" close_to="kontakt" }}
+    <div class="max-w-[1024px] px-5 py-12.5 tablet:px-10 notebook:px-17.5">
+        <div class="editor-content is-faded-in mb-10 pr-5 tablet:pr-0">
+            {{ site_settings:liability }}
+        </div>
+    </div>
+
+    {{ partial:contact from='overlay' }}
+{{ /partial:overlay }}

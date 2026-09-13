@@ -1,0 +1,16 @@
+{{#
+    Menu items derived from the start page's main_content sets: one link per set,
+    pointing at the set's anchor (partials/sets/anchor). The label is the set's
+    `navigation_title` (set_navigation fieldset), else the set's own title
+    (`title` for gallery/faq, `headline` for text_image, portfolio, team and
+    blog). Sets without any of these are skipped; disabled sets are already
+    filtered out by the replicator. Params: sets (the main_content value), to
+    (href prefix, e.g. "/#"), item (class string).
+#}}
+{{ sets scope="set" }}
+    {{ _label = set:navigation_title ?? set:title ?? set:headline }}
+
+    {{ if _label }}
+        <a href="{{ to }}{{ partial:sets/anchor }}" class="{{ item }}" @click="closeOverlays()">{{ _label }}</a>
+    {{ /if }}
+{{ /sets }}

@@ -1,0 +1,27 @@
+{{#
+    Showreel background for the intro: a Vimeo background player (created by the
+    `intro` component in partials/intro) or a local file. Both fill the intro's
+    height, centred, wider overflow cropped by the intro's overflow-hidden – the
+    ratio comes from page:showreel_ratio (default 16:9), so the iframe
+    has the film's proportions and the player doesn't letterbox.
+#}}
+{{ _ratio = page:showreel_ratio or "16:9" }}
+
+{{ if page:showreel }}
+    <div
+        x-ref="vimeo"
+        data-key="{{ page:showreel }}"
+        class="w-full h-full bg-ink [&_iframe]:absolute [&_iframe]:top-0 [&_iframe]:left-1/2 [&_iframe]:-translate-x-1/2 [&_iframe]:h-full [&_iframe]:w-auto [&_iframe]:max-w-none [&_iframe]:aspect-(--ratio) [&_iframe]:border-0"
+        style="--ratio: {{ _ratio | replace(':', '/') }}"
+    ></div>
+{{ elseif page:showreel_file }}
+    <div class="w-full h-full bg-ink">
+        <video
+            x-ref="video"
+            class="absolute top-0 left-1/2 -translate-x-1/2 h-full w-auto max-w-none"
+            autoplay loop muted playsinline
+        >
+            <source src="{{ page:showreel_file }}" type="video/mp4">
+        </video>
+    </div>
+{{ /if }}

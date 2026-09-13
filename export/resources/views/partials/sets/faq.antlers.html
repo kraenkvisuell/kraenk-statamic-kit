@@ -1,0 +1,47 @@
+{{#
+    FAQ set (main_content replicator): title, Bard intro and a `questions`
+    replicator (question text + Bard answer), rendered as native
+    <details>/<summary> – no JS; the shared `name` lets the browser close the
+    other answers when one opens. Section id via partials/sets/anchor
+    (default "faq-{set id}").
+#}}
+{{ _anchor = {partial:sets/anchor} }}
+
+<div
+    class="section mb-7.5 tablet:mb-17.5"
+    id="{{ _anchor }}"
+>
+    {{ partial:section/heading :headline="set:title" }}
+        {{ if set:intro }}
+            <div>{{ set:intro }}</div>
+        {{ /if }}
+    {{ /partial:section/heading }}
+
+    {{ if set:questions }}
+        <div x-fade class="editor-content max-w-[1024px] px-5 pt-7.5 pb-12.5 tablet:px-10 notebook:px-17.5">
+            {{ set:questions }}
+                <details name="{{ _anchor }}" class="group border-t border-ink/20 last:border-b">
+                    <summary class="
+                        flex items-start justify-between gap-5 py-5 cursor-pointer list-none [&::-webkit-details-marker]:hidden
+                        font-headline font-bold uppercase tracking-wider text-[0.9rem] leading-snug
+                    ">
+                        <span>{{ question }}</span>
+                        {{# plus sign that turns into a minus when open #}}
+                        <span
+                            aria-hidden="true"
+                            class="
+                                shrink-0 w-4 h-4 mt-0.5
+                                before:content-[''] before:absolute before:left-0 before:top-[calc(50%_-_1px)] before:w-full before:h-0.5 before:bg-ink
+                                after:content-[''] after:absolute after:left-0 after:top-[calc(50%_-_1px)] after:w-full after:h-0.5 after:bg-ink
+                                after:rotate-90 after:transition-transform after:duration-300 group-open:after:rotate-0
+                            "
+                        ></span>
+                    </summary>
+                    <div class="pb-5">
+                        {{ answer }}
+                    </div>
+                </details>
+            {{ /set:questions }}
+        </div>
+    {{ /if }}
+</div>

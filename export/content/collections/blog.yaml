@@ -1,0 +1,16 @@
+title: Blog
+route: '/blog/{slug}'
+template: post
+sites:
+  - default
+  - en
+date: true
+date_behavior:
+  past: public
+  future: unlisted
+sort_dir: desc
+inject:
+  seo:
+    description: '@seo:teaser'
+    image: '@seo:image'
+    og_type: article

@@ -1,0 +1,354 @@
+title: Website
+sections:
+  main:
+    display: Hauptseite
+    fields:
+      -
+        handle: site_name
+        field:
+          type: text
+          display: 'Website Name'
+          instructions: 'Der Name der Website'
+  address:
+    display: Kontakt
+    fields:
+      -
+        handle: contact_topline
+        field:
+          type: textarea
+          display: 'Topline Kontakt'
+          localizable: true
+      -
+        handle: phone
+        field:
+          type: text
+          display: Telefon
+          width: 50
+      -
+        handle: email
+        field:
+          type: text
+          display: E-Mail
+          width: 50
+      -
+        handle: second_contact_topline
+        field:
+          type: textarea
+          display: 'Topline Sekundärer Kontakt'
+          localizable: true
+      -
+        handle: second_phone
+        field:
+          type: text
+          display: 'Sekundäres Telefon'
+          width: 50
+      -
+        handle: second_email
+        field:
+          type: text
+          display: 'Sekundäre E-Mail'
+          width: 50
+      -
+        handle: company
+        field:
+          type: text
+          display: Firma
+          width: 50
+      -
+        handle: fax
+        field:
+          type: text
+          display: Fax
+          width: 50
+      -
+        handle: address
+        field:
+          type: textarea
+          display: Adresse
+          width: 50
+      -
+        handle: gmaps_link
+        field:
+          type: text
+          display: 'Google Maps Link'
+          width: 50
+      -
+        handle: contact_image
+        field:
+          type: assets
+          container: main
+          folder: /
+          restrict: false
+          max_files: 1
+          width: 50
+          display: Kontakt-Bild
+      -
+        handle: social_links_topline
+        field:
+          type: text
+          display: 'Topline Social Links'
+          localizable: true
+      -
+        handle: social_links
+        field:
+          type: replicator
+          sets:
+            social_link:
+              display: 'Social Link'
+              fields:
+                -
+                  handle: title
+                  field:
+                    type: text
+                    width: 50
+                    display: Titel
+                -
+                  handle: link
+                  field:
+                    type: text
+                    width: 50
+                    display: Link
+          display: 'Social Links'
+      -
+        handle: newsletter_text
+        field:
+          type: textarea
+          display: Newsletter-Text
+          localizable: true
+          width: 50
+      -
+        handle: newsletter_link
+        field:
+          type: text
+          display: Newsletter-Link
+          width: 50
+  legal:
+    display: Rechtliches
+    fields:
+      -
+        handle: imprint_topline
+        field:
+          type: text
+          display: 'Topline Impressum'
+          width: 50
+          localizable: true
+      -
+        handle: imprint
+        field:
+          type: bard
+          buttons:
+            - h2
+            - h3
+            - bold
+            - italic
+            - underline
+            - unorderedlist
+            - orderedlist
+            - removeformat
+            - quote
+            - anchor
+          style: sans
+          spellcheck: true
+          allow_source: true
+          allow_internal_links: true
+          link_noopener: false
+          link_noreferrer: false
+          target_blank: false
+          semantic_elements: true
+          restrict_assets: false
+          display: Impressum
+          localizable: true
+      -
+        handle: liability_topline
+        field:
+          type: text
+          display: 'Topline Haftungsausschuss'
+          width: 50
+          localizable: true
+      -
+        handle: liability
+        field:
+          type: bard
+          buttons:
+            - h2
+            - h3
+            - bold
+            - italic
+            - unorderedlist
+            - orderedlist
+            - removeformat
+            - quote
+            - anchor
+          style: sans
+          spellcheck: true
+          allow_source: true
+          allow_internal_links: true
+          link_noopener: false
+          link_noreferrer: false
+          target_blank: false
+          semantic_elements: true
+          restrict_assets: false
+          display: Haftungsausschuss
+          localizable: true
+      -
+        handle: privacy_topline
+        field:
+          type: text
+          display: 'Topline Datenschutz'
+          width: 50
+          localizable: true
+      -
+        handle: privacy
+        field:
+          type: bard
+          buttons:
+            - h2
+            - h3
+            - bold
+            - italic
+            - unorderedlist
+            - orderedlist
+            - removeformat
+            - quote
+            - anchor
+          style: sans
+          spellcheck: true
+          allow_source: true
+          allow_internal_links: true
+          link_noopener: false
+          link_noreferrer: false
+          target_blank: false
+          semantic_elements: true
+          restrict_assets: false
+          display: Datenschutz
+          localizable: true
+      -
+        handle: AGB_topline
+        field:
+          type: text
+          display: 'Topline AGB'
+          localizable: true
+      -
+        import: downloads
+  images:
+    display: Grafiken
+    fields:
+      -
+        handle: logo
+        field:
+          type: assets
+          container: main
+          folder: /
+          restrict: false
+          max_files: 1
+          width: 50
+          display: 'Logo (Navigation)'
+      -
+        handle: logo_footer
+        field:
+          type: assets
+          container: main
+          folder: /
+          restrict: false
+          max_files: 1
+          width: 50
+          display: 'Logo (Footer)'
+      -
+        handle: favicon
+        field:
+          type: assets
+          container: main
+          folder: /
+          restrict: false
+          max_files: 1
+          width: 50
+          display: 'Favicon (Default für alle Größen)'
+          instructions: 'Mindestens dieses Favicon sollte gefüllt sein'
+      -
+        handle: favicon_16
+        field:
+          type: assets
+          container: main
+          folder: /
+          restrict: false
+          max_files: 1
+          width: 50
+          display: 'Favicon (16x16 px)'
+      -
+        handle: favicon_32
+        field:
+          type: assets
+          container: main
+          folder: /
+          restrict: false
+          max_files: 1
+          width: 50
+          display: 'Favicon (32x32 px)'
+      -
+        handle: favicon_96
+        field:
+          type: assets
+          container: main
+          folder: /
+          restrict: false
+          max_files: 1
+          width: 50
+          display: 'Favicon (96x96 px)'
+      -
+        handle: favicon_128
+        field:
+          type: assets
+          container: main
+          folder: /
+          restrict: false
+          max_files: 1
+          width: 50
+          display: 'Favicon (128x128 px)'
+      -
+        handle: favicon_196
+        field:
+          type: assets
+          container: main
+          folder: /
+          restrict: false
+          max_files: 1
+          width: 50
+          display: 'Favicon (196x196 px)'
+  videos:
+    display: Videos
+    fields:
+      -
+        handle: video_consent_text
+        field:
+          type: textarea
+          display: 'Hinweis vor eingebetteten Videos'
+          instructions: 'Wird anstelle eines Vimeo-/YouTube-Videos gezeigt, bis Besucher das Laden von Drittanbieter-Videos akzeptiert haben. Die Entscheidung merkt sich der Browser (localStorage).'
+          localizable: true
+          default: 'Dieses Video wird von Vimeo bzw. YouTube bereitgestellt. Beim Laden werden Daten an den jeweiligen Anbieter übertragen. Mit einem Klick akzeptieren Sie das Laden von Drittanbieter-Videos – Ihr Browser merkt sich diese Entscheidung.'
+      -
+        handle: video_consent_button
+        field:
+          type: text
+          display: 'Button: Videos akzeptieren'
+          localizable: true
+          width: 50
+          default: 'Videos aktivieren'
+      -
+        handle: video_consent_revoke
+        field:
+          type: text
+          display: 'Button: Zustimmung widerrufen (Footer)'
+          instructions: 'Erscheint im Footer unter dem Datenschutz-Text, sobald Videos akzeptiert wurden.'
+          localizable: true
+          width: 50
+          default: 'Drittanbieter-Videos nicht mehr laden'
+  embed_codes:
+    display: 'Embed Codes'
+    fields:
+      -
+        handle: header_scripts
+        field:
+          type: textarea
+          instructions: 'Z.B. für den Google Analytics Tracking-Code'
+          display: Header-Scripts
+taxonomies: false

@@ -1,0 +1,44 @@
+{{# Social links / newsletter + company address. Param: alt ("light" for the phone-only footer, else "dark"). #}}
+<div class="tablet:grid tablet:grid-cols-2 tablet:gap-x-5">
+    <div class="mb-10 tablet:mb-0">
+        <p class="leading-[1.6]">
+            {{ if alt == 'light' }}<br>{{ /if }}
+            {{ if site_settings:social_links }}
+                {{ site_settings:social_links_topline }}<br>
+                {{ site_settings:social_links }}
+                    {{ _icon = '' }}
+                    {{ if link | contains:facebook or link | contains:fb.me }}
+                        {{ _icon = 'facebook' }}
+                    {{ elseif link | contains:instagram }}
+                        {{ _icon = 'instagram' }}
+                    {{ elseif link | contains:vimeo }}
+                        {{ _icon = 'vimeo' }}
+                    {{ /if }}
+                    {{ partial:contact/link :href="link | ensure_url" target="_blank" :icon="_icon" :alt="alt" }}{{ title }}{{ /partial:contact/link }}
+                    <br>
+                {{ /site_settings:social_links }}
+                <br>
+            {{ /if }}
+
+            {{ if site_settings:newsletter_link }}
+                {{ site_settings:newsletter_text }}<br>
+                {{ partial:contact/link :href="site_settings:newsletter_link | ensure_url" target="_blank" icon="mail" :alt="alt" }}Newsletter{{ /partial:contact/link }}
+                <br>
+            {{ /if }}
+        </p>
+    </div>
+
+    <div class="mb-10 tablet:mb-0">
+        <p class="leading-[1.6]">
+            {{ site_settings:company }}<br><br>
+            {{ site_settings:address | trim | nl2br }}
+            {{ if site_settings:gmaps_link }}
+                <br>
+                <br>
+                Unser Standort auf:
+                <br>
+                {{ partial:contact/link :href="site_settings:gmaps_link" target="_blank" icon="gmaps" :alt="alt" }}Google Maps{{ /partial:contact/link }}
+            {{ /if }}
+        </p>
+    </div>
+</div>

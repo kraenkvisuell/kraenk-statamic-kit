@@ -1,0 +1,41 @@
+sections:
+  main:
+    display: Main
+    fields:
+      -
+        handle: title
+        field:
+          type: text
+          display: Name
+          localizable: true
+          width: 50
+      -
+        handle: published
+        field:
+          type: toggle
+          width: 50
+          display: Veröffentlicht
+      -
+        handle: description
+        field:
+          type: bard
+          buttons:
+            - h2
+            - bold
+            - italic
+            - unorderedlist
+            - orderedlist
+            - removeformat
+            - anchor
+          style: sans
+          spellcheck: true
+          allow_source: true
+          allow_internal_links: true
+          link_noopener: false
+          link_noreferrer: false
+          target_blank: false
+          semantic_elements: false
+          restrict_assets: false
+          display: Description
+taxonomies: false
+title: Job

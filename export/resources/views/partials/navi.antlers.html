@@ -1,0 +1,75 @@
+{{#
+    Fixed navi. The menu is Showreel, one item per main_content set of the
+    site's start page (partials/navi/items), Kontakt. Links are #anchors on the
+    start page itself; everywhere else (entry pages, other pages) they are
+    prefixed with the site URL so they lead back to the start page – except
+    Kontakt, which every page renders itself.
+    Uses the global `site` component (layout): menuOpen, logoVisible (fades in the site-name link, not the whole navi), closeOverlays().
+    JS hook left: .navi-top (popup positioning)
+#}}
+{{ _home = is_homepage ? "" : site:url }}
+<div class="navi fixed top-0 left-0 w-screen z-30 bg-navi overflow-visible">
+    <div class="navi-top w-full h-12.5 tablet:h-17.5">
+        <div class="absolute left-0 -top-[0.1em] w-3/4 h-12.5 tablet:h-17.5 flex items-center pl-5 tablet:pl-10 notebook:pl-17.5">
+            <a
+                href="{{ _home }}#showreel"
+                class="block py-5 tl:py-2.5 font-headline font-bold uppercase leading-none tracking-widest text-[0.8rem] tablet:text-[1.3rem] opacity-0 transition-all duration-2000 ease-out is-faded-in:opacity-100"
+                :class="{ 'is-faded-in': logoVisible }"
+                @click="closeOverlays()"
+            >{{ site_settings.site_name }}</a>
+        </div>
+
+        <div class="absolute right-17.5 top-4.75 tablet:right-35 tablet:top-7 italic uppercase text-off text-[0.75rem]">
+            {{ locales current_first="false" }}
+                {{ if current != locale.key }}
+                    <a href="{{ url }}">
+                {{ else }}
+                    <span class="text-ink">
+                {{ /if }}
+                    {{ locale.short }}
+                {{ if current != locale.key }}
+                    </a>
+                {{ else }}
+                    </span>
+                {{ /if }}
+                {{ if !last }}
+                &nbsp;&nbsp;/&nbsp;&nbsp;
+                {{ /if }}
+            {{ /locales }}
+        </div>
+
+        <div class="absolute top-0 right-2.5 tablet:right-5 notebook:right-11.5 w-12.5 tablet:w-17.5 aspect-square cursor-pointer" @click="toggleMenu()">
+            <div class="absolute inset-0 flex items-center justify-center">
+                <div :class="{ active: menuOpen }" class="
+                    w-7.5 h-7.5
+                    before:content-[''] before:absolute before:w-full before:h-1.25 before:top-[calc(50%_-_3px)] before:bg-ink before:transition-all before:duration-300 before:ease-in-out
+                    after:content-[''] after:absolute after:w-full after:h-1.25 after:top-[calc(50%_-_3px)] after:bg-ink after:transition-all after:duration-300 after:ease-in-out
+                    is-active:before:-rotate-45 is-active:after:rotate-45
+                "></div>
+            </div>
+        </div>
+    </div>
+
+    <div :class="{ open: menuOpen }" class="
+        absolute left-0 top-12.5 tablet:top-17.5 w-full px-5 tablet:px-10 notebook:px-17.5 bg-navi
+        h-0 overflow-hidden transition-all duration-300 ease-in-out
+        menu-open:h-[calc(100vh_-_50px)] tl:menu-open:h-21 notebook:menu-open:h-28
+    ">
+        <div class="w-full h-[calc(100vh_-_50px)] flex flex-col flex-wrap items-center justify-center tl:flex-row tl:justify-between tl:h-20">
+            {{# navi-menu-item is repeated inline: headline font, size-navi-5 / tablet size-navi-6 / tl size-navi-5 #}}
+            {{ _item = "block py-5 tl:py-2.5 font-headline font-bold uppercase leading-none tracking-wider text-[1.3rem] tablet:text-[1.4rem] tl:text-[1rem] notebook:text-[1.2rem]" }}
+            {{ _to = _home + "#" }}
+
+            <a href="{{ _to }}showreel" class="{{ _item }}" @click="closeOverlays()">Showreel</a>
+
+            {{ collection:pages uri:is="/" limit="1" }}
+                {{ partial:navi/items :sets="main_content" :to="_to" :item="_item" }}
+            {{ /collection:pages }}
+
+            {{# every page renders the contact section, so this stays on the page #}}
+            <a href="#kontakt" class="{{ _item }}" @click="closeOverlays()">
+                {{ trans:frontend.contact }}
+            </a>
+        </div>
+    </div>
+</div>

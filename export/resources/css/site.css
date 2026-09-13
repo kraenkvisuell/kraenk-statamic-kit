@@ -1,0 +1,119 @@
+/* Typekit: noto-serif (copy) + josefin-sans (headlines/navi) */
+@import url("https://use.typekit.net/itj0abl.css?v3");
+@import "tailwindcss";
+@import "./editor-content.css";
+
+@source "../views";
+
+/*
+ * Port of the old Sass theme (~/Code/vollbild/public/themes/vollbild/src/sass)
+ * to Tailwind 4. Styling lives as utilities in resources/views; the imported
+ * editor-content.css covers markup we don't author (CMS content).
+ */
+
+@theme {
+    /* Breakpoints of the old theme (bp mixin). Defaults are dropped so
+       nobody reaches for md:/lg: expecting them to exist. */
+    --breakpoint-*: initial;
+    --breakpoint-tablet: 737px;
+    --breakpoint-tl: 800px;       /* tablet-landscape */
+    --breakpoint-notebook: 1025px;
+    --breakpoint-desktop: 1440px;
+    --breakpoint-cinema: 1921px;
+    --breakpoint-giant: 2500px;   /* giant-cinema */
+
+    --font-main: noto-serif, serif;
+    --font-headline: josefin-sans, sans-serif;
+
+    /* hsb() values from variables/_colors.scss, converted */
+    --color-ink: #0a0b0d;            /* $black – text, dark backgrounds */
+    --color-off: #b3b398;            /* $grey-medium – off text (language switch) */
+    --color-important: #707870;      /* $tinted-grey – important/blockquote text */
+    --color-footer-text: #838f82;    /* $green-grey */
+    --color-navi: #f0f2f1;           /* $grey-lightest – navi/awards background */
+    --color-footer-bg: #1c1a1b;      /* $grey-dark */
+    --color-card-1: #faf9f7;
+    --color-card-2: #f0f2f1;
+    --color-card-3: #f4f5f2;
+    --color-card-4: #eaeeeb;
+    --color-overlay: hsl(0 0% 0% / 65%);       /* $transparent-black */
+    --color-overlay-light: hsl(0 0% 0% / 40%); /* $light-transparent-black */
+
+    --animate-ring: ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    @keyframes ring {
+        to { transform: rotate(360deg); }
+    }
+}
+
+/*
+ * State classes toggled by the Alpine components. They carry no styles
+ * themselves – templates react to them via these variants, e.g.
+ * `opacity-0 is-faded-in:opacity-100`.
+ */
+@custom-variant is-faded-in (&.is-faded-in);
+@custom-variant is-faded-out (&.is-faded-out);
+@custom-variant is-hidden (&.is-hidden);
+@custom-variant is-on (&.is-on);                 /* intro sound toggle */
+@custom-variant on (&.on);                       /* awards panel */
+@custom-variant is-active (&.active);            /* navi opener, intro arrow */
+@custom-variant menu-open (&.open);              /* navi menu wrapper */
+@custom-variant playing-by-scroll (:where(.playing-by-scroll) &);
+
+@layer base {
+    html {
+        font-size: 16px;
+        line-height: 1.15; /* normalize.css baseline the old theme was built on */
+        background-color: var(--color-white);
+        overflow-x: hidden;
+        /* section links are plain #anchors; keep the target below the fixed navi */
+        scroll-behavior: smooth;
+        scroll-padding-top: 50px;
+        @variant tablet {
+            scroll-padding-top: 70px;
+        }
+    }
+
+    html, body {
+        min-height: 100%;
+    }
+
+    body {
+        font-family: var(--font-main);
+        font-weight: 300;
+        font-size: 0.9rem;
+        color: var(--color-ink);
+        overflow-x: hidden;
+    }
+
+    /* Alpine: keep x-show elements hidden until Alpine has initialised */
+    [x-cloak] {
+        display: none !important;
+    }
+
+    /* The old theme positioned everything relative; absolute children all
+       over the templates rely on it. */
+    * {
+        position: relative;
+    }
+
+    a {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: var(--font-headline);
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        font-size: 2rem;
+
+        @variant notebook {
+            font-size: 2.5rem;
+        }
+    }
+
+    b, strong {
+        font-weight: 700;
+    }
+}

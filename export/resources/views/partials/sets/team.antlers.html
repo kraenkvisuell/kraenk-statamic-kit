@@ -1,0 +1,11 @@
+{{# Team set (main_content replicator): the start-page team section – set fields topline, headline, copy (Bard) above partials/team/grid. Section id via partials/sets/anchor (default "team"). #}}
+<div
+    class="section mb-7.5 tablet:mb-17.5"
+    id="{{ partial:sets/anchor }}"
+>
+    {{ partial:section/heading :topline="set:topline" :headline="set:headline" }}
+        {{ set:copy }}
+    {{ /partial:section/heading }}
+
+    {{ partial:team/grid }}
+</div>

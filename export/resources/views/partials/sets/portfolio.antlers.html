@@ -1,0 +1,13 @@
+{{# Portfolio set (main_content replicator): the start-page portfolio section – set fields topline, headline, copy (Bard) above partials/portfolio/grid. Section id via partials/sets/anchor (default "portfolio"). #}}
+<div
+    class="section mb-7.5 tablet:mb-17.5"
+    id="{{ partial:sets/anchor }}"
+>
+    {{ partial:section/heading :topline="set:topline" :headline="set:headline" }}
+        {{ set:copy }}
+    {{ /partial:section/heading }}
+
+    <div class="pb-12.5">
+        {{ partial:portfolio/grid }}
+    </div>
+</div>

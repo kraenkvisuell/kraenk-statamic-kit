@@ -10,6 +10,7 @@ Updatable [Statamic starter kit](https://statamic.dev/starter-kits/creating-a-st
 
 - `Console/Commands/` – `assets:copy-to-bunny` (`--from`, `--to`, `--dry-run`, `--force`), `bard:fix-list-items` (`--dry-run`), `site:reset-postgres-keys` (`--dry-run`). Listed by `php artisan list`; `php please list` shows only `statamic:` commands.
 - `Modifiers/` – `ensure_url`, `file_size` (locale-aware via `Number::fileSize`).
+- `Database/Seeders/DemoPagesSeeder` – demo content for a fresh site: start page, five main pages, an area with three sub pages, footer pages Impressum/Datenschutz/Kontakt, localized into every site, placed in the `pages` tree and the `main`/`footer` navigations. Idempotent: `php artisan db:seed --class="Kraenkvisuell\StatamicKit\Database\Seeders\DemoPagesSeeder"`.
 - `Http/Middleware/UseCdnClientIp` – takes the visitor's IP from Bunny's `X-Real-IP`. Not registered automatically: the site's `bootstrap/app.php` has to prepend it (see below), because it must run before `TrustProxies`.
 - `ServiceProvider::bootNumberLocale()` – `Number::useLocale()` follows the site's locale (`LocaleUpdated`), so "210,6 KB" on `/` and "210.6 KB" on `/en`.
 

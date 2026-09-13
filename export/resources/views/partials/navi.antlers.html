@@ -1,18 +1,16 @@
 {{#
-    Fixed navi. The menu is Showreel, one item per main_content set of the
-    site's start page (partials/navi/items), Kontakt. Links are #anchors on the
-    start page itself; everywhere else (entry pages, other pages) they are
-    prefixed with the site URL so they lead back to the start page – except
-    Kontakt, which every page renders itself.
+    Fixed navi: site name (links to the site's start page), language switch,
+    burger, and the menu – the `main` navigation (content/navigation/main.yaml,
+    one tree per site, edited in the CP, max_depth 2): one link per item, an item
+    without URL is an area label whose children render beneath it.
     Uses the global `site` component (layout): menuOpen, logoVisible (fades in the site-name link, not the whole navi), closeOverlays().
     JS hook left: .navi-top (popup positioning)
 #}}
-{{ _home = is_homepage ? "" : site:url }}
 <div class="navi fixed top-0 left-0 w-screen z-30 bg-navi overflow-visible">
     <div class="navi-top w-full h-12.5 tablet:h-17.5">
         <div class="absolute left-0 -top-[0.1em] w-3/4 h-12.5 tablet:h-17.5 flex items-center pl-5 tablet:pl-10 notebook:pl-17.5">
             <a
-                href="{{ _home }}#showreel"
+                href="{{ site:url }}"
                 class="block py-5 tl:py-2.5 font-headline font-bold uppercase leading-none tracking-widest text-[0.8rem] tablet:text-[1.3rem] opacity-0 transition-all duration-2000 ease-out is-faded-in:opacity-100"
                 :class="{ 'is-faded-in': logoVisible }"
                 @click="closeOverlays()"
@@ -55,21 +53,26 @@
         h-0 overflow-hidden transition-all duration-300 ease-in-out
         menu-open:h-[calc(100vh_-_50px)] tl:menu-open:h-21 notebook:menu-open:h-28
     ">
-        <div class="w-full h-[calc(100vh_-_50px)] flex flex-col flex-wrap items-center justify-center tl:flex-row tl:justify-between tl:h-20">
+        <nav aria-label="{{ trans:frontend.main_navigation }}" class="w-full h-[calc(100vh_-_50px)] flex flex-col flex-wrap items-center justify-center tl:flex-row tl:justify-between tl:h-20">
             {{# navi-menu-item is repeated inline: headline font, size-navi-5 / tablet size-navi-6 / tl size-navi-5 #}}
             {{ _item = "block py-5 tl:py-2.5 font-headline font-bold uppercase leading-none tracking-wider text-[1.3rem] tablet:text-[1.4rem] tl:text-[1rem] notebook:text-[1.2rem]" }}
-            {{ _to = _home + "#" }}
 
-            <a href="{{ _to }}showreel" class="{{ _item }}" @click="closeOverlays()">Showreel</a>
+            {{# the area item of an item group has no URL of its own (a text-only item); its children follow underneath #}}
+            {{ _child = "block py-2.5 tl:py-1 font-headline uppercase leading-none tracking-wider text-[1rem] tablet:text-[1.1rem] tl:text-[0.8rem] notebook:text-[0.9rem] text-off" }}
 
-            {{ collection:pages uri:is="/" limit="1" }}
-                {{ partial:navi/items :sets="main_content" :to="_to" :item="_item" }}
-            {{ /collection:pages }}
+            {{ nav:main }}
+                <div class="text-center tl:text-left">
+                    {{ if url }}
+                        <a href="{{ url }}" class="{{ _item }}" @click="closeOverlays()"{{ if is_current }} aria-current="page"{{ /if }}{{ if is_external }} target="_blank" rel="noopener"{{ /if }}>{{ title }}</a>
+                    {{ else }}
+                        <span class="{{ _item }}">{{ title }}</span>
+                    {{ /if }}
 
-            {{# every page renders the contact section, so this stays on the page #}}
-            <a href="#kontakt" class="{{ _item }}" @click="closeOverlays()">
-                {{ trans:frontend.contact }}
-            </a>
-        </div>
+                    {{ children }}
+                        <a href="{{ url }}" class="{{ _child }}" @click="closeOverlays()"{{ if is_current }} aria-current="page"{{ /if }}{{ if is_external }} target="_blank" rel="noopener"{{ /if }}>{{ title }}</a>
+                    {{ /children }}
+                </div>
+            {{ /nav:main }}
+        </nav>
     </div>
 </div>

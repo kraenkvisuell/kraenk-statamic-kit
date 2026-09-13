@@ -12,9 +12,9 @@ use Statamic\StaticCaching\DefaultInvalidator;
  * listeners only when STATAMIC_STATIC_CACHING_STRATEGY is set (half/full), so
  * locally – with the strategy at null – none of this runs.
  *
- * Most content is shared between pages here: the navi on every page is built
- * from the start page's sets, every page renders the contact section and the
- * footer from `site_settings`, film cards (start page and "similar films" on
+ * Most content is shared between pages here: every page renders the `main`
+ * and `footer` navigations, the contact section and the footer from
+ * `site_settings`, film cards (start page and "similar films" on
  * film pages) show the other films' titles, stills and terms, and every photo
  * is a Glide URL with the asset's focal point baked in. So besides an entry's
  * own URLs this invalidator resolves the pages that *render* the saved item –
@@ -83,12 +83,6 @@ class Invalidator extends DefaultInvalidator
             return $this->allUrls();
         }
 
-        // The start page's sets define the navi menu of every page (labels,
-        // anchors, order), so saving it must flush everything, not just itself.
-        if (in_array($collection, $this->builderCollections, true) && $entry->uri() === '/') {
-            return $this->allUrls();
-        }
-
         // Routeless entries (team, awards) have no URL of their own; the parent
         // returns null for them, which would be passed on as a URL to invalidate.
         $urls = array_filter(parent::getEntryUrls($entry));
@@ -153,6 +147,22 @@ class Invalidator extends DefaultInvalidator
      * silently serve stale pages everywhere.
      */
     protected function getGlobalUrls($variables)
+    {
+        return $this->allUrls();
+    }
+
+    /**
+     * Both navigations render in the layout – `main` in the navi, `footer` in
+     * the footer – so a saved navigation or tree affects every page. The parent
+     * only follows `navigation.<handle>.urls` invalidation rules, which are not
+     * configured here.
+     */
+    protected function getNavUrls($nav)
+    {
+        return $this->allUrls();
+    }
+
+    protected function getNavTreeUrls($tree)
     {
         return $this->allUrls();
     }

@@ -20,4 +20,6 @@ return [
     'we_are_hiring' => 'We are hiring',
     'newsletter_subscription' => 'Newsletter subscription',
     'open_gallery' => 'Check out our gallery',
+    'main_navigation' => 'Main navigation',
+    'footer_navigation' => 'Footer navigation',
 ];

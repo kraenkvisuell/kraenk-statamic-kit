@@ -15,6 +15,7 @@ export_paths:
   - config/statamic/auto-alt-text.php
   - config/statamic/eloquent-driver.php
   - config/statamic/static_caching.php
+  - config/statamic/system.php
   - config/statamic/users.php
   - database/migrations
   - content/assets/main.yaml
@@ -25,6 +26,8 @@ export_paths:
   - content/collections/portfolio.yaml
   - content/collections/team.yaml
   - content/globals/site_settings.yaml
+  - content/navigation/footer.yaml
+  - content/navigation/main.yaml
   - content/taxonomies/cameras.yaml
   - content/taxonomies/categories.yaml
   - content/taxonomies/clients.yaml

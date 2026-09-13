@@ -1,4 +1,4 @@
-{{# Imprint / terms / liability / privacy. `is-footer` is a CSS context marker for editor-content. #}}
+{{# Imprint / terms / liability / privacy, then the `footer` navigation (partials/footer/navi). `is-footer` is a CSS context marker for editor-content. #}}
 <div class="section is-footer bg-footer-bg text-footer-text">
     <div x-fade class="editor-content w-full p-5 tablet:flex tablet:px-10 tablet:py-12.5 notebook:px-17.5">
         <div class="flex-1 mb-12.5 pr-5 tablet:mb-0">
@@ -46,6 +46,8 @@
             <br><br>
         </div>
     </div>
+
+    {{ partial:footer/navi }}
 </div>
 
 {{# legal texts as overlays (resources/js/overlay.js) #}}

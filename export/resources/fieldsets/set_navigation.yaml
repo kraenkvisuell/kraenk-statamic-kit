@@ -5,7 +5,7 @@ fields:
     field:
       type: slug
       display: Anker
-      instructions: 'Optional – Sprungmarke für die Navigation, z.B. "galerie" ergibt /seite#galerie. Nur Kleinbuchstaben, Ziffern und Bindestriche.'
+      instructions: 'Optional – Sprungmarke des Abschnitts, z.B. "galerie" ergibt /seite#galerie. Nur Kleinbuchstaben, Ziffern und Bindestriche.'
       width: 50
       validate:
         - 'regex:/^[a-z0-9-]*$/'
@@ -13,6 +13,6 @@ fields:
     handle: navigation_title
     field:
       type: text
-      display: 'Titel in Navigation'
-      instructions: 'Optional – Text des Navigationspunkts, der zum Anker springt.'
+      display: 'Titel für Verlinkungen'
+      instructions: 'Optional – Bezeichnung des Abschnitts in Links dorthin, z.B. im Zurück-Link von Unterseiten. Sonst gilt die Überschrift.'
       width: 50

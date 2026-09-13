@@ -20,4 +20,6 @@ return [
     'we_are_hiring' => 'Wir suchen',
     'newsletter_subscription' => 'Newsletter-Abo',
     'open_gallery' => 'Hier ist die Galerie zum Durchklicken',
+    'main_navigation' => 'Hauptnavigation',
+    'footer_navigation' => 'Footer-Navigation',
 ];

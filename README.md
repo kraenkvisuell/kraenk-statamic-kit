@@ -29,7 +29,7 @@ statamic new my-site kraenkvisuell/kraenk-statamic-kit
 php please starter-kit:install kraenkvisuell/kraenk-statamic-kit
 ```
 
-Statamic finds the package through the public GitHub repo (no Packagist entry needed; Composer resolves `dev-main` from it). Afterwards (also printed by the post-install hook):
+The package is on Packagist (`kraenkvisuell/kraenk-statamic-kit`), so a plain `composer require` works and no `repositories` entry is needed. Afterwards (also printed by the post-install hook):
 
 1. `.env`: `DB_CONNECTION=pgsql` + credentials, `QUEUE_CONNECTION=redis`, `BUNNY_S3_*`, `BUNNY_PUBLIC_URL`, `GLIDE_CACHE_DISK=bunny-glide-cache`, `STATAMIC_PRO_ENABLED=true` (the theme is multi-site de/en, see `resources/sites.yaml`).
 2. `php artisan migrate`, `php please make:user`.
@@ -84,6 +84,6 @@ The kit is developed inside a *sandbox* site (a "dummy" Statamic site), never in
    cd ~/Code/kraenk-statamic-kit && git add -A && git commit -m "…" && git push
    ```
 
-   `--clear` empties the clone (except `.git`) before writing, so removed files disappear too. `starter-kit.yaml` is written with the dependency versions from the sandbox's `composer.json`. Sites pick the change up with `composer update kraenkvisuell/kraenk-statamic-kit` (package code) – tag releases once the kit is stable.
+   `--clear` empties the clone (except `.git`) before writing, so removed files disappear too. `starter-kit.yaml` is written with the dependency versions from the sandbox's `composer.json`. Packagist updates from GitHub (auto-update hook), so sites pick the change up with `composer update kraenkvisuell/kraenk-statamic-kit` (package code) – tag releases once the kit is stable and switch sites from `dev-main` to a version constraint.
 
 Rules of thumb: whether a file belongs in `src/` or in `export_paths` depends on who should be able to change it later – the kit (`src/`) or the site (`export_paths`). Anything in neither place is not part of the kit.

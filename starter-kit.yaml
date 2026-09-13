@@ -7,9 +7,12 @@ export_paths:
   - app/Providers/HorizonServiceProvider.php
   - app/StaticCaching/Invalidator.php
   - bootstrap/providers.php
+  - config/auth.php
+  - config/bentonow.php
   - config/filesystems.php
   - config/horizon.php
   - config/statamic/assets.php
+  - config/statamic/auto-alt-text.php
   - config/statamic/eloquent-driver.php
   - config/statamic/static_caching.php
   - config/statamic/users.php
@@ -35,6 +38,7 @@ export_paths:
   - package-lock.json
   - vite.config.js
 dependencies:
+  bentonow/bento-laravel-sdk: ^1.4
   laravel/horizon: ^5.48
   league/flysystem-aws-s3-v3: ^3.0
   livewire/livewire: ^4.3

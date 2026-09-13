@@ -29,7 +29,8 @@ return [
     | Instructions for the AI on how to generate alt text.
     |
     */
-    'system_message' => env('AUTO_ALT_TEXT_SYSTEM_MESSAGE',
+    'system_message' => env(
+        'AUTO_ALT_TEXT_SYSTEM_MESSAGE',
         'You are an accessibility expert generating concise, descriptive alt text for images. Focus on the most important visual elements that convey meaning and context. Keep descriptions brief but informative for screen readers. Reply with the alt text only, no introduction or explanations.'
     ),
 
@@ -48,7 +49,8 @@ return [
     | - {{ asset:custom_field }} - Access custom asset fields
     |
     */
-    'prompt' => env('AUTO_ALT_TEXT_PROMPT',
+    'prompt' => env(
+        'AUTO_ALT_TEXT_PROMPT',
         'Describe this image for accessibility alt text.{{ if filename && filename != asset.id }} The filename is "{{ filename }}".{{ /if }}'
     ),
 
@@ -124,6 +126,6 @@ return [
     */
     'queue' => [
         'connection' => env('AUTO_ALT_TEXT_QUEUE_CONNECTION', config('queue.default')),
-        'name' => env('AUTO_ALT_TEXT_QUEUE_NAME', config('queue.connections.'.config('queue.default').'.queue', 'default')),
+        'name' => env('AUTO_ALT_TEXT_QUEUE_NAME', config('queue.connections.' . config('queue.default') . '.queue', 'default')),
     ],
 ];

@@ -29,7 +29,7 @@ statamic new my-site kraenkvisuell/kraenk-statamic-kit
 php please starter-kit:install kraenkvisuell/kraenk-statamic-kit
 ```
 
-Statamic finds the package through GitHub (private repo: Composer needs a `github-oauth` token in `~/.composer/auth.json`). Afterwards (also printed by the post-install hook):
+Statamic finds the package through the public GitHub repo (no Packagist entry needed; Composer resolves `dev-main` from it). Afterwards (also printed by the post-install hook):
 
 1. `.env`: `DB_CONNECTION=pgsql` + credentials, `QUEUE_CONNECTION=redis`, `BUNNY_S3_*`, `BUNNY_PUBLIC_URL`, `GLIDE_CACHE_DISK=bunny-glide-cache`, `STATAMIC_PRO_ENABLED=true` (the theme is multi-site de/en, see `resources/sites.yaml`).
 2. `php artisan migrate`, `php please make:user`.

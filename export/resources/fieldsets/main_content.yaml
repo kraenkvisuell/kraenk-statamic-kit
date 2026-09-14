@@ -55,6 +55,8 @@ fields:
               icon: fieldtype-textarea
               fields:
                 -
+                  import: set_navigation
+                -
                   import: text_media
             blog:
               display: Blog

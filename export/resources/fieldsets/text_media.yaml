@@ -1,8 +1,6 @@
 title: Text/Medien
 fields:
   -
-    import: set_navigation
-  -
     handle: modus
     field:
       type: radio

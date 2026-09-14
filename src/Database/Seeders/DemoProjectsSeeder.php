@@ -7,7 +7,7 @@ use Statamic\Facades\Collection;
 use Statamic\Facades\Site;
 
 /**
- * Three lorem ipsum projects for a fresh site, each with one `text_image`
+ * Three lorem ipsum projects for a fresh site, each with one `text_media`
  * set, localized into every site of the `projects` collection and placed in
  * its tree (the collection is orderable) in this order.
  *
@@ -42,7 +42,7 @@ class DemoProjectsSeeder extends DemoSeeder
         $projects = collect($this->projects)->map(function ($titles, $slug) use ($sites, $origin) {
             $title = $titles[$origin] ?? reset($titles);
 
-            return $this->entry($slug, $titles, $sites, $origin, ['main_content' => [$this->textImageSet($title)]]);
+            return $this->entry($slug, $titles, $sites, $origin, ['main_content' => [$this->textMediaSet($title)]]);
         });
 
         foreach ($sites as $site) {

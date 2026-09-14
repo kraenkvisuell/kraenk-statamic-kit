@@ -9,7 +9,7 @@ use Statamic\Facades\Site;
 /**
  * Three lorem ipsum blog posts for a fresh site, dated 30, 20 and 10 days
  * back so they are public, each with a one-sentence teaser and one
- * `text_image` set, localized into every site of the `blog` collection.
+ * `text_media` set, localized into every site of the `blog` collection.
  *
  * Idempotent: existing posts are matched by slug in the default site and
  * reused.
@@ -39,7 +39,7 @@ class DemoPostsSeeder extends DemoSeeder
 
             $this->entry($slug, $titles, $sites, $origin, [
                 'teaser' => $this->paragraph(1),
-                'main_content' => [$this->textImageSet($title)],
+                'main_content' => [$this->textMediaSet($title)],
             ], Carbon::now()->startOfDay()->subDays($daysBack));
         }
 

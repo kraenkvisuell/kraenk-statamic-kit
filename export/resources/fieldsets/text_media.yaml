@@ -1,0 +1,69 @@
+title: Text/Medien
+fields:
+  -
+    import: set_navigation
+  -
+    handle: modus
+    field:
+      type: radio
+      display: Modus
+      inline: true
+      default: text_media
+      options:
+        -
+          key: text_media
+          value: 'Text und Medien'
+        -
+          key: only_text
+          value: 'Nur Text'
+        -
+          key: only_media
+          value: 'Nur Medien'
+      localizable: false
+  -
+    handle: text
+    field:
+      type: bard
+      display: Text
+      buttons:
+        - h2
+        - h3
+        - h4
+        - bold
+        - italic
+        - underline
+        - unorderedlist
+        - orderedlist
+        - quote
+        - anchor
+      style: sans
+      spellcheck: true
+      allow_source: false
+      allow_internal_links: true
+      semantic_elements: false
+      restrict_assets: false
+      always_save: true
+      if:
+        modus: 'not only_media'
+      localizable: false
+  -
+    import: media
+    config:
+      if:
+        modus: 'not only_text'
+      always_save: true
+  -
+    handle: button_text
+    field:
+      type: text
+      display: Button-Text
+      instructions: 'Optional – ein Button unter dem Text.'
+      width: 50
+      localizable: false
+  -
+    import: link
+    prefix: button_
+    config:
+      width: 50
+      if:
+        button_text: 'not empty'

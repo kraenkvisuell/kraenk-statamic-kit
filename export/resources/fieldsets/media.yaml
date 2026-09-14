@@ -1,0 +1,20 @@
+title: Medien
+fields:
+  -
+    handle: media
+    field:
+      type: replicator
+      display: Medien
+      instructions: 'Bilder und Videos untereinander, jeweils mit optionaler Bildunterschrift und Link.'
+      collapse: true
+      localizable: false
+      sets:
+        media:
+          display: Medien
+          sets:
+            medium:
+              display: Medium
+              icon: media-image-picture
+              fields:
+                -
+                  import: medium

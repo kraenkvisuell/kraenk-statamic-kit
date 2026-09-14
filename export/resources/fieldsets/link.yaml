@@ -1,0 +1,10 @@
+title: Link
+fields:
+  -
+    handle: url
+    field:
+      type: text
+      display: URL
+      instructions: 'Optional – externe Adresse oder interner Pfad (z.B. /de/kontakt).'
+      prepend: 'https://'
+      localizable: false

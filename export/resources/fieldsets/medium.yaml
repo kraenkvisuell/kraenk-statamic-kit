@@ -1,0 +1,30 @@
+title: Medium
+fields:
+  -
+    handle: file
+    field:
+      type: assets
+      display: Datei
+      instructions: 'Bild oder Video (mp4). Ohne Datei erscheint das Platzhalterbild.'
+      container: main
+      folder: /
+      max_files: 1
+      localizable: false
+  -
+    handle: caption
+    field:
+      type: bard
+      display: Bildunterschrift
+      buttons:
+        - bold
+        - italic
+        - anchor
+      style: sans
+      spellcheck: true
+      allow_source: false
+      allow_internal_links: true
+      semantic_elements: false
+      restrict_assets: false
+      localizable: false
+  -
+    import: link

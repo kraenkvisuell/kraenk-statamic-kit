@@ -50,48 +50,12 @@ fields:
                     semantic_elements: false
                     restrict_assets: false
                     localizable: false
-            text_image:
-              display: 'Text + Bild'
+            text_media:
+              display: Text/Medien
               icon: fieldtype-textarea
               fields:
                 -
-                  import: set_navigation
-                -
-                  handle: headline
-                  field:
-                    type: text
-                    display: Überschrift
-                    validate:
-                      - required
-                    localizable: false
-                -
-                  handle: text
-                  field:
-                    type: bard
-                    display: Text
-                    buttons:
-                      - bold
-                      - italic
-                      - underline
-                      - anchor
-                      - unorderedlist
-                      - orderedlist
-                    style: sans
-                    spellcheck: true
-                    allow_source: false
-                    allow_internal_links: true
-                    semantic_elements: false
-                    restrict_assets: false
-                    localizable: false
-                -
-                  handle: image
-                  field:
-                    type: assets
-                    display: 'Bild (optional)'
-                    container: main
-                    folder: /
-                    max_files: 1
-                    localizable: false
+                  import: text_media
             blog:
               display: Blog
               icon: fieldtype-textarea

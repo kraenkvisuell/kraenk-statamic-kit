@@ -153,7 +153,7 @@ class DemoPagesSeeder extends DemoSeeder
     }
 
     /**
-     * The page with this slug, created with one text_image set and without
+     * The page with this slug, created with one text_media set and without
      * intro when missing (see DemoSeeder::entry); $data overrides, e.g. the
      * start page's intro.
      */
@@ -163,7 +163,7 @@ class DemoPagesSeeder extends DemoSeeder
 
         return $this->entry($slug, $titles, $sites, $origin, [
             'has_intro' => false,
-            'main_content' => [$this->textImageSet($title)],
+            'main_content' => [$this->textMediaSet($title)],
             ...$data,
         ], null, $this->slugs[$slug] ?? []);
     }

@@ -12,7 +12,7 @@ use Statamic\Facades\Entry;
 /**
  * Shared pieces of the demo content seeders: an entry per slug that is
  * created once in the origin site and localized into every further site,
- * lorem ipsum in the shapes the blueprints expect (a `text_image` set of the
+ * lorem ipsum in the shapes the blueprints expect (a `text_media` set of the
  * main_content page builder, a Bard paragraph), and the tree helpers for
  * structured collections.
  */
@@ -74,15 +74,22 @@ abstract class DemoSeeder extends Seeder
         return $entry;
     }
 
-    /** A `text_image` set of the main_content page builder with a lorem paragraph. */
-    protected function textImageSet(string $headline): array
+    /**
+     * A `text_media` set of the main_content page builder: a lorem headline and
+     * paragraph as Bard text, no media (the template shows the placeholder image).
+     */
+    protected function textMediaSet(string $headline): array
     {
         return [
             'id' => Str::random(8),
-            'type' => 'text_image',
+            'type' => 'text_media',
             'enabled' => true,
-            'headline' => $headline,
-            'text' => $this->paragraph(),
+            'modus' => 'text_media',
+            'text' => [
+                ['type' => 'heading', 'attrs' => ['level' => 2], 'content' => [['type' => 'text', 'text' => $headline]]],
+                ...$this->paragraph(),
+            ],
+            'media' => [],
         ];
     }
 

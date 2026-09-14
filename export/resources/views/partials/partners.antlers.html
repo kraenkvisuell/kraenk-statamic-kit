@@ -1,21 +1,29 @@
-{{# Partners drawer, slides in from the right; `partnersOpen` lives in the global `site` component (opened by the badge in partials/intro). #}}
+{{#
+    Partner logos in a centred row above the footer (collection `partners`,
+    routeless: title + icon). Included at the top of partials/footer, so every
+    template shows it; nothing renders while the collection is empty. SVG icons
+    are output as they are (Glide would break them), everything else via Glide.
+    Uses x-fade (site.js).
+#}}
 {{ if {collection:count in="partners" published:is="true"} > 0 }}
-    <div :class="{ on: partnersOpen }" class="fixed top-0 -right-41 w-41 h-full z-20 bg-navi pt-12.5 tablet:pt-17.5 transition-[right] duration-600 ease-out on:right-0">
-        <div @click="partnersOpen = false" class="
-            absolute z-2 top-20 right-5 tablet:right-10.25 notebook:right-16.75 [@media(max-height:667px)]:top-17.5
-            w-7.5 h-7.5 cursor-pointer
-            before:content-[''] before:absolute before:w-full before:h-1.25 before:top-[calc(50%_-_3px)] before:bg-ink before:-rotate-45
-            after:content-[''] after:absolute after:w-full after:h-1.25 after:top-[calc(50%_-_3px)] after:bg-ink after:rotate-45
-        "></div>
-
-        <div class="top-15 h-[calc(100%_-_70px)] overflow-y-scroll">
-            <div class="h-full px-8.5 [@media(max-height:568px)]:px-10 flex flex-col justify-around">
-                {{ collection:partners scope="partner" published:is="true" }}
-                    <div>
-                        <img src="{{ glide :src="partner.icon" width="200" }}" alt="{{ (partner.icon.alt or partner.title) | sanitize }}" title="{{ (partner.title) | sanitize }}" class="w-full h-auto">
-                    </div>
-                {{ /collection:partners }}
-            </div>
-        </div>
+    <div class="section px-5 py-12.5 tablet:px-10 tablet:py-17.5 notebook:px-17.5">
+        <ul class="flex flex-wrap items-center justify-center gap-x-12 gap-y-8 tablet:gap-x-17.5">
+            {{ collection:partners scope="partner" published:is="true" }}
+                {{ if partner.icon.extension == "svg" }}
+                    {{ _src = partner.icon.url }}
+                {{ else }}
+                    {{ _src = {glide :src="partner.icon" width="320"} }}
+                {{ /if }}
+                <li x-fade class="opacity-0 transition-opacity duration-1500 ease-out is-faded-in:opacity-100">
+                    <img
+                        src="{{ _src }}"
+                        alt="{{ (partner.icon.alt or partner.title) | sanitize }}"
+                        title="{{ partner.title | sanitize }}"
+                        loading="lazy"
+                        class="h-10 w-auto max-w-40 object-contain tablet:h-12"
+                    >
+                </li>
+            {{ /collection:partners }}
+        </ul>
     </div>
 {{ /if }}

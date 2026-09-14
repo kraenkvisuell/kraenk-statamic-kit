@@ -50,14 +50,6 @@
             </div>
         {{ /if }}
     </div>
-    {{ if {collection:count in="partners" published:is="true"} > 0 }}
-        <img
-            @click="togglePartners()"
-            class="absolute top-0 right-2.25 w-12.5 h-auto z-10 cursor-pointer tablet:right-12 tablet:w-16"
-            src="/images/partners.png"
-            alt="Partners"
-        >
-    {{ /if }}
 </div>
 
 <script>

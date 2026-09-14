@@ -2,7 +2,6 @@
     {{ partial:navi }}
     {{ if page.has_intro }}
         {{ partial:intro }}
-        {{ partial:partners }}{{# drawer opened by the badge in the intro #}}
     {{ /if }}
     {{ page.main_content scope="set" }}
         {{ partial src="sets/{set.type}" }}

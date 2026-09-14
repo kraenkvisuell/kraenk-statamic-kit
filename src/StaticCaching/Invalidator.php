@@ -55,8 +55,8 @@ class Invalidator extends DefaultInvalidator
     ];
 
     /**
-     * Collections rendered in an every-page region (theme: partners in the
-     * layout). A saved entry flushes everything; these are typically routeless,
+     * Collections rendered in an every-page region (theme: the partner logos
+     * above the footer). A saved entry flushes everything; these are typically routeless,
      * so the default invalidator would do nothing at all for them.
      *
      * @var list<string>

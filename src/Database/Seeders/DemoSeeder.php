@@ -26,13 +26,14 @@ abstract class DemoSeeder extends Seeder
 
     /**
      * The entry with this slug in the origin site, created with the given
-     * data when missing, plus a localization per further site (title only,
-     * everything else falls back to the origin). Existing entries are reused
-     * untouched.
+     * data when missing, plus a localization per further site (title and, when
+     * given, its own slug; everything else falls back to the origin). Existing
+     * entries are reused untouched.
      *
      * @param  array<string, string>  $titles  site handle => title
+     * @param  array<string, string>  $slugs  site handle => slug for localizations (default: the origin's slug)
      */
-    protected function entry(string $slug, array $titles, array $sites, string $origin, array $data = [], ?Carbon $date = null): EntryContract
+    protected function entry(string $slug, array $titles, array $sites, string $origin, array $data = [], ?Carbon $date = null, array $slugs = []): EntryContract
     {
         $title = $titles[$origin] ?? reset($titles);
 
@@ -64,7 +65,7 @@ abstract class DemoSeeder extends Seeder
             }
 
             $entry->makeLocalization($site)
-                ->slug($slug)
+                ->slug($slugs[$site] ?? $slug)
                 ->published(true)
                 ->data(['title' => $titles[$site] ?? $title])
                 ->save();

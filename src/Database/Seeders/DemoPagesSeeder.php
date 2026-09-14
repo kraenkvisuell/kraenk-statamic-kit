@@ -9,13 +9,16 @@ use Statamic\Facades\Nav;
 use Statamic\Facades\Site;
 
 /**
- * Demo pages for a fresh site: a start page, five main pages, an "area" (a
- * text-only navigation item) with three sub pages, and the footer pages
+ * Demo pages for a fresh site: a start page, five main pages – "Blog" and
+ * "Projekte" carry the blog and projects listing sets, the others lorem
+ * text –, an "area" (a text-only navigation item) with three sub pages, and
+ * the footer pages. Only the start page has the intro (placeholder video,
+ * lorem headline and text); every other page switches it off. Then the
+ * footer pages
  * Impressum and Datenschutz (contact is a jump to the contact section on
  * every page, not a page). Every page is localized into every site
  * of the `pages` collection, placed in the collection tree (start page as root)
- * and in the `main` or `footer` navigation. The start page also gets the
- * `projects` and `blog` listing sets, so the seeded projects and posts show.
+ * and in the `main` or `footer` navigation.
  *
  * Idempotent: existing pages are matched by slug in the default site and
  * reused; the trees are rebuilt on every run.
@@ -32,11 +35,22 @@ class DemoPagesSeeder extends DemoSeeder
     protected array $home = ['default' => 'Startseite', 'en' => 'Home'];
 
     protected array $mainPages = [
-        'lorem' => ['default' => 'Lorem', 'en' => 'Lorem'],
-        'ipsum' => ['default' => 'Ipsum', 'en' => 'Ipsum'],
+        'blog' => ['default' => 'Blog', 'en' => 'Blog'],
+        'projekte' => ['default' => 'Projekte', 'en' => 'Projects'],
         'dolor' => ['default' => 'Dolor', 'en' => 'Dolor'],
         'sit-amet' => ['default' => 'Sit amet', 'en' => 'Sit amet'],
         'consectetur' => ['default' => 'Consectetur', 'en' => 'Consectetur'],
+    ];
+
+    /** localized slugs where they differ from the default site's (default slug => site handle => slug) */
+    protected array $slugs = [
+        'projekte' => ['en' => 'projects'],
+    ];
+
+    /** default slug of the main page carrying each listing set, with the set's lorem headline */
+    protected array $listings = [
+        'blog' => ['blog', 'Consectetur adipiscing'],
+        'projects' => ['projekte', 'Dolor sit amet'],
     ];
 
     protected array $area = ['default' => 'Adipiscing', 'en' => 'Adipiscing'];
@@ -65,9 +79,16 @@ class DemoPagesSeeder extends DemoSeeder
             $this->ensureTree(Nav::find('footer'), $site);
         }
 
-        $home = $this->page('home', $this->home, $sites, $origin);
-        $this->ensureSets($home, [$this->listingSet('projects', 'Dolor sit amet'), $this->listingSet('blog', 'Consectetur adipiscing')]);
+        $home = $this->page('home', $this->home, $sites, $origin, [
+            'has_intro' => true,
+            'intro_headline' => 'Lorem ipsum dolor sit amet',
+            'intro_text' => $this->paragraph(2),
+        ]);
         $main = collect($this->mainPages)->map(fn ($titles, $slug) => $this->page($slug, $titles, $sites, $origin));
+
+        foreach ($this->listings as $type => [$slug, $headline]) {
+            $this->ensureSets($main[$slug], [$this->listingSet($type, $headline)]);
+        }
         $area = collect($this->areaPages)->map(fn ($titles, $slug) => $this->page($slug, $titles, $sites, $origin));
         $footer = collect($this->footerPages)->map(fn ($titles, $slug) => $this->page($slug, $titles, $sites, $origin));
 
@@ -131,11 +152,19 @@ class DemoPagesSeeder extends DemoSeeder
         ];
     }
 
-    /** The page with this slug, created with one text_image set when missing (see DemoSeeder::entry). */
-    protected function page(string $slug, array $titles, array $sites, string $origin): EntryContract
+    /**
+     * The page with this slug, created with one text_image set and without
+     * intro when missing (see DemoSeeder::entry); $data overrides, e.g. the
+     * start page's intro.
+     */
+    protected function page(string $slug, array $titles, array $sites, string $origin, array $data = []): EntryContract
     {
         $title = $titles[$origin] ?? reset($titles);
 
-        return $this->entry($slug, $titles, $sites, $origin, ['main_content' => [$this->textImageSet($title)]]);
+        return $this->entry($slug, $titles, $sites, $origin, [
+            'has_intro' => false,
+            'main_content' => [$this->textImageSet($title)],
+            ...$data,
+        ], null, $this->slugs[$slug] ?? []);
     }
 }

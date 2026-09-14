@@ -34,9 +34,11 @@ use function Laravel\Prompts\confirm;
  * answer that question up front (CI, scripts); without either, a
  * non-interactive run keeps the sites as they are.
  *
- * Without options nothing is destroyed: the seeders reuse existing pages,
- * defaults and users. `--force` drops every table first (migrate:fresh) to
- * start over; it refuses to run outside the local and staging environments.
+ * The command refuses to run in production altogether: demo content, lorem
+ * ipsum defaults and a test login have no place there. Without options
+ * nothing is destroyed: the seeders reuse existing pages, defaults and users.
+ * `--force` drops every table first (migrate:fresh) to start over; it is
+ * limited further, to the local and staging environments.
  */
 #[Signature('kit:init
     {--force : Start over: drop all tables and migrate fresh first (local and staging only)}
@@ -53,6 +55,12 @@ class Init extends Command
 
     public function handle(): int
     {
+        if ($this->laravel->environment('production')) {
+            $this->components->error('kit:init sets up demo content and a test login and does not run in production (APP_ENV=production).');
+
+            return self::FAILURE;
+        }
+
         if ($this->option('force') && ! $this->migrateFresh()) {
             return self::FAILURE;
         }

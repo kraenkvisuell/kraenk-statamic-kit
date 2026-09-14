@@ -12,12 +12,13 @@ Updatable [Statamic starter kit](https://statamic.dev/starter-kits/creating-a-st
 - The `kit:` prefix plus the kebab-case class name is the convention for every command.
 - `Modifiers/` – `ensure_url`, `file_size` (locale-aware via `Number::fileSize`).
 - `Database/Seeders/DemoPagesSeeder` – demo content for a fresh site: start page, five main pages, an area with three sub pages, footer pages Impressum/Datenschutz/Kontakt, localized into every site, placed in the `pages` tree and the `main`/`footer` navigations. Idempotent: `php artisan db:seed --class="Kraenkvisuell\StatamicKit\Database\Seeders\DemoPagesSeeder"`.
+- `StaticCaching/Invalidator` – static cache invalidation along the site's content graph (listing pages, referencing entries, term carriers; globals, navigations and assets flush everything). Bound by the exported `config/statamic/static_caching.php`, which also holds the graph under `invalidation.content_graph`.
 - `Http/Middleware/UseCdnClientIp` – takes the visitor's IP from Bunny's `X-Real-IP`. Not registered automatically: the site's `bootstrap/app.php` has to prepend it (see below), because it must run before `TrustProxies`.
 - `ServiceProvider::bootNumberLocale()` – `Number::useLocale()` follows the site's locale (`LocaleUpdated`), so "210,6 KB" on `/` and "210.6 KB" on `/en`.
 
 **Exported files (`export/`, listed under `export_paths` in `starter-kit.yaml`)** are copied into the new site once and are the site's own from then on:
 
-- Infrastructure: eloquent-driver and users config (eloquent entries, trees, globals, terms and users; everything else file-based), the migrations (uuid entries, uuid users with the blueprint columns, auth tables), `app/Models/User.php` (HasUuids), `config/filesystems.php` with the `bunny-assets` and `bunny-glide-cache` disks, `config/statamic/assets.php` (`GLIDE_CACHE_DISK`), `config/statamic/static_caching.php` + `app/StaticCaching/Invalidator.php` (invalidation along the content graph of the theme's collections), `config/horizon.php` (256 MB) + `HorizonServiceProvider` + `bootstrap/providers.php`, `.env.example` with all keys, `.npmrc`, `.bloom/` for Bloom workspaces.
+- Infrastructure: eloquent-driver and users config (eloquent entries, trees, globals, terms and users; everything else file-based), the migrations (uuid entries, uuid users with the blueprint columns, auth tables), `app/Models/User.php` (HasUuids), `config/filesystems.php` with the `bunny-assets` and `bunny-glide-cache` disks, `config/statamic/assets.php` (`GLIDE_CACHE_DISK`), `config/statamic/static_caching.php` (binds the kit's invalidator and describes the theme's content graph under `invalidation.content_graph`), `config/horizon.php` (256 MB) + `HorizonServiceProvider` + `bootstrap/providers.php`, `.env.example` with all keys, `.npmrc`, `.bloom/` for Bloom workspaces.
 - Content model: the collection, taxonomy, global-set and asset-container definitions of the theme (`content/**/*.yaml`; entries, trees and global variables live in the database and are not part of the kit).
 - Theme: `resources/` (blueprints, fieldsets, forms, views, css, js, roles, `sites.yaml`, SEO Pro settings, macros), `lang/`, `public/images/`, and the Vite build (`vite.config.js`, `package.json`, `package-lock.json`; entries `resources/css/site.css`, `resources/js/site.js`, `resources/js/gallery.js`).
 
@@ -54,7 +55,7 @@ The package is on Packagist (`kraenkvisuell/kraenk-statamic-kit`), so a plain `c
    ```
 
 5. Point the site's `CLAUDE.md` at `@~/Code/coding-guidelines/CLAUDE.md` and keep only what is specific to the site.
-6. Static caching: set `STATAMIC_STATIC_CACHING_STRATEGY=half` in production; adapt `app/StaticCaching/Invalidator.php` when the collections change.
+6. Static caching: set `STATAMIC_STATIC_CACHING_STRATEGY=half` in production; adapt `invalidation.content_graph` in `config/statamic/static_caching.php` when collections, sets or reference fields change.
 
 ## Updating a site
 

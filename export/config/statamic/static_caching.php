@@ -1,6 +1,6 @@
 <?php
 
-use App\StaticCaching\Invalidator;
+use Kraenkvisuell\StatamicKit\StaticCaching\Invalidator;
 use Statamic\StaticCaching\Replacers\CsrfTokenReplacer;
 use Statamic\StaticCaching\Replacers\NoCacheReplacer;
 
@@ -93,6 +93,31 @@ return [
             'seo_pro_site_defaults' => [
                 'urls' => ['/*'],
             ],
+        ],
+
+        // The kit's invalidator (see the class) follows the content graph: which
+        // entries and terms render on which pages. Adapt this when collections,
+        // page-builder sets or reference fields change.
+        'content_graph' => [
+            // Entries of this collection render other entries and terms (cards, "similar" entries).
+            'referencing_collection' => 'portfolio',
+            // collection => field on the referencing collection holding that collection's entry ids
+            'references' => [
+                'team' => 'own_directors',
+                'portfolio' => 'similar',
+            ],
+            // collection => page-builder set(s) listing it
+            'listing_sets' => [
+                'blog' => ['blog'],
+                'jobs' => ['team'],
+                'team' => ['team'],
+                'portfolio' => ['portfolio'],
+            ],
+            // Collections rendered on every page: a save flushes everything.
+            'global_collections' => ['awards'],
+            // Collections whose blueprint carries the page builder, and its field handle.
+            'builder_collections' => ['pages'],
+            'builder_field' => 'main_content',
         ],
 
     ],

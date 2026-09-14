@@ -5,7 +5,6 @@ export_paths:
   - .npmrc
   - app/Models/User.php
   - app/Providers/HorizonServiceProvider.php
-  - app/StaticCaching/Invalidator.php
   - bootstrap/providers.php
   - config/auth.php
   - config/bentonow.php

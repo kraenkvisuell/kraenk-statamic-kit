@@ -11,7 +11,8 @@ use Statamic\Providers\AddonServiceProvider;
  * The updatable part of the starter kit. Statamic autoloads what lives next to
  * this file: Console/Commands (kit:init, kit:copy-assets-to-bunny,
  * kit:fix-bard-list-items, kit:reset-postgres-keys) and Modifiers (ensure_url,
- * file_size). The
+ * file_size). StaticCaching/Invalidator is bound by the exported
+ * config/statamic/static_caching.php. The
  * middleware in Http/Middleware is registered by the site's bootstrap/app.php,
  * because it has to run before TrustProxies.
  */

@@ -1,5 +1,6 @@
 {{#
-    Fixed navi: site name (links to the site's start page), language switch,
+    Fixed navi: site name (links to the site's start page), language switch
+    (partials/navi/language-switch, removed by kit:init on single-site setups),
     burger, and the menu – the `main` navigation (content/navigation/main.yaml,
     one tree per site, edited in the CP, max_depth 2): one link per item, an item
     without URL is an area label whose children render beneath it.
@@ -16,24 +17,7 @@
             >{{ site_settings.site_name }}</a>
         </div>
 
-        <div class="absolute right-17.5 top-4.75 tablet:right-35 tablet:top-7 italic uppercase text-off text-[0.75rem]">
-            {{ locales current_first="false" }}
-                {{ if current != locale.key }}
-                    <a href="{{ url }}">
-                {{ else }}
-                    <span class="text-ink">
-                {{ /if }}
-                    {{ locale.short }}
-                {{ if current != locale.key }}
-                    </a>
-                {{ else }}
-                    </span>
-                {{ /if }}
-                {{ if !last }}
-                &nbsp;&nbsp;/&nbsp;&nbsp;
-                {{ /if }}
-            {{ /locales }}
-        </div>
+        {{ partial:navi/language-switch }}
 
         <div class="absolute top-0 right-2.5 tablet:right-5 notebook:right-11.5 w-12.5 tablet:w-17.5 aspect-square cursor-pointer" @click="toggleMenu()">
             <div class="absolute inset-0 flex items-center justify-center">

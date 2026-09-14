@@ -28,28 +28,28 @@ class DemoPagesSeeder extends DemoSeeder
     protected string $blueprint = 'default';
 
     /** slug => title per site handle (the default site's slug identifies the page) */
-    protected array $home = ['default' => 'Startseite', 'en' => 'Home'];
+    protected array $home = ['de' => 'Startseite', 'en' => 'Home'];
 
     protected array $mainPages = [
-        'lorem' => ['default' => 'Lorem', 'en' => 'Lorem'],
-        'ipsum' => ['default' => 'Ipsum', 'en' => 'Ipsum'],
-        'dolor' => ['default' => 'Dolor', 'en' => 'Dolor'],
-        'sit-amet' => ['default' => 'Sit amet', 'en' => 'Sit amet'],
-        'consectetur' => ['default' => 'Consectetur', 'en' => 'Consectetur'],
+        'lorem' => ['de' => 'Lorem', 'en' => 'Lorem'],
+        'ipsum' => ['de' => 'Ipsum', 'en' => 'Ipsum'],
+        'dolor' => ['de' => 'Dolor', 'en' => 'Dolor'],
+        'sit-amet' => ['de' => 'Sit amet', 'en' => 'Sit amet'],
+        'consectetur' => ['de' => 'Consectetur', 'en' => 'Consectetur'],
     ];
 
-    protected array $area = ['default' => 'Adipiscing', 'en' => 'Adipiscing'];
+    protected array $area = ['de' => 'Adipiscing', 'en' => 'Adipiscing'];
 
     protected array $areaPages = [
-        'elit' => ['default' => 'Elit', 'en' => 'Elit'],
-        'sed-do' => ['default' => 'Sed do', 'en' => 'Sed do'],
-        'eiusmod' => ['default' => 'Eiusmod', 'en' => 'Eiusmod'],
+        'elit' => ['de' => 'Elit', 'en' => 'Elit'],
+        'sed-do' => ['de' => 'Sed do', 'en' => 'Sed do'],
+        'eiusmod' => ['de' => 'Eiusmod', 'en' => 'Eiusmod'],
     ];
 
     protected array $footerPages = [
-        'impressum' => ['default' => 'Impressum', 'en' => 'Imprint'],
-        'datenschutz' => ['default' => 'Datenschutz', 'en' => 'Privacy'],
-        'kontakt' => ['default' => 'Kontakt', 'en' => 'Contact'],
+        'impressum' => ['de' => 'Impressum', 'en' => 'Imprint'],
+        'datenschutz' => ['de' => 'Datenschutz', 'en' => 'Privacy'],
+        'kontakt' => ['de' => 'Kontakt', 'en' => 'Contact'],
     ];
 
     public function run(): void

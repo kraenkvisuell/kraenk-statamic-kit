@@ -24,9 +24,9 @@ class DemoProjectsSeeder extends DemoSeeder
 
     /** slug => title per site handle */
     protected array $projects = [
-        'tempor-incididunt' => ['default' => 'Tempor incididunt', 'en' => 'Tempor incididunt'],
-        'labore-et-dolore' => ['default' => 'Labore et dolore', 'en' => 'Labore et dolore'],
-        'magna-aliqua' => ['default' => 'Magna aliqua', 'en' => 'Magna aliqua'],
+        'tempor-incididunt' => ['de' => 'Tempor incididunt', 'en' => 'Tempor incididunt'],
+        'labore-et-dolore' => ['de' => 'Labore et dolore', 'en' => 'Labore et dolore'],
+        'magna-aliqua' => ['de' => 'Magna aliqua', 'en' => 'Magna aliqua'],
     ];
 
     public function run(): void

@@ -55,6 +55,8 @@ class SeoDefaultsSeeder extends Seeder
 
         SiteDefaults::in($default)->set($this->defaults)->save();
 
-        $this->command?->info("SEO Pro site defaults seeded for site {$default}; other sites inherit them.");
+        $this->command?->info(Site::hasMultiple()
+            ? "SEO Pro site defaults seeded for site {$default}; other sites inherit them."
+            : "SEO Pro site defaults seeded for site {$default}.");
     }
 }

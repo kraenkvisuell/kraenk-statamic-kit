@@ -5,38 +5,64 @@ namespace Kraenkvisuell\StatamicKit\Console\Commands;
 use Illuminate\Console\Attributes\Description;
 use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\File;
 use Kraenkvisuell\StatamicKit\Database\Seeders\DemoPagesSeeder;
 use Kraenkvisuell\StatamicKit\Database\Seeders\DemoPostsSeeder;
 use Kraenkvisuell\StatamicKit\Database\Seeders\DemoProjectsSeeder;
 use Kraenkvisuell\StatamicKit\Database\Seeders\SeoDefaultsSeeder;
+use Statamic\Facades\Collection;
+use Statamic\Facades\GlobalSet;
+use Statamic\Facades\Site;
 use Statamic\Facades\User;
 
 use function Laravel\Prompts\confirm;
 
 /**
  * Sets a freshly installed site up to the point where the control panel and
- * the starter website work: the steps in `handle()` run in order (demo pages,
- * blog posts and projects, SEO Pro site defaults, user), each one idempotent, and the last one always
- * asks the person initializing the site for their own login. Add further
- * steps between the seeders and the user.
+ * the starter website work: the steps in `handle()` run in order (sites,
+ * demo pages, blog posts and projects, SEO Pro site defaults, user), each one
+ * idempotent, and the last one always asks the person initializing the site
+ * for their own login. Add further steps between the seeders and the user.
+ *
+ * The kit ships two sites, `de` at /de and `en` at /en. The first step asks
+ * whether the site needs them; a single-language site keeps `de` alone at `/`
+ * (sites, collections, globals, `multisite` in config/statamic/system.php)
+ * and loses the language switch in the navi. `--multisite` / `--single-site`
+ * answer that question up front (CI, scripts); without either, a
+ * non-interactive run keeps the sites as they are.
  *
  * Without options nothing is destroyed: the seeders reuse existing pages and
  * defaults and the user step asks before adding to existing users. `--force`
  * drops every table first (migrate:fresh) to start over; it refuses to run
- * outside the local and staging environments. Non-interactive runs (`--no-interaction`,
- * CI) skip the user step.
+ * outside the local and staging environments. Non-interactive runs
+ * (`--no-interaction`, CI) skip the user step.
  */
-#[Signature('kit:init {--force : Start over: drop all tables and migrate fresh first (local and staging only)}')]
-#[Description('Set up a fresh site: seed the demo pages, posts, projects and SEO defaults, then create your user')]
+#[Signature('kit:init
+    {--force : Start over: drop all tables and migrate fresh first (local and staging only)}
+    {--multisite : Keep both sites (de at /de, en at /en) without asking}
+    {--single-site : Reduce the site to de at / without asking}')]
+#[Description('Set up a fresh site: choose single- or multisite, seed the demo pages, posts, projects and SEO defaults, then create your user')]
 class Init extends Command
 {
     protected array $freshEnvironments = ['local', 'staging'];
+
+    protected string $naviPartial = 'views/partials/navi.antlers.html';
+
+    protected string $languageSwitchPartial = 'views/partials/navi/language-switch.antlers.html';
 
     public function handle(): int
     {
         if ($this->option('force') && ! $this->migrateFresh()) {
             return self::FAILURE;
         }
+
+        if ($this->option('multisite') && $this->option('single-site')) {
+            $this->components->error('--multisite and --single-site exclude each other.');
+
+            return self::FAILURE;
+        }
+
+        $this->configureSites();
 
         $this->components->info('Seeding the demo pages and navigations');
         $this->call('db:seed', ['--class' => DemoPagesSeeder::class]);
@@ -74,6 +100,77 @@ class Init extends Command
         $this->call('migrate:fresh');
 
         return true;
+    }
+
+    /**
+     * Single- or multisite. With one site left there is nothing to decide;
+     * otherwise the options answer, then the prompt, and a non-interactive
+     * run without options keeps the sites as they are.
+     */
+    protected function configureSites(): void
+    {
+        if (Site::all()->count() < 2) {
+            $this->components->info(sprintf('Single site: %s at %s.', Site::default()->handle(), Site::default()->url()));
+
+            return;
+        }
+
+        $sites = Site::all()->map(fn ($site) => sprintf('%s (%s) at %s', $site->handle(), $site->name(), $site->url()))->join(', ');
+
+        $multisite = match (true) {
+            (bool) $this->option('multisite') => true,
+            (bool) $this->option('single-site') => false,
+            ! $this->input->isInteractive() => true,
+            default => confirm(
+                label: 'Will the site have more than one language?',
+                default: true,
+                hint: "Yes keeps both sites: {$sites}. No keeps ".Site::default()->handle().' alone at /.',
+            ),
+        };
+
+        if (! $multisite) {
+            $this->makeSingleSite();
+
+            return;
+        }
+
+        $this->components->info("Multisite: {$sites}.");
+        $this->line('  Every entry, tree and global has one version per site; the CP switches between them at the top');
+        $this->line('  and everything else works like in any Statamic site. The site root (/) redirects to '.Site::default()->url().'.');
+    }
+
+    /**
+     * Keep the default site alone at `/`: sites.yaml, the collections' and
+     * global sets' site lists, `multisite` off in config/statamic/system.php,
+     * and the language switch out of the navi. Everything is file-based, so
+     * this is a one-time edit of the site's own files.
+     */
+    protected function makeSingleSite(): void
+    {
+        $default = Site::default();
+        $handle = $default->handle();
+        $removed = Site::all()->keys()->reject(fn ($h) => $h === $handle)->join(', ');
+
+        Site::setSites([$handle => [...$default->rawConfig(), 'url' => '/']])->save();
+
+        Collection::all()->each(fn ($collection) => $collection->sites([$handle])->save());
+        GlobalSet::all()->each(fn ($set) => $set->sites([$handle])->save());
+
+        $config = config_path('statamic/system.php');
+        File::put($config, str_replace("'multisite' => true", "'multisite' => false", File::get($config)));
+        config()->set('statamic.system.multisite', false);
+
+        $navi = resource_path($this->naviPartial);
+        if (File::exists($navi)) {
+            File::put($navi, preg_replace('/^\s*\{\{\s*partial:navi\/language-switch\s*\}\}\s*\n/m', '', File::get($navi)));
+        }
+        File::delete(resource_path($this->languageSwitchPartial));
+
+        $this->call('statamic:stache:clear');
+
+        $this->components->info("Single site: {$handle} at /. Removed: {$removed}.");
+        $this->line('  resources/sites.yaml, the collections and global sets list only '.$handle.', multisite is off in');
+        $this->line('  config/statamic/system.php, and the language switch is gone from partials/navi.');
     }
 
     /**

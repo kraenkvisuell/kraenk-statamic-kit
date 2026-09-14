@@ -24,9 +24,9 @@ class DemoPostsSeeder extends DemoSeeder
 
     /** slug => [title per site handle, days back] */
     protected array $posts = [
-        'lorem-ipsum-dolor' => [['default' => 'Lorem ipsum dolor', 'en' => 'Lorem ipsum dolor'], 30],
-        'sit-amet-consectetur' => [['default' => 'Sit amet consectetur', 'en' => 'Sit amet consectetur'], 20],
-        'adipiscing-elit' => [['default' => 'Adipiscing elit', 'en' => 'Adipiscing elit'], 10],
+        'lorem-ipsum-dolor' => [['de' => 'Lorem ipsum dolor', 'en' => 'Lorem ipsum dolor'], 30],
+        'sit-amet-consectetur' => [['de' => 'Sit amet consectetur', 'en' => 'Sit amet consectetur'], 20],
+        'adipiscing-elit' => [['de' => 'Adipiscing elit', 'en' => 'Adipiscing elit'], 10],
     ];
 
     public function run(): void

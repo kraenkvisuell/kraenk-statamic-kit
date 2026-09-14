@@ -4,7 +4,9 @@ namespace Kraenkvisuell\StatamicKit;
 
 use Illuminate\Foundation\Events\LocaleUpdated;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Number;
+use Statamic\Facades\Site;
 use Statamic\Providers\AddonServiceProvider;
 
 /**
@@ -21,6 +23,25 @@ class ServiceProvider extends AddonServiceProvider
     public function bootAddon()
     {
         $this->bootNumberLocale();
+        $this->bootRootRedirect();
+    }
+
+    /**
+     * Multisite routing keeps every site under its own prefix (`/de`, `/en`),
+     * so nothing answers at `/`. Redirect it to the default site. Skipped as
+     * soon as a site lives at `/` (single-site setups).
+     */
+    protected function bootRootRedirect(): void
+    {
+        $rootTaken = Site::all()->contains(
+            fn ($site) => rtrim(parse_url($site->absoluteUrl(), PHP_URL_PATH) ?: '/', '/') === ''
+        );
+
+        if ($rootTaken) {
+            return;
+        }
+
+        Route::middleware('web')->get('/', fn () => redirect(Site::default()->url()));
     }
 
     /**

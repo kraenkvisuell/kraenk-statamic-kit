@@ -1,0 +1,23 @@
+{{#
+    Language switch in the fixed navi: one link per site (`de / en`), the current
+    site as plain text. Included by partials/navi on its own line; kit:init
+    deletes this partial and that line when the site is set up single-site.
+#}}
+<div class="absolute right-17.5 top-4.75 tablet:right-35 tablet:top-7 italic uppercase text-off text-[0.75rem]">
+    {{ locales current_first="false" }}
+        {{ if current != locale.key }}
+            <a href="{{ url }}">
+        {{ else }}
+            <span class="text-ink">
+        {{ /if }}
+            {{ locale.short }}
+        {{ if current != locale.key }}
+            </a>
+        {{ else }}
+            </span>
+        {{ /if }}
+        {{ if !last }}
+        &nbsp;&nbsp;/&nbsp;&nbsp;
+        {{ /if }}
+    {{ /locales }}
+</div>

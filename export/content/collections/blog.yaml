@@ -2,7 +2,7 @@ title: Blog
 route: '/blog/{slug}'
 template: post
 sites:
-  - default
+  - de
   - en
 date: true
 date_behavior:

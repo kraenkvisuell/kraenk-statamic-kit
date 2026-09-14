@@ -1,16 +1,14 @@
 title: Pages
 icon: collections
 sites:
-  - default
+  - de
   - en
 propagate: false
 template: default
 layout: layout
 revisions: false
 title_format: null
-route:
-  default: '/{{ slug }}'
-  en: '/{{ slug }}'
+route: '/{{ slug }}'
 sort_dir: asc
 date_behavior:
   past: null

@@ -12,6 +12,7 @@ return [
     'newsletter_subscription' => 'Newsletter-Abo',
     'open_gallery' => 'Hier ist die Galerie zum Durchklicken',
     'menu' => 'Menü',
+    'scroll_down' => 'Nach unten',
     'main_navigation' => 'Hauptnavigation',
     'footer_navigation' => 'Footer-Navigation',
 ];

@@ -1,6 +1,5 @@
-{{# `intro` component (below): background video (partials/intro/video), pulsing "scroll down" arrow to the intro text. Content comes from the page's intro fieldset (resources/fieldsets/intro.yaml: video, intro_headline, intro_text, cta). #}}
+{{# Intro: background video (partials/intro/video) with a caret linking down to the intro text. Content comes from the page's intro fieldset (resources/fieldsets/intro.yaml: video, intro_headline, intro_text, cta). #}}
 <div
-    x-data="intro"
     class="intro relative w-screen overflow-hidden z-20 text-white h-dvh"
 >
     <div class="w-full h-full z-10">
@@ -8,20 +7,10 @@
     </div>
 
     <div class="absolute bottom-5 left-0 w-screen h-7.5 z-100 flex items-center justify-center">
-        <a
-            href="#intro"
-            title="Go to Intro"
-            :class="{ active: arrowActive }"
-            class="
-                relative block w-7.5 h-7.5 z-100 cursor-pointer
-                before:content-[''] before:absolute before:left-0 before:top-[calc(50%_-_3px)] before:w-1/2 before:h-1.25 before:bg-paper before:transition-all before:duration-400 before:ease-in-out
-                after:content-[''] after:absolute after:left-1/2 after:top-[calc(50%_-_3px)] after:w-1/2 after:h-1.25 after:bg-paper after:transition-all after:duration-400 after:ease-in-out
-                [&.active]:before:left-1 [&.active]:before:top-[calc(75%_-_3px)] [&.active]:before:rotate-45
-                [&.active]:after:left-[calc(50%_-_4px)] [&.active]:after:top-[calc(75%_-_3px)] [&.active]:after:-rotate-45
-                hover:before:left-1 hover:before:top-[calc(75%_-_3px)] hover:before:rotate-45
-                hover:after:left-[calc(50%_-_4px)] hover:after:top-[calc(75%_-_3px)] hover:after:-rotate-45
-            "
-        ></a>
+        {{# caret: a square with two 2px borders (the menu button's bar thickness), turned 45° #}}
+        <a href="#intro" aria-label="{{ trans:frontend.scroll_down }}" class="flex items-center justify-center w-7.5 h-7.5 pb-1.5 cursor-pointer">
+            <span class="block w-3.5 h-3.5 border-b-2 border-r-2 border-paper rotate-45"></span>
+        </a>
     </div>
 </div>
 
@@ -51,19 +40,3 @@
         {{ /if }}
     </div>
 </div>
-
-<script>
-    document.addEventListener('alpine:init', () => {
-        Alpine.data('intro', () => ({
-            arrowActive: false,
-
-            init() {
-                // nudge the "scroll down" arrow every 4 seconds
-                setInterval(() => {
-                    this.arrowActive = true
-                    setTimeout(() => this.arrowActive = false, 1000)
-                }, 4000)
-            },
-        }))
-    })
-</script>

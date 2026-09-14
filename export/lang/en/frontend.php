@@ -12,6 +12,7 @@ return [
     'newsletter_subscription' => 'Newsletter subscription',
     'open_gallery' => 'Check out our gallery',
     'menu' => 'Menu',
+    'scroll_down' => 'Scroll down',
     'main_navigation' => 'Main navigation',
     'footer_navigation' => 'Footer navigation',
 ];

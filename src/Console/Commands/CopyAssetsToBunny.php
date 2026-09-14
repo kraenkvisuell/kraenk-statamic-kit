@@ -16,7 +16,7 @@ use League\Flysystem\StorageAttributes;
  * that disk. Files already present with the same size are skipped, so the
  * command can be re-run to sync only new files.
  */
-#[Signature('assets:copy-to-bunny
+#[Signature('kit:copy-assets-to-bunny
     {--from=assets_main : Source disk (the asset container\'s local disk)}
     {--to=bunny-assets : Destination disk}
     {--force : Overwrite files that already exist on the destination}

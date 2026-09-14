@@ -19,7 +19,7 @@ use Statamic\Facades\Entry;
  * saves the changed entries in every site. Idempotent – valid list items are
  * left untouched.
  */
-#[Signature('bard:fix-list-items {--dry-run : Report the entries that would change, write nothing}')]
+#[Signature('kit:fix-bard-list-items {--dry-run : Report the entries that would change, write nothing}')]
 #[Description('Wrap bare text in Bard list items in a paragraph (fixes v2-migrated content)')]
 class FixBardListItems extends Command
 {

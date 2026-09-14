@@ -9,8 +9,9 @@ use Statamic\Providers\AddonServiceProvider;
 
 /**
  * The updatable part of the starter kit. Statamic autoloads what lives next to
- * this file: Console/Commands (assets:copy-to-bunny, bard:fix-list-items,
- * site:reset-postgres-keys) and Modifiers (ensure_url, file_size). The
+ * this file: Console/Commands (kit:init, kit:copy-assets-to-bunny,
+ * kit:fix-bard-list-items, kit:reset-postgres-keys) and Modifiers (ensure_url,
+ * file_size). The
  * middleware in Http/Middleware is registered by the site's bootstrap/app.php,
  * because it has to run before TrustProxies.
  */

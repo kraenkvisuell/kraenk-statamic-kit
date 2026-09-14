@@ -17,7 +17,7 @@ use Illuminate\Support\Str;
  * one row are touched; a sequence that is already ahead stays where it is
  * (GREATEST), so the command is idempotent.
  */
-#[Signature('site:reset-postgres-keys {--dry-run : Report the sequences that would change, write nothing}')]
+#[Signature('kit:reset-postgres-keys {--dry-run : Report the sequences that would change, write nothing}')]
 #[Description('Advance the Postgres id sequences past the highest id of each table')]
 class ResetPostgresKeys extends Command
 {

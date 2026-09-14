@@ -7,7 +7,9 @@ propagate: false
 template: project
 layout: layout
 revisions: false
-route: '/projects/{slug}'
+route:
+  default: '/de/projects/{slug}'
+  en: '/projects/{slug}'
 sort_dir: asc
 date_behavior:
   past: null

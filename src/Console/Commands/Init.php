@@ -6,6 +6,7 @@ use Illuminate\Console\Attributes\Description;
 use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 use Kraenkvisuell\StatamicKit\Database\Seeders\DemoPagesSeeder;
 use Kraenkvisuell\StatamicKit\Database\Seeders\DemoPostsSeeder;
 use Kraenkvisuell\StatamicKit\Database\Seeders\DemoProjectsSeeder;
@@ -25,12 +26,13 @@ use function Laravel\Prompts\confirm;
  * (test@kraenk.de / password, super) is only seeded in the local and staging
  * environments; elsewhere add your login with `php please make:user --super`.
  *
- * The kit ships two sites, `default` (German) at /de and `en` at /en; the
- * default site keeps Statamic's handle so a single-language site of any
+ * The kit ships two sites: `default` (German) at `/` with its collection
+ * routes under `/de/…`, so only the start page is `/`, and `en` at `/en`.
+ * The default site keeps Statamic's handle so a single-language site of any
  * language needs no rename. The first step asks whether the site needs both;
- * a single-language site keeps the default site alone at `/`
- * (sites, collections, globals, `multisite` in config/statamic/system.php)
- * and loses the language switch in the navi. `--multisite` / `--single-site`
+ * a single-language site keeps the default site alone, drops the language
+ * prefix from its routes (sites, collections, globals, `multisite` in
+ * config/statamic/system.php) and loses the language switch in the navi. `--multisite` / `--single-site`
  * answer that question up front (CI, scripts); without either, a
  * non-interactive run keeps the sites as they are.
  *
@@ -42,8 +44,8 @@ use function Laravel\Prompts\confirm;
  */
 #[Signature('kit:init
     {--force : Start over: drop all tables and migrate fresh first (local and staging only)}
-    {--multisite : Keep both sites (default at /de, en at /en) without asking}
-    {--single-site : Reduce the site to the default site at / without asking}')]
+    {--multisite : Keep both sites (default at / with /de/… routes, en at /en) without asking}
+    {--single-site : Reduce the site to the default site without language prefix, without asking}')]
 #[Description('Set up a fresh site: choose single- or multisite, seed the demo pages, posts, projects, SEO defaults and the test user')]
 class Init extends Command
 {
@@ -128,6 +130,7 @@ class Init extends Command
         }
 
         $sites = Site::all()->map(fn ($site) => sprintf('%s (%s) at %s', $site->handle(), $site->name(), $site->url()))->join(', ');
+        $prefix = '/'.Site::default()->shortLocale();
 
         $multisite = match (true) {
             (bool) $this->option('multisite') => true,
@@ -136,7 +139,7 @@ class Init extends Command
             default => confirm(
                 label: 'Will the site have more than one language?',
                 default: true,
-                hint: "Yes keeps both sites: {$sites}. No keeps ".Site::default()->handle().' alone at /.',
+                hint: "Yes keeps both sites: {$sites}, pages of the default site under {$prefix}/…. No keeps ".Site::default()->handle().' alone, without prefix.',
             ),
         };
 
@@ -147,15 +150,17 @@ class Init extends Command
         }
 
         $this->components->info("Multisite: {$sites}.");
+        $this->line("  The start page of the default site is /, its other pages live under {$prefix}/…; {$prefix} redirects to /.");
         $this->line('  Every entry, tree and global has one version per site; the CP switches between them at the top');
-        $this->line('  and everything else works like in any Statamic site. The site root (/) redirects to '.Site::default()->url().'.');
+        $this->line('  and everything else works like in any Statamic site.');
     }
 
     /**
-     * Keep the default site alone at `/`: sites.yaml, the collections' and
-     * global sets' site lists, `multisite` off in config/statamic/system.php,
-     * and the language switch out of the navi. Everything is file-based, so
-     * this is a one-time edit of the site's own files.
+     * Keep the default site alone at `/` without the language prefix in its
+     * routes: sites.yaml, the collections' routes and site lists, the global
+     * sets' site lists, `multisite` off in config/statamic/system.php, and
+     * the language switch out of the navi. Everything is file-based, so this
+     * is a one-time edit of the site's own files.
      */
     protected function makeSingleSite(): void
     {
@@ -165,7 +170,15 @@ class Init extends Command
 
         Site::setSites([$handle => [...$default->rawConfig(), 'url' => '/']])->save();
 
-        Collection::all()->each(fn ($collection) => $collection->sites([$handle])->save());
+        $prefix = '/'.$default->shortLocale();
+        Collection::all()->each(function ($collection) use ($handle, $prefix) {
+            // '/de/blog/{slug}' -> '/blog/{slug}'; the pages route '{{ is_root ? "" : "/de" }}/{{ slug }}' -> '/{{ slug }}'
+            if (is_string($route = $collection->route($handle))) {
+                $collection->routes(Str::replace(['{{ is_root ? "" : "'.$prefix.'" }}', $prefix.'/'], ['', '/'], $route));
+            }
+
+            $collection->sites([$handle])->save();
+        });
         GlobalSet::all()->each(fn ($set) => $set->sites([$handle])->save());
 
         $config = config_path('statamic/system.php');
@@ -181,7 +194,7 @@ class Init extends Command
         $this->call('statamic:stache:clear');
 
         $this->components->info("Single site: {$handle} at /. Removed: {$removed}.");
-        $this->line('  resources/sites.yaml, the collections and global sets list only '.$handle.', multisite is off in');
-        $this->line('  config/statamic/system.php, and the language switch is gone from partials/navi.');
+        $this->line('  resources/sites.yaml, the collections and global sets list only '.$handle.", routes lost the {$prefix} prefix,");
+        $this->line('  multisite is off in config/statamic/system.php, and the language switch is gone from partials/navi.');
     }
 }

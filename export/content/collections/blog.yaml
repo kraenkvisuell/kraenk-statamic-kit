@@ -1,5 +1,7 @@
 title: Blog
-route: '/blog/{slug}'
+route:
+  default: '/de/blog/{slug}'
+  en: '/blog/{slug}'
 template: post
 sites:
   - default

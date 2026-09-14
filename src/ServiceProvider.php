@@ -23,25 +23,22 @@ class ServiceProvider extends AddonServiceProvider
     public function bootAddon()
     {
         $this->bootNumberLocale();
-        $this->bootRootRedirect();
+        $this->bootLanguagePrefixRedirect();
     }
 
     /**
-     * Multisite routing keeps every site under its own prefix (`/de`, `/en`),
-     * so nothing answers at `/`. Redirect it to the default site. Skipped as
-     * soon as a site lives at `/` (single-site setups).
+     * Multisite routing: the default site lives at `/` and its start page is
+     * `/`, while its collection routes carry the language prefix (`/de/…`),
+     * like the other sites (`/en`, `/en/…`). So `/de` itself has no page –
+     * redirect it to `/`. Single-site setups have no prefix and no redirect.
      */
-    protected function bootRootRedirect(): void
+    protected function bootLanguagePrefixRedirect(): void
     {
-        $rootTaken = Site::all()->contains(
-            fn ($site) => rtrim(parse_url($site->absoluteUrl(), PHP_URL_PATH) ?: '/', '/') === ''
-        );
-
-        if ($rootTaken) {
+        if (! Site::hasMultiple()) {
             return;
         }
 
-        Route::middleware('web')->get('/', fn () => redirect(Site::default()->url()));
+        Route::middleware('web')->get('/'.Site::default()->shortLocale(), fn () => redirect(Site::default()->url()));
     }
 
     /**

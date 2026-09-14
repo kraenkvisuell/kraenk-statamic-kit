@@ -1,7 +1,7 @@
 default:
   name: Deutsch
   locale: de_DE
-  url: /de
+  url: /
 en:
   name: English
   locale: en_US

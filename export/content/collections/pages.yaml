@@ -8,7 +8,9 @@ template: default
 layout: layout
 revisions: false
 title_format: null
-route: '/{{ slug }}'
+route:
+  default: '{{ is_root ? "" : "/de" }}/{{ slug }}'
+  en: '/{{ slug }}'
 sort_dir: asc
 date_behavior:
   past: null

@@ -10,19 +10,20 @@ use Kraenkvisuell\StatamicKit\Database\Seeders\DemoPagesSeeder;
 use Kraenkvisuell\StatamicKit\Database\Seeders\DemoPostsSeeder;
 use Kraenkvisuell\StatamicKit\Database\Seeders\DemoProjectsSeeder;
 use Kraenkvisuell\StatamicKit\Database\Seeders\SeoDefaultsSeeder;
+use Kraenkvisuell\StatamicKit\Database\Seeders\TestUserSeeder;
 use Statamic\Facades\Collection;
 use Statamic\Facades\GlobalSet;
 use Statamic\Facades\Site;
-use Statamic\Facades\User;
 
 use function Laravel\Prompts\confirm;
 
 /**
  * Sets a freshly installed site up to the point where the control panel and
  * the starter website work: the steps in `handle()` run in order (sites,
- * demo pages, blog posts and projects, SEO Pro site defaults, user), each one
- * idempotent, and the last one always asks the person initializing the site
- * for their own login. Add further steps between the seeders and the user.
+ * demo pages, blog posts and projects, SEO Pro site defaults, test user),
+ * each one idempotent; add further steps at the end. The test user
+ * (test@kraenk.de / password, super) is only seeded in the local and staging
+ * environments; elsewhere add your login with `php please make:user --super`.
  *
  * The kit ships two sites, `default` (German) at /de and `en` at /en; the
  * default site keeps Statamic's handle so a single-language site of any
@@ -33,17 +34,15 @@ use function Laravel\Prompts\confirm;
  * answer that question up front (CI, scripts); without either, a
  * non-interactive run keeps the sites as they are.
  *
- * Without options nothing is destroyed: the seeders reuse existing pages and
- * defaults and the user step asks before adding to existing users. `--force`
- * drops every table first (migrate:fresh) to start over; it refuses to run
- * outside the local and staging environments. Non-interactive runs
- * (`--no-interaction`, CI) skip the user step.
+ * Without options nothing is destroyed: the seeders reuse existing pages,
+ * defaults and users. `--force` drops every table first (migrate:fresh) to
+ * start over; it refuses to run outside the local and staging environments.
  */
 #[Signature('kit:init
     {--force : Start over: drop all tables and migrate fresh first (local and staging only)}
     {--multisite : Keep both sites (default at /de, en at /en) without asking}
     {--single-site : Reduce the site to the default site at / without asking}')]
-#[Description('Set up a fresh site: choose single- or multisite, seed the demo pages, posts, projects and SEO defaults, then create your user')]
+#[Description('Set up a fresh site: choose single- or multisite, seed the demo pages, posts, projects, SEO defaults and the test user')]
 class Init extends Command
 {
     protected array $freshEnvironments = ['local', 'staging'];
@@ -76,7 +75,10 @@ class Init extends Command
         $this->components->info('Seeding the SEO Pro site defaults');
         $this->call('db:seed', ['--class' => SeoDefaultsSeeder::class]);
 
-        return $this->makeUser();
+        $this->components->info('Seeding the test user');
+        $this->call('db:seed', ['--class' => TestUserSeeder::class]);
+
+        return self::SUCCESS;
     }
 
     /**
@@ -173,27 +175,5 @@ class Init extends Command
         $this->components->info("Single site: {$handle} at /. Removed: {$removed}.");
         $this->line('  resources/sites.yaml, the collections and global sets list only '.$handle.', multisite is off in');
         $this->line('  config/statamic/system.php, and the language switch is gone from partials/navi.');
-    }
-
-    /**
-     * `php please make:user --super` with its prompts (email, name, password),
-     * so the first person on the site gets a super user. With users already
-     * present it asks first, so a re-run of kit:init does not force a new one.
-     */
-    protected function makeUser(): int
-    {
-        if (! $this->input->isInteractive()) {
-            $this->components->warn('No user created (non-interactive). Run `php please make:user --super` to add yours.');
-
-            return self::SUCCESS;
-        }
-
-        if (User::all()->isNotEmpty() && ! confirm('Users exist already. Create another one?', false)) {
-            return self::SUCCESS;
-        }
-
-        $this->components->info('Your user for the control panel');
-
-        return $this->call('statamic:make:user', ['--super' => true]);
     }
 }

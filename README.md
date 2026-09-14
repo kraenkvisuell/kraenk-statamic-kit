@@ -8,10 +8,11 @@ Updatable [Statamic starter kit](https://statamic.dev/starter-kits/creating-a-st
 
 **Package code (`src/`)** stays a Composer dependency in every site (`updatable: true`) and is updated with `composer update kraenkvisuell/kraenk-statamic-kit`. Statamic autoloads it through the `ServiceProvider` (an `AddonServiceProvider`, namespace `Kraenkvisuell\StatamicKit`):
 
-- `Console/Commands/` – `kit:init` (sets a fresh site up: runs the demo seeder, then `make:user --super` with its prompts for the person initializing the site; non-destructive and repeatable, more steps go in between; `--force` runs `migrate:fresh` first and only works with `APP_ENV` local or staging), `kit:copy-assets-to-bunny` (`--from`, `--to`, `--dry-run`, `--force`), `kit:fix-bard-list-items` (`--dry-run`), `kit:reset-postgres-keys` (`--dry-run`). Listed by `php artisan list`; `php please list` shows only `statamic:` commands.
+- `Console/Commands/` – `kit:init` (sets a fresh site up: runs the demo pages and SEO defaults seeders, then `make:user --super` with its prompts for the person initializing the site; non-destructive and repeatable, more steps go in between; `--force` runs `migrate:fresh` first and only works with `APP_ENV` local or staging), `kit:copy-assets-to-bunny` (`--from`, `--to`, `--dry-run`, `--force`), `kit:fix-bard-list-items` (`--dry-run`), `kit:reset-postgres-keys` (`--dry-run`). Listed by `php artisan list`; `php please list` shows only `statamic:` commands.
 - The `kit:` prefix plus the kebab-case class name is the convention for every command.
 - `Modifiers/` – `ensure_url`, `file_size` (locale-aware via `Number::fileSize`).
 - `Database/Seeders/DemoPagesSeeder` – demo content for a fresh site: start page, five main pages, an area with three sub pages, footer pages Impressum/Datenschutz/Kontakt, localized into every site, placed in the `pages` tree and the `main`/`footer` navigations. Idempotent: `php artisan db:seed --class="Kraenkvisuell\StatamicKit\Database\Seeders\DemoPagesSeeder"`.
+- `Database/Seeders/SeoDefaultsSeeder` – SEO Pro site defaults for a fresh site: lorem ipsum site name and description as placeholders, `@seo:title` and `@seo:permalink` as sources, the other sites inheriting from the default site, everything else empty. Only runs when no defaults are stored yet.
 - `StaticCaching/Invalidator` – static cache invalidation along the site's content graph (listing pages, referencing entries, term carriers; globals, navigations and assets flush everything). Bound by the exported `config/statamic/static_caching.php`, which also holds the graph under `invalidation.content_graph`.
 - `Http/Middleware/UseCdnClientIp` – takes the visitor's IP from Bunny's `X-Real-IP`. Not registered automatically: the site's `bootstrap/app.php` has to prepend it (see below), because it must run before `TrustProxies`.
 - `ServiceProvider::bootNumberLocale()` – `Number::useLocale()` follows the site's locale (`LocaleUpdated`), so "210,6 KB" on `/` and "210.6 KB" on `/en`.
@@ -35,7 +36,7 @@ php please starter-kit:install kraenkvisuell/kraenk-statamic-kit
 The package is on Packagist (`kraenkvisuell/kraenk-statamic-kit`), so a plain `composer require` works and no `repositories` entry is needed. Afterwards (also printed by the post-install hook):
 
 1. `.env`: `DB_CONNECTION=pgsql` + credentials, `QUEUE_CONNECTION=redis`, `BUNNY_S3_*`, `BUNNY_PUBLIC_URL`, `GLIDE_CACHE_DISK=bunny-glide-cache`, `STATAMIC_PRO_ENABLED=true` (the theme is multi-site de/en, see `resources/sites.yaml`).
-2. `php artisan migrate`, then `php artisan kit:init` (demo pages and navigations, then your super user).
+2. `php artisan migrate`, then `php artisan kit:init` (demo pages and navigations, SEO Pro site defaults, then your super user).
 3. `npm install && npm run build` (or `npm run dev`).
 4. Behind Bunny CDN, in `bootstrap/app.php`:
 

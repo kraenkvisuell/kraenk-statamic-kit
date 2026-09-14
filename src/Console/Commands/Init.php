@@ -6,24 +6,26 @@ use Illuminate\Console\Attributes\Description;
 use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
 use Kraenkvisuell\StatamicKit\Database\Seeders\DemoPagesSeeder;
+use Kraenkvisuell\StatamicKit\Database\Seeders\SeoDefaultsSeeder;
 use Statamic\Facades\User;
 
 use function Laravel\Prompts\confirm;
 
 /**
  * Sets a freshly installed site up to the point where the control panel and
- * the starter website work: the steps in `handle()` run in order, each one
- * idempotent, and the last one always asks the person initializing the site
- * for their own login. Add further steps between the seeder and the user.
+ * the starter website work: the steps in `handle()` run in order (demo pages,
+ * SEO Pro site defaults, user), each one idempotent, and the last one always
+ * asks the person initializing the site for their own login. Add further
+ * steps between the seeders and the user.
  *
- * Without options nothing is destroyed: the seeder reuses existing pages and
- * the user step asks before adding to existing users. `--force` drops every
- * table first (migrate:fresh) to start over; it refuses to run outside the
- * local and staging environments. Non-interactive runs (`--no-interaction`,
+ * Without options nothing is destroyed: the seeders reuse existing pages and
+ * defaults and the user step asks before adding to existing users. `--force`
+ * drops every table first (migrate:fresh) to start over; it refuses to run
+ * outside the local and staging environments. Non-interactive runs (`--no-interaction`,
  * CI) skip the user step.
  */
 #[Signature('kit:init {--force : Start over: drop all tables and migrate fresh first (local and staging only)}')]
-#[Description('Set up a fresh site: seed the demo pages and navigations, then create your user')]
+#[Description('Set up a fresh site: seed the demo pages, navigations and SEO defaults, then create your user')]
 class Init extends Command
 {
     protected array $freshEnvironments = ['local', 'staging'];
@@ -36,6 +38,9 @@ class Init extends Command
 
         $this->components->info('Seeding the demo pages and navigations');
         $this->call('db:seed', ['--class' => DemoPagesSeeder::class]);
+
+        $this->components->info('Seeding the SEO Pro site defaults');
+        $this->call('db:seed', ['--class' => SeoDefaultsSeeder::class]);
 
         return $this->makeUser();
     }

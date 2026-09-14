@@ -30,6 +30,7 @@ document.addEventListener('alpine:init', () => {
             this.$dispatch('site-close-overlays') // other overlays, before isOpen so we don't close ourselves
             this.isOpen = true
             lockPage(true)
+            this.$dispatch('gallery-opened') // the site component hides the menu button
 
             // wait for x-show: Swiper needs the popup visible to measure it
             this.$nextTick(() => {
@@ -44,6 +45,7 @@ document.addEventListener('alpine:init', () => {
 
             this.isOpen = false
             lockPage(false)
+            this.$dispatch('gallery-closed')
         },
 
         createSwiper() {

@@ -1,5 +1,7 @@
 /*
- * Global Alpine component on <body>: the menu state. Section links are plain #anchors; the browser handles
+ * Global Alpine component on <body>: the menu state, and whether a gallery
+ * overlay is open (gallery.js dispatches gallery-opened/-closed; the menu
+ * button hides meanwhile). Section links are plain #anchors; the browser handles
  * scrolling and the address bar. The menu covers the viewport, so the page
  * scroll is locked while it is open (lock-page.js).
  */
@@ -9,6 +11,7 @@ import { lockPage } from './lock-page'
 document.addEventListener('alpine:init', () => {
     Alpine.data('site', () => ({
         menuOpen: false,
+        galleryOpen: false,
 
         init() {
             this.$watch('menuOpen', (open) => lockPage(open))

@@ -1,7 +1,7 @@
 {{# `intro` component (below): background video (partials/intro/video), pulsing "scroll down" arrow to the intro text. Content comes from the page's intro fieldset (resources/fieldsets/intro.yaml: video, intro_headline, intro_text, cta). #}}
 <div
     x-data="intro"
-    class="intro w-screen overflow-hidden z-20 text-white mt-12.5 h-[calc(100dvh_-_50px)] tablet:mt-17.5 tablet:h-[calc(100dvh_-_70px)]"
+    class="intro w-screen overflow-hidden z-20 text-white h-dvh"
 >
     <div class="w-full h-full z-10">
         {{ partial:intro/video }}

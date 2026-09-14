@@ -39,6 +39,8 @@
     x-data="site"
     @site-close-menu.window="menuOpen = false"
     @keydown.escape.window="menuOpen = false"
+    @gallery-opened.window="galleryOpen = true"
+    @gallery-closed.window="galleryOpen = false"
 >
     {{ template_content }}
     {{ livewire:scriptConfig }}

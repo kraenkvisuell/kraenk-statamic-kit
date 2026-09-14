@@ -1,42 +1,31 @@
 {{#
-    Fixed navi: the top bar with the site name (links to the site's start page)
-    and a round menu button (three lines, an X while open); the menu itself is a
-    panel over the whole viewport below the bar – the `main` navigation
+    Navi: a round menu button fixed top right (three lines, an X while open) and
+    the menu itself, a panel over the whole viewport – the `main` navigation
     (content/navigation/main.yaml, one tree per site, edited in the CP, max_depth
     2): one link per item, an item without URL is an area label whose children
     render beneath it – with the language switch at the bottom
     (partials/navi/language-switch, removed by kit:init on single-site setups).
     Uses the global `site` component (body, resources/js/site-component.js):
-    menuOpen, toggleMenu(), closeOverlays(); it locks page scrolling while open.
+    menuOpen, galleryOpen, toggleMenu(), closeOverlays(); it locks page
+    scrolling while the menu is open.
 #}}
-<div class="navi fixed top-0 left-0 w-screen z-40 bg-navi">
-    <div class="w-full h-12.5 tablet:h-17.5">
-        <div class="absolute left-0 -top-[0.1em] w-3/4 h-12.5 tablet:h-17.5 flex items-center pl-5 tablet:pl-10 notebook:pl-17.5">
-            <a
-                href="{{ site:url }}"
-                class="block py-5 tl:py-2.5 font-headline font-bold uppercase leading-none tracking-widest text-[0.8rem] tablet:text-[1.3rem]"
-                @click="closeOverlays()"
-            >{{ site_settings.site_name }}</a>
-        </div>
+{{# round button fixed top right: three bars; `.active` (menuOpen) turns them into an X. Hidden while a gallery overlay is open (its own X sits there). #}}
+<button
+    type="button"
+    x-show="!galleryOpen"
+    @click="toggleMenu()"
+    :class="menuOpen && 'active'"
+    :aria-expanded="menuOpen"
+    aria-controls="site-menu"
+    aria-label="{{ trans:frontend.menu }}"
+    class="fixed top-2.5 right-2.5 tablet:top-5 tablet:right-5 notebook:right-11.5 z-40 w-10 h-10 tablet:w-12 tablet:h-12 flex flex-col items-center justify-center gap-1.5 rounded-full bg-ink text-white border-2 border-white cursor-pointer"
+>
+    <span class="block w-5 h-0.5 bg-current transition-transform duration-300 ease-in-out in-[.active]:translate-y-2 in-[.active]:rotate-45"></span>
+    <span class="block w-5 h-0.5 bg-current transition-opacity duration-300 ease-in-out in-[.active]:opacity-0"></span>
+    <span class="block w-5 h-0.5 bg-current transition-transform duration-300 ease-in-out in-[.active]:-translate-y-2 in-[.active]:-rotate-45"></span>
+</button>
 
-        {{# round button: three bars; `.active` (menuOpen) turns them into an X #}}
-        <button
-            type="button"
-            @click="toggleMenu()"
-            :class="menuOpen && 'active'"
-            :aria-expanded="menuOpen"
-            aria-controls="site-menu"
-            aria-label="{{ trans:frontend.menu }}"
-            class="absolute top-1.25 right-2.5 tablet:top-2.75 tablet:right-5 notebook:right-11.5 w-10 h-10 tablet:w-12 tablet:h-12 flex flex-col items-center justify-center gap-1.5 rounded-full bg-ink text-white cursor-pointer"
-        >
-            <span class="block w-5 h-0.5 bg-current transition-transform duration-300 ease-in-out in-[.active]:translate-y-2 in-[.active]:rotate-45"></span>
-            <span class="block w-5 h-0.5 bg-current transition-opacity duration-300 ease-in-out in-[.active]:opacity-0"></span>
-            <span class="block w-5 h-0.5 bg-current transition-transform duration-300 ease-in-out in-[.active]:-translate-y-2 in-[.active]:-rotate-45"></span>
-        </button>
-    </div>
-</div>
-
-{{# the menu: covers the viewport below the bar, slides in from the top #}}
+{{# the menu: covers the viewport, slides in from the top; the button stays on top of it #}}
 <div
     id="site-menu"
     x-show="menuOpen"
@@ -47,12 +36,12 @@
     x-transition:leave="transition-transform duration-300 ease-in-out"
     x-transition:leave-start="translate-y-0"
     x-transition:leave-end="-translate-y-full"
-    class="fixed inset-0 z-30 flex flex-col bg-navi pt-12.5 tablet:pt-17.5"
+    class="fixed inset-0 z-30 flex flex-col bg-navi"
 >
     {{ _item = "block py-3 font-headline font-bold uppercase leading-none tracking-wider text-[1.4rem] tablet:text-[1.8rem]" }}
     {{ _child = "block py-2 font-headline uppercase leading-none tracking-wider text-[1rem] tablet:text-[1.2rem] text-off" }}
 
-    <nav aria-label="{{ trans:frontend.main_navigation }}" class="flex-1 flex flex-col items-center justify-center gap-4 px-5 py-8 overflow-y-auto text-center">
+    <nav aria-label="{{ trans:frontend.main_navigation }}" class="flex-1 flex flex-col items-center justify-center gap-4 px-5 pt-16 pb-8 overflow-y-auto text-center tablet:pt-20">
         {{ nav:main }}
             <div>
                 {{# an area item has no URL of its own (a text-only item); its children follow underneath #}}

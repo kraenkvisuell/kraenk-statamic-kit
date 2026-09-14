@@ -84,13 +84,13 @@
         x-transition:leave="transition-transform duration-600 ease-in"
         x-transition:leave-start="translate-y-0"
         x-transition:leave-end="-translate-y-full"
-        class="fixed left-0 top-12.5 tablet:top-17.5 z-20 w-full h-[calc(100dvh_-_50px)] tablet:h-[calc(100dvh_-_70px)] bg-white overflow-hidden"
+        class="fixed inset-0 z-20 w-full h-dvh bg-white overflow-hidden"
     >
         {{ partial:gallery/title :close_to="_anchor" on_close="close()" }}
             <div x-text="caption"></div>
         {{ /partial:gallery/title }}
 
-        {{ _swiper_height = "h-[calc(100dvh_-_100px)] tablet:h-[calc(100dvh_-_140px)]" }}
+        {{ _swiper_height = "h-[calc(100dvh_-_50px)] tablet:h-[calc(100dvh_-_70px)]" }}
         <div class="relative z-100 bg-overlay text-white {{ _swiper_height }}">
             <div x-ref="swiper" class="swiper w-full bg-overlay {{ _swiper_height }}">
                 <div class="swiper-wrapper h-full">

@@ -1,5 +1,5 @@
 {{#
-    Embedded video (project page, blog "video" set) behind a consent gate. The
+    Embedded video (project page, embed_video and blog "video" sets) behind a consent gate. The
     `videoConsent` component (resources/js/video-consent.js) shows the notice
     and the accept button from site_settings (video_consent_text/_button) until
     third-party videos are accepted (localStorage); then the `videoPlayer`
@@ -7,13 +7,15 @@
     The privacy link leads to the page chosen in site_settings (privacy_page, Videos tab); without one there is no link.
     Deliberately client-side: the HTML is the same for every visitor, so the
     page stays static-cacheable. Fills the width at the video's ratio (default 16:9).
-    Params: key (Vimeo/YouTube URL), ratio ("4:3", optional), autoplay (optional),
-    classes (extra classes for the wrapper, e.g. margins / max height).
+    Params: key (Vimeo/YouTube URL), ratio ("4:3", optional), still (asset shown
+    behind the notice until accepted, optional), autoplay (optional), classes
+    (extra classes for the wrapper, e.g. margins / max height).
 #}}
+{{ _ratio = ratio ?? "16:9" }}
 <div
     x-data="videoConsent"
-    class="w-full bg-ink overflow-hidden aspect-video [&_iframe]:absolute [&_iframe]:inset-0 [&_iframe]:w-full [&_iframe]:h-full [&_iframe]:border-0 {{ classes }}"
-    {{ if ratio }}style="aspect-ratio:{{ ratio | replace(':', '/') }}"{{ /if }}
+    class="w-full bg-ink bg-cover bg-center overflow-hidden [&_iframe]:absolute [&_iframe]:inset-0 [&_iframe]:w-full [&_iframe]:h-full [&_iframe]:border-0 {{ classes }}"
+    style="aspect-ratio:{{ _ratio | replace(':', '/') }};{{ if still }}background-image:url('{{ glide :src="still" width="1600" }}'){{ /if }}"
 >
     <template x-if="accepted">
         <div
@@ -28,7 +30,7 @@
     </template>
 
     <template x-if="! accepted">
-        <div class="absolute inset-0 flex flex-col items-center justify-center gap-4 p-5 text-center text-white tablet:gap-6">
+        <div class="absolute inset-0 flex flex-col items-center justify-center gap-4 p-5 text-center text-white tablet:gap-6 {{ if still }} bg-overlay {{ /if }}">
             <p class="max-w-[36rem] font-main italic text-[0.75rem] leading-[1.5] tablet:text-[0.95rem]">{{ site_settings:video_consent_text | nl2br }}</p>
             <button
                 type="button"

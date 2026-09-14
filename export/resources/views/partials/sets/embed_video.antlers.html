@@ -1,0 +1,13 @@
+{{#
+    Embed video set (main_content replicator): one Vimeo/YouTube video behind the
+    consent gate (partials/video/player), full width. Set fields come from the
+    embed_video fieldset: key (URL), ratio, still (shown until videos are accepted).
+    Section id via partials/sets/anchor (default "embed-video-{set id}").
+#}}
+{{ _anchor = {partial:sets/anchor} }}
+
+<div class="section mb-7.5 tablet:mb-17.5" id="{{ _anchor }}">
+    {{ if set:key }}
+        {{ partial:video/player :key="set:key" :ratio="set:ratio" :still="set:still" }}
+    {{ /if }}
+</div>

@@ -1,64 +1,19 @@
-{{#
-    Project card, linking to the project page (/projects/{slug}). Also rendered on the
-    project page ("similar projects"), where the in-[.small-projects] variants shrink the titles.
-    `projectCard` component (resources/js/project-card.js): thumb video on hover / by scroll.
-#}}
-<div
-    x-data="projectCard"
-    @mouseenter="hover(true)"
-    @mouseleave="hover(false)"
-    :class="{ 'playing-by-scroll': byScroll }"
-    x-fade class="group aspect-video bg-cover bg-center bg-ink cursor-pointer opacity-0 transition-opacity duration-1500 ease-out is-faded-in:opacity-100"
-    {{ if still }}
-    style="background-image:url('{{ glide :src="still" width="1600" height="900" fit="crop_focal" }}')"
-    {{ /if }}
+{{# Project card, linking to the project page (/projects/{slug}): the title on a dark 16:9 box, fading in on scroll. #}}
+<a
+    href="{{ url }}"
+    x-fade
+    class="group block aspect-video bg-ink text-white opacity-0 transition-opacity duration-1500 ease-out is-faded-in:opacity-100"
 >
-    {{ if still.alt }}<span class="sr-only">{{ still.alt | sanitize }}</span>{{ /if }}{{# the still is a CSS background #}}
     <div class="absolute inset-0">
-        <div class="z-10 text-white transition-all duration-300 ease-in-out pt-[12%] pr-[3%] pl-5 tablet:pl-10 notebook:pl-17.5 [&_a]:underline group-hover:opacity-0">
+        <div class="z-10 pt-[12%] pr-[3%] pl-5 tablet:pl-10 notebook:pl-17.5">
             <div class="
-                font-headline font-bold uppercase tracking-wider leading-[1.4] mb-[0.5em] tablet:mb-[1em]
+                font-headline font-bold uppercase tracking-wider leading-[1.4]
                 text-[1.3rem] tablet:text-[0.8rem] tl:text-[1.3rem] desktop:text-[0.8rem] cinema:text-[1.3rem] giant:text-[0.8rem]
-                in-[.small-projects]:text-[0.8rem] tl:in-[.small-projects]:text-[0.8rem] cinema:in-[.small-projects]:text-[0.8rem]
             ">
                 {{ title }}
             </div>
-
-            {{ if headline }}
-                <div class="
-                    italic leading-normal
-                    text-[0.75rem] tl:text-[0.9rem] desktop:text-[0.75rem] cinema:text-[0.9rem] giant:text-[0.75rem]
-                    tl:in-[.small-projects]:text-[0.75rem] cinema:in-[.small-projects]:text-[0.75rem]
-                ">
-                    {{ headline | nl2br }}
-                </div>
-            {{ /if }}
         </div>
-
-        <div class="absolute top-0 right-0 z-4 w-full text-right pr-[1%]">
-            {{ partners }}
-                {{ if small_icon }}
-                    <div class="inline-block w-[9%] mr-[3%]" title="{{ (title) | sanitize }}">
-                        <img src="{{ glide :src="small_icon" width="200" }}" alt="{{ (small_icon.alt or title) | sanitize }}" class="w-full h-auto">
-                    </div>
-                {{ /if }}
-            {{ /partners }}
-        </div>
-
-        <a href="{{ url }}" class="absolute inset-0 z-10 block" aria-label="{{ (title) | sanitize }}"></a>
-
-        {{ if thumb_video }}
-            <div class="absolute inset-0 z-2 w-full h-full overflow-hidden opacity-0 transition-all duration-300 ease-in-out playing-by-scroll:opacity-100 group-hover:opacity-100">
-                <video
-                    x-ref="video"
-                    class="w-[100.5%] max-w-none h-full"
-                    muted loop playsinline
-                >
-                    <source src="{{ thumb_video }}" type="video/mp4">
-                </video>
-            </div>
-        {{ /if }}
 
         <div class="absolute inset-0 z-5 block bg-overlay-light transition-all duration-300 ease-in-out group-hover:opacity-0"></div>
     </div>
-</div>
+</a>

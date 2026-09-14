@@ -20,11 +20,8 @@ preview_targets:
 inject:
   seo:
     description: '@seo:description'
-    image: '@seo:still'
-    og_type: video.other
   columns:
     - title
-    - year
 structure:
   root: false
   max_depth: 1

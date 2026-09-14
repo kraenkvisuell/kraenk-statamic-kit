@@ -34,13 +34,12 @@ class Invalidator extends DefaultInvalidator
     /**
      * Collection handle => field of the referencing collection that holds ids
      * of that collection's entries. Saving such an entry also invalidates every
-     * referencing entry that renders it. Theme: projects as "similar projects".
+     * referencing entry that renders it (e.g. team members as directors,
+     * "similar" entries). The theme has none.
      *
      * @var array<string, string>
      */
-    protected array $references = [
-        'projects' => 'similar',
-    ];
+    protected array $references = [];
 
     /**
      * Collection handle => page-builder set handle(s) that list it. Saving an

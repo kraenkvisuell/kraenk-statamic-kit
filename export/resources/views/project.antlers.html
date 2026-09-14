@@ -1,9 +1,9 @@
 {{#
     Project page – one projects entry at /projects/{slug} (collection route,
-    template set in content/collections/projects.yaml): video player, partner
-    badges, stills, similar projects, description and facts.
+    template set in content/collections/projects.yaml): the page header with its
+    back link, then the entry's main_content sets like on a page.
     Head metadata comes from SEO Pro (layout).
-    Components: x-fade, projectCard (similar projects), videoConsent + videoPlayer (partials/video/player), backLink (partials/page/header).
+    Components: x-fade, backLink (partials/page/header).
 #}}
 {{ partial:navi }}
 
@@ -13,85 +13,9 @@
         {{ title }}
     {{ /partial:page/header }}
 
-    {{# player, capped so the header and the top of the text stay in view #}}
-    {{ partial:video/player :key="key" :ratio="ratio" autoplay="true" classes="mb-9 max-h-[calc(100vh_-_250px)]" }}
-
-    {{ if partners }}
-        <div class="-mt-17.5 w-full h-27.5 overflow-visible text-right pr-4.25 tablet:pr-9.25 notebook:pr-13">
-            {{ partners }}
-                {{ if large_icon }}
-                    <div class="inline-block w-15 ml-5" title="{{ (title) | sanitize }}">
-                        <img src="{{ glide :src="large_icon" width="200" }}" alt="{{ (large_icon.alt or title) | sanitize }}" class="w-full h-auto">
-                    </div>
-                {{ /if }}
-            {{ /partners }}
-        </div>
-    {{ /if }}
-
-    {{ _subheadline = "font-headline font-bold uppercase tracking-wider text-[0.8rem] mb-5 pl-5 tablet:pl-10 notebook:pl-17.5" }}
-
-    <div class="w-full overflow-x-hidden grid grid-cols-1 pb-30 tablet:grid-cols-2 tablet:gap-x-10 tablet:pb-45">
-        <div class="w-full pt-8.75 row-start-2 tablet:row-start-1 tablet:pt-0">
-            {{ if images }}
-                <div class="mb-12.5">
-                    <h2 class="{{ _subheadline }}">Stills</h2>
-
-                    {{# rows of three: one 16:9 image + two 8:9 images, the wide one alternating left/right #}}
-                    <div class="grid grid-cols-2 tablet:grid-cols-4">
-                        {{ images }}
-                            <img
-                                src="{{ glide :src="id" width="960" }}"
-                                alt="{{ (alt or page:title) | sanitize }}"
-                                loading="lazy"
-                                class="block w-full aspect-[8/9] object-cover nth-[6n+1]:col-span-2 nth-[6n+1]:aspect-video nth-[6n]:col-span-2 nth-[6n]:aspect-video"
-                            >
-                        {{ /images }}
-                    </div>
-                </div>
-            {{ /if }}
-
-            {{ if similar }}
-                <div class="mb-12.5">
-                    <h2 class="{{ _subheadline }}">{{ trans:frontend.similar_projects }}</h2>
-
-                    <div class="small-projects tablet:grid tablet:grid-cols-2">
-                        {{ similar }}
-                            {{ if id != page:id }}
-                                {{ partial:projects/project }}
-                            {{ /if }}
-                        {{ /similar }}
-                    </div>
-                </div>
-            {{ /if }}
-        </div>
-
-        <div class="row-start-1 max-w-[900px] pt-6.5 pl-5 mb-10 leading-[1.4] [&_a]:underline tablet:pl-0 tablet:pr-17.5 tablet:mb-0 notebook:pr-30">
-            <div x-fade class="editor-content mb-10 pr-5 tablet:pr-0">
-                {{ description }}
-
-                {{ if downloads }}
-                    <br>
-                    {{ partial:downloads :downloads="downloads" }}
-                {{ /if }}
-            </div>
-
-            <dl class="font-headline font-bold uppercase tracking-wider text-[0.8rem] w-auto">
-                {{ if year }}
-                    <div class="flex items-start">
-                        <dt class="w-37.5 shrink-0">{{ trans:frontend.created }}:</dt>
-                        <dd>{{ year }}</dd>
-                    </div>
-                {{ /if }}
-
-                {{ if agency }}
-                    <div class="flex items-start">
-                        <dt class="w-37.5 shrink-0">{{ trans:frontend.agency }}:</dt>
-                        <dd>{{ agency }}</dd>
-                    </div>
-                {{ /if }}
-            </dl>
-        </div>
-    </div>
+    {{ main_content scope="set" }}
+        {{ partial src="sets/{set.type}" }}
+    {{ /main_content }}
 
     {{ partial:contact from='page' }}
     {{ partial:footer }}

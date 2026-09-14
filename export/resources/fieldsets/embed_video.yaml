@@ -1,0 +1,29 @@
+title: Embed-Video
+fields:
+  -
+    handle: key
+    field:
+      type: text
+      instructions: 'URL inkl. "https://" am Anfang'
+      width: 50
+      display: 'Vimeo- oder Youtube-URL'
+      localizable: false
+  -
+    handle: ratio
+    field:
+      type: text
+      instructions: 'Z.B. "4:3" - nur notwendig wenn nicht 16:9'
+      width: 50
+      display: Original-Seitenverhältnis
+      localizable: false
+  -
+    handle: still
+    field:
+      type: assets
+      container: main
+      folder: /
+      max_files: 1
+      width: 50
+      display: Vorschaubild
+      instructions: 'Wird gezeigt, bis Drittanbieter-Videos akzeptiert sind'
+      localizable: false

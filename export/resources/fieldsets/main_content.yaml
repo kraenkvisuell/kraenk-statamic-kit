@@ -201,6 +201,13 @@ fields:
                               semantic_elements: false
                               restrict_assets: false
                               sets: {}
+            embed_video:
+              display: 'Embed-Video'
+              fields:
+                -
+                  import: set_navigation
+                -
+                  import: embed_video
             gallery:
               display: Bildergalerie
               icon: media-image-picture-gallery

@@ -102,9 +102,7 @@ return [
             // Entries of this collection render other entries and terms (cards, "similar" entries).
             'referencing_collection' => 'projects',
             // collection => field on the referencing collection holding that collection's entry ids
-            'references' => [
-                'projects' => 'similar',
-            ],
+            'references' => [],
             // collection => page-builder set(s) listing it
             'listing_sets' => [
                 'blog' => ['blog'],

@@ -10,169 +10,24 @@ tabs:
             field:
               type: text
               required: true
-              display: Title
+              display: Titel
               width: 50
               localizable: true
               validate:
                 - required
           -
+            import: main_content
+  sidebar:
+    display: Sidebar
+    sections:
+      -
+        fields:
+          -
             handle: slug
             field:
-              type: text
+              type: slug
               localizable: true
               validate: 'max:200'
-              display: Text-ID
-              width: 50
-              instructions: 'Wird in der URL verwendet - am besten keine Leer- und Sonderzeichen und nur Kleinbuchstaben'
-          -
-            handle: published
-            field:
-              type: toggle
-              width: 50
-              display: Veröffentlicht
-              localizable: false
-          -
-            handle: headline
-            field:
-              type: textarea
-              display: Headline
-              instructions: 'Optional - falls vom Titel abweichend'
-              width: 50
-              localizable: false
-          -
-            handle: year
-            field:
-              type: text
-              display: 'Entstanden (Jahr)'
-              width: 50
-              localizable: false
-          -
-            handle: agency
-            field:
-              type: text
-              display: Agentur
-              width: 50
-              localizable: false
-          -
-            handle: description
-            field:
-              type: bard
-              buttons:
-                - h3
-                - bold
-                - italic
-                - anchor
-                - quote
-              style: sans
-              spellcheck: true
-              allow_source: true
-              allow_internal_links: true
-              semantic_elements: false
-              restrict_assets: false
-              display: Beschreibung
-              localizable: true
-          -
-            import: downloads
-  media:
-    display: Medien
-    sections:
-      -
-        fields:
-          -
-            handle: key
-            field:
-              type: text
-              instructions: 'URL inkl. "https://" am Anfang'
-              width: 50
-              display: 'Vimeo- oder Youtube-URL'
-              localizable: false
-          -
-            handle: ratio
-            field:
-              type: text
-              instructions: 'Z.B. "4:3" - nur notwendig wenn nicht 16:9'
-              width: 50
-              display: Original-Seitenverhältnis
-              localizable: false
-          -
-            handle: still
-            field:
-              type: assets
-              container: main
-              folder: /
-              max_files: 1
-              width: 50
-              display: Still
-              localizable: false
-          -
-            handle: thumb_video
-            field:
-              type: assets
-              container: main
-              folder: /
-              max_files: 1
-              width: 50
-              display: Thumb-Video
-              localizable: false
-          -
-            handle: similar
-            field:
-              type: entries
-              max_items: '99'
-              mode: panes
-              display: 'Ähnliche Projekte'
-              collections:
-                - projects
-              localizable: false
-          -
-            handle: images
-            field:
-              type: assets
-              container: main
-              folder: /
-              max_files: 99
-              display: Bilder
-              localizable: false
-  partners:
-    display: Partner
-    sections:
-      -
-        fields:
-          -
-            handle: partners
-            field:
-              type: replicator
-              display: Partner
-              localizable: false
-              sets:
-                partner:
-                  display: Partner
-                  fields:
-                    -
-                      handle: title
-                      field:
-                        type: text
-                        display: Titel
-                    -
-                      handle: small_icon
-                      field:
-                        type: assets
-                        container: main
-                        folder: /
-                        restrict: false
-                        max_files: 1
-                        width: 50
-                        display: 'Icon klein'
-                    -
-                      handle: large_icon
-                      field:
-                        type: assets
-                        container: main
-                        folder: /
-                        restrict: false
-                        max_files: 1
-                        width: 50
-                        display: 'Icon groß'
   'SEO Meta':
     display: 'SEO Meta'
     sections:

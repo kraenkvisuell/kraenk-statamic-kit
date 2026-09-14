@@ -1,6 +1,7 @@
 {{#
-    Navi: a round menu button fixed top right (three lines, an X while open) and
-    the menu itself, a panel over the whole viewport – the `main` navigation
+    Navi: the logo top left (partials/logo), a round menu button fixed top right
+    (three lines, an X while open) and the menu itself, a panel over the whole
+    viewport – the `main` navigation
     (content/navigation/main.yaml, one tree per site, edited in the CP, max_depth
     2): one link per item, an item without URL is an area label whose children
     render beneath it – with the language switch at the bottom
@@ -9,6 +10,8 @@
     menuOpen, galleryOpen, toggleMenu(), closeOverlays(); it locks page
     scrolling while the menu is open.
 #}}
+{{ partial:logo }}
+
 {{# round button fixed top right: three bars; `.active` (menuOpen) turns them into an X. Hidden while a gallery overlay is open (its own X sits there). #}}
 <button
     type="button"

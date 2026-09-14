@@ -78,7 +78,7 @@
                     left: 0;
                     width: 14px;
                     height: 1px;
-                    background-color: var(--color-neutral-950);
+                    background-color: var(--color-ink);
                 }
             }
         }
@@ -114,7 +114,7 @@
     /* project/post pages: description copy with pull quotes */
     .popup-description blockquote {
         font-size: 1.2rem;
-        color: var(--color-neutral-500);
+        color: var(--color-important);
         margin: 2em 0;
 
         & p {
@@ -134,7 +134,7 @@
             top: 7px;
             width: 30px;
             height: 5px;
-            background-color: var(--color-neutral-950);
+            background-color: var(--color-ink);
         }
     }
 }

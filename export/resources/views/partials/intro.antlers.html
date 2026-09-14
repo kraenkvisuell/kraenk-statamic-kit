@@ -14,8 +14,8 @@
             :class="{ active: arrowActive }"
             class="
                 relative block w-7.5 h-7.5 z-100 cursor-pointer
-                before:content-[''] before:absolute before:left-0 before:top-[calc(50%_-_3px)] before:w-1/2 before:h-1.25 before:bg-white before:transition-all before:duration-400 before:ease-in-out
-                after:content-[''] after:absolute after:left-1/2 after:top-[calc(50%_-_3px)] after:w-1/2 after:h-1.25 after:bg-white after:transition-all after:duration-400 after:ease-in-out
+                before:content-[''] before:absolute before:left-0 before:top-[calc(50%_-_3px)] before:w-1/2 before:h-1.25 before:bg-paper before:transition-all before:duration-400 before:ease-in-out
+                after:content-[''] after:absolute after:left-1/2 after:top-[calc(50%_-_3px)] after:w-1/2 after:h-1.25 after:bg-paper after:transition-all after:duration-400 after:ease-in-out
                 [&.active]:before:left-1 [&.active]:before:top-[calc(75%_-_3px)] [&.active]:before:rotate-45
                 [&.active]:after:left-[calc(50%_-_4px)] [&.active]:after:top-[calc(75%_-_3px)] [&.active]:after:-rotate-45
                 hover:before:left-1 hover:before:top-[calc(75%_-_3px)] hover:before:rotate-45
@@ -39,7 +39,7 @@
 
         <div
             x-fade
-            class="text-[1.2rem] italic leading-[1.45] text-neutral-500 opacity-0 transition-opacity duration-1500 ease-out [&.is-faded-in]:opacity-100 pr-12.5 md:pr-30"
+            class="text-[1.2rem] italic leading-[1.45] text-important opacity-0 transition-opacity duration-1500 ease-out [&.is-faded-in]:opacity-100 pr-12.5 md:pr-30"
         >
             {{ page:intro_text }}
         </div>

@@ -51,12 +51,12 @@
             {{ if (set:images | count) > 8 }}
                 <div x-fade x-show="visible < total" class="relative opacity-0 transition-opacity duration-1500 ease-out [&.is-faded-in]:opacity-100">
                     <div class="grid grid-cols-2 md:grid-cols-4">
-                        <div class="min-h-7.5 bg-neutral-50"></div>
-                        <div class="min-h-7.5 bg-neutral-100"></div>
-                        <div class="min-h-7.5 bg-stone-100 hidden md:block"></div>
-                        <div class="min-h-7.5 bg-neutral-200 hidden md:block"></div>
+                        <div class="min-h-7.5 bg-card-1"></div>
+                        <div class="min-h-7.5 bg-card-2"></div>
+                        <div class="min-h-7.5 bg-card-3 hidden md:block"></div>
+                        <div class="min-h-7.5 bg-card-4 hidden md:block"></div>
                     </div>
-                    <div @click="showMore()" class="absolute top-0 min-w-full h-7.5 flex items-center justify-center cursor-pointer font-headline font-bold uppercase tracking-wider text-[0.8rem] text-neutral-950">
+                    <div @click="showMore()" class="absolute top-0 min-w-full h-7.5 flex items-center justify-center cursor-pointer font-headline font-bold uppercase tracking-wider text-[0.8rem] text-ink">
                         <div class="min-w-5.5 h-5.5 cursor-pointer bg-no-repeat bg-position-[0px_0px]" style="background-image:url('/images/show-more.svg')"></div>
                         <div class="min-w-5.5 cursor-pointer">show more</div>
                         <div class="min-w-5.5 h-5.5 cursor-pointer bg-no-repeat bg-position-[0px_0px]" style="background-image:url('/images/show-more.svg')"></div>
@@ -84,15 +84,15 @@
         x-transition:leave="transition-transform duration-600 ease-in"
         x-transition:leave-start="translate-y-0"
         x-transition:leave-end="-translate-y-full"
-        class="[&[x-cloak]]:hidden fixed inset-0 z-20 w-full h-dvh bg-white overflow-hidden"
+        class="[&[x-cloak]]:hidden fixed inset-0 z-20 w-full h-dvh bg-paper overflow-hidden"
     >
         {{ partial:gallery/title :close_to="_anchor" on_close="close()" }}
             <div x-text="caption"></div>
         {{ /partial:gallery/title }}
 
         {{ _swiper_height = "h-[calc(100dvh_-_50px)] md:h-[calc(100dvh_-_70px)]" }}
-        <div class="relative z-100 bg-black/65 text-white {{ _swiper_height }}">
-            <div x-ref="swiper" class="swiper w-full bg-black/65 {{ _swiper_height }}">
+        <div class="relative z-100 bg-overlay text-white {{ _swiper_height }}">
+            <div x-ref="swiper" class="swiper w-full bg-overlay {{ _swiper_height }}">
                 <div class="swiper-wrapper h-full">
                     {{ set:images }}
                         <div class="swiper-slide h-full bg-contain bg-no-repeat bg-center"

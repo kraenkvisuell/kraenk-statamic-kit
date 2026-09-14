@@ -7,8 +7,8 @@
 @source "../views";
 
 /*
- * Default Tailwind theme (breakpoints, colours, spacing) plus the two font
- * families; everything else is utilities in resources/views. State classes the
+ * Default Tailwind theme (breakpoints, spacing, palette) plus the two font
+ * families and the role-named colours; everything else is utilities in resources/views. State classes the
  * JS toggles (is-faded-in, is-hidden, active, x-cloak) are matched with
  * arbitrary variants in the templates, e.g. `opacity-0 [&.is-faded-in]:opacity-100`.
  * editor-content.css covers markup we don't author (Bard output).
@@ -16,4 +16,19 @@
 @theme {
     --font-main: "PT Sans", sans-serif;
     --font-headline: Domine, serif;
+
+    /* Colours by role (coding-guidelines/tailwind.md); values from Tailwind's neutral/stone palette. */
+    --color-ink: #0a0a0a;            /* text, dark sections, the menu button */
+    --color-paper: #ffffff;          /* page background */
+    --color-off: #a6a09b;            /* subdued text: language switch, sub items */
+    --color-important: #737373;      /* emphasised copy, pull quotes */
+    --color-footer: #171717;         /* footer background */
+    --color-footer-text: #a1a1a1;
+    --color-panel: #f5f5f5;          /* menu panel */
+    --color-card-1: #fafafa;         /* the four tones of the gallery "show more" strip */
+    --color-card-2: #f5f5f5;
+    --color-card-3: #f5f5f4;
+    --color-card-4: #e5e5e5;
+    --color-overlay: hsl(0 0% 0% / 65%);
+    --color-overlay-light: hsl(0 0% 0% / 40%);
 }

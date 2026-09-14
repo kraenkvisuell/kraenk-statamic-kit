@@ -1,17 +1,22 @@
-title: Projects
-route: '/projects/{slug}'
-template: project
+title: Projekte
+icon: collections
 sites:
   - default
   - en
-taxonomies:
-  - cameras
-  - categories
-  - clients
-  - directors
-  - productions
-structure:
-  max_depth: 1
+propagate: false
+template: project
+layout: layout
+revisions: false
+route: '/projects/{slug}'
+sort_dir: asc
+date_behavior:
+  past: null
+  future: null
+preview_targets:
+  -
+    label: Entry
+    url: '{permalink}'
+    refresh: true
 inject:
   seo:
     description: '@seo:description'
@@ -19,6 +24,7 @@ inject:
     og_type: video.other
   columns:
     - title
-    - client.title
-    - category.title
     - year
+structure:
+  root: false
+  max_depth: 1

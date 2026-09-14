@@ -1,8 +1,7 @@
 {{#
-    Download links with the dark icon (project/post pages, intro). Param: downloads
-    (a downloads replicator: file, title, show_filesize). Same flex-row markup as
-    partials/downloadsfooter: decorative icon in a fixed-width box, then title or
-    filename and the file size (`file_size` modifier: Laravel's Number::fileSize, formatted per language).
+    Download links with the dark icon (project/post pages). Param: downloads
+    (a downloads replicator: file, title, show_filesize). Flex rows: decorative
+    icon in a fixed-width box, then title or filename and the file size (`file_size` modifier: Laravel's Number::fileSize, formatted per language).
 #}}
 <div class="flex flex-col gap-6 mb-6">
 {{ downloads }}

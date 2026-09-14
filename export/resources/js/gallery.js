@@ -8,7 +8,7 @@
  * (`x-data="gallery('id')"`) and opened by the `gallery-open` window event with
  * `{ gallery: 'id', index: n }` (1-based slide number) – every other gallery
  * ignores the event. The overlay drops in and rises out (x-transition in the
- * partial) over the page, which stays put (see overlay.js for the scroll lock).
+ * partial) over the page, which stays put (see lock-page.js for the scroll lock).
  *
  * `galleryGrid(total)` is the "show more" expander of the set's grid
  * (8 pictures, 8 more per click).
@@ -16,7 +16,7 @@
 import Swiper from 'swiper'
 import { Navigation, Keyboard } from 'swiper/modules'
 import 'swiper/css'
-import { lockPage } from './overlay'
+import { lockPage } from './lock-page'
 
 document.addEventListener('alpine:init', () => {
     Alpine.data('gallery', (name) => ({

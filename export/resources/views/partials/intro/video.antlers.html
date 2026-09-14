@@ -1,0 +1,15 @@
+{{#
+    Intro background video: the page's `video` asset (intro fieldset), a plain
+    <video> that plays muted in a loop. Fills the intro's height, centred, wider
+    overflow cropped by the intro's overflow-hidden.
+#}}
+{{ if page:video }}
+    <div class="w-full h-full bg-ink">
+        <video
+            class="absolute top-0 left-1/2 -translate-x-1/2 h-full w-auto max-w-none"
+            autoplay loop muted playsinline
+        >
+            <source src="{{ page:video }}" type="video/mp4">
+        </video>
+    </div>
+{{ /if }}

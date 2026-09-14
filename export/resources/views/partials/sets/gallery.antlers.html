@@ -86,9 +86,9 @@
         x-transition:leave-end="-translate-y-full"
         class="fixed left-0 top-12.5 tablet:top-17.5 z-20 w-full h-[calc(100dvh_-_50px)] tablet:h-[calc(100dvh_-_70px)] bg-white overflow-hidden"
     >
-        {{ partial:overlay/title :close_to="_anchor" on_close="close()" }}
+        {{ partial:gallery/title :close_to="_anchor" on_close="close()" }}
             <div x-text="caption"></div>
-        {{ /partial:overlay/title }}
+        {{ /partial:gallery/title }}
 
         {{ _swiper_height = "h-[calc(100dvh_-_100px)] tablet:h-[calc(100dvh_-_140px)]" }}
         <div class="relative z-100 bg-overlay text-white {{ _swiper_height }}">

@@ -3,7 +3,7 @@
     burger, and the menu – the `main` navigation (content/navigation/main.yaml,
     one tree per site, edited in the CP, max_depth 2): one link per item, an item
     without URL is an area label whose children render beneath it.
-    Uses the global `site` component (layout): menuOpen, logoVisible (fades in the site-name link, not the whole navi), closeOverlays().
+    Uses the global `site` component (layout): menuOpen, closeOverlays().
     JS hook left: .navi-top (popup positioning)
 #}}
 <div class="navi fixed top-0 left-0 w-screen z-30 bg-navi overflow-visible">
@@ -11,8 +11,7 @@
         <div class="absolute left-0 -top-[0.1em] w-3/4 h-12.5 tablet:h-17.5 flex items-center pl-5 tablet:pl-10 notebook:pl-17.5">
             <a
                 href="{{ site:url }}"
-                class="block py-5 tl:py-2.5 font-headline font-bold uppercase leading-none tracking-widest text-[0.8rem] tablet:text-[1.3rem] opacity-0 transition-all duration-2000 ease-out is-faded-in:opacity-100"
-                :class="{ 'is-faded-in': logoVisible }"
+                class="block py-5 tl:py-2.5 font-headline font-bold uppercase leading-none tracking-widest text-[0.8rem] tablet:text-[1.3rem]"
                 @click="closeOverlays()"
             >{{ site_settings.site_name }}</a>
         </div>

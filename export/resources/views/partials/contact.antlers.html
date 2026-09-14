@@ -1,13 +1,11 @@
 {{#
-    Contact section. Param `from`: unset on pages (fades in on scroll, anchor
-    #kontakt), 'page' on entry pages (already faded in, anchor #kontakt – the
-    navi's Kontakt link stays on the page), 'overlay' inside the legal-text
-    overlays (already faded in, no anchor – the page has its own).
+    Contact section (anchor #kontakt). Param `from`: unset on pages (fades in
+    on scroll), 'page' on entry pages (already faded in).
     `is-footer` is a CSS context marker for editor-content.
 #}}
 <div
     class="section is-footer bg-ink text-white tablet:pt-7.5 tablet:pb-32.5"
-    {{ if from != 'overlay' }} id="kontakt" {{ /if }}
+    id="kontakt"
 >
     <div
         class="absolute bottom-0 left-0 h-full w-full max-w-[640px] bg-no-repeat bg-size-[240px_auto] bg-position-[right_-80px_bottom_0] tablet:bg-position-[right_0_bottom_0] tablet:w-[56%] tl:w-1/2"

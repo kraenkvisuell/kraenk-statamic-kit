@@ -6,6 +6,7 @@ export_paths:
   - app/Models/User.php
   - app/Providers/HorizonServiceProvider.php
   - bootstrap/providers.php
+  - config/app.php
   - config/auth.php
   - config/bentonow.php
   - config/filesystems.php
@@ -25,12 +26,6 @@ export_paths:
   - content/globals/site_settings.yaml
   - content/navigation/footer.yaml
   - content/navigation/main.yaml
-  - content/taxonomies/cameras.yaml
-  - content/taxonomies/categories.yaml
-  - content/taxonomies/clients.yaml
-  - content/taxonomies/directors.yaml
-  - content/taxonomies/productions.yaml
-  - content/taxonomies/tags.yaml
   - resources
   - lang
   - public/images

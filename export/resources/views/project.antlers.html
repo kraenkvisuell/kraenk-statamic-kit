@@ -2,7 +2,7 @@
     Project page – one projects entry at /projects/{slug} (collection route,
     template set in content/collections/projects.yaml): video player, partner
     badges, stills, similar projects, description and facts.
-    Head metadata comes from SEO Pro (layout); the navi logo shows right away (the `site` component checks the URL).
+    Head metadata comes from SEO Pro (layout).
     Components: x-fade, projectCard (similar projects), videoConsent + videoPlayer (partials/video/player), backLink (partials/page/header).
 #}}
 {{ partial:navi }}
@@ -10,7 +10,7 @@
 {{# below the fixed navi (50/70px) #}}
 <main class="w-full pt-12.5 tablet:pt-17.5">
     {{ partial:page/header back_to="projects" back_set="projects" }}
-        {{ title }}{{ if categories }} - {{ categories }}{{ title }}{{ if !last }} / {{ /if }}{{ /categories }}{{ /if }}
+        {{ title }}
     {{ /partial:page/header }}
 
     {{# player, capped so the header and the top of the text stay in view #}}
@@ -76,24 +76,10 @@
             </div>
 
             <dl class="font-headline font-bold uppercase tracking-wider text-[0.8rem] w-auto">
-                {{ if clients }}
-                    <div class="flex items-start">
-                        <dt class="w-37.5 shrink-0">{{ trans:frontend.client }}:</dt>
-                        <dd>{{ clients }}{{ title }}{{ if !last }} / {{ /if }}{{ /clients }}</dd>
-                    </div>
-                {{ /if }}
-
                 {{ if year }}
                     <div class="flex items-start">
                         <dt class="w-37.5 shrink-0">{{ trans:frontend.created }}:</dt>
                         <dd>{{ year }}</dd>
-                    </div>
-                {{ /if }}
-
-                {{ if cameras }}
-                    <div class="flex items-start">
-                        <dt class="w-37.5 shrink-0">{{ trans:frontend.camera }}:</dt>
-                        <dd>{{ cameras }}{{ title }}{{ if !last }} / {{ /if }}{{ /cameras }}</dd>
                     </div>
                 {{ /if }}
 

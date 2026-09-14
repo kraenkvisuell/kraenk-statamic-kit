@@ -1,149 +1,181 @@
-sections:
+title: Blog-Post
+tabs:
   main:
     display: Main
-    fields:
+    sections:
       -
-        handle: title
-        field:
-          type: text
-          display: Titel
-          width: 50
-          localizable: true
-      -
-        handle: slug
-        field:
-          type: text
-          display: Slug
-          width: 50
-      -
-        handle: published
-        field:
-          type: toggle
-          width: 50
-          display: Veröffentlicht
-      -
-        handle: date
-        field:
-          type: date
-          width: 50
-          display: Datum
-      -
-        handle: image
-        field:
-          type: assets
-          container: main
-          folder: /
-          restrict: false
-          max_files: 1
-          width: 50
-          display: Bild
-      -
-        handle: teaser
-        field:
-          type: bard
-          buttons:
-            - bold
-            - italic
-            - underline
-            - anchor
-          style: sans
-          spellcheck: true
-          allow_source: true
-          allow_internal_links: true
-          link_noopener: false
-          link_noreferrer: false
-          target_blank: false
-          semantic_elements: false
-          restrict_assets: false
-          display: Teaser
-          localizable: true
-      -
-        handle: copy
-        field:
-          type: bard
-          buttons:
-            - h3
-            - bold
-            - italic
-            - anchor
-            - quote
-            - unorderedlist
-            - orderedlist
-            - assets
-          style: sans
-          spellcheck: true
-          allow_source: true
-          allow_internal_links: true
-          link_noopener: false
-          link_noreferrer: false
-          target_blank: false
-          semantic_elements: false
-          restrict_assets: false
-          display: Inhalt
-          localizable: true
-          sets:
-            video:
-              display: Video
-              fields:
-                -
-                  handle: url
-                  field:
-                    type: text
-                    instructions: 'URL inkl. "https://" am Anfang'
-                    display: 'Vimeo- oder YouTube-URL'
-                    width: 50
-                -
-                  handle: ratio
-                  field:
-                    type: text
-                    instructions: 'Z.B. "4:3" - nur notwendig wenn nicht 16:9'
-                    width: 50
-                    display: Original-Seitenverhältnis
-            image:
+        fields:
+          -
+            handle: title
+            field:
+              type: text
+              required: true
+              display: Titel
+              width: 50
+              localizable: true
+              validate:
+                - required
+          -
+            handle: slug
+            field:
+              type: text
+              localizable: true
+              validate: 'max:200'
+              display: Slug
+              width: 50
+          -
+            handle: published
+            field:
+              type: toggle
+              width: 50
+              display: Veröffentlicht
+              localizable: false
+          -
+            handle: date
+            field:
+              type: date
+              required: true
+              default: now
+              width: 50
+              display: Datum
+              localizable: false
+              validate:
+                - required
+          -
+            handle: image
+            field:
+              type: assets
+              container: main
+              folder: /
+              max_files: 1
+              width: 50
               display: Bild
-              fields:
-                -
-                  handle: file
-                  field:
-                    type: assets
-                    container: main
-                    folder: /
-                    restrict: false
-                    width: 50
-                    display: Bild
-                    max_files: 1
-                -
-                  handle: caption
-                  field:
-                    type: textarea
-                    width: 50
-                    display: Caption
+              localizable: false
+          -
+            handle: teaser
+            field:
+              type: bard
+              buttons:
+                - bold
+                - italic
+                - underline
+                - anchor
+              style: sans
+              spellcheck: true
+              allow_source: true
+              allow_internal_links: true
+              semantic_elements: false
+              restrict_assets: false
+              display: Teaser
+              localizable: true
+          -
+            handle: copy
+            field:
+              type: bard
+              buttons:
+                - h3
+                - bold
+                - italic
+                - anchor
+                - quote
+                - unorderedlist
+                - orderedlist
+                - assets
+              style: sans
+              spellcheck: true
+              allow_source: true
+              allow_internal_links: true
+              semantic_elements: false
+              restrict_assets: false
+              display: Inhalt
+              localizable: true
+              sets:
+                video:
+                  display: Video
+                  fields:
+                    -
+                      handle: url
+                      field:
+                        type: text
+                        instructions: 'URL inkl. "https://" am Anfang'
+                        display: 'Vimeo- oder YouTube-URL'
+                        width: 50
+                    -
+                      handle: ratio
+                      field:
+                        type: text
+                        instructions: 'Z.B. "4:3" - nur notwendig wenn nicht 16:9'
+                        width: 50
+                        display: Original-Seitenverhältnis
+                image:
+                  display: Bild
+                  fields:
+                    -
+                      handle: file
+                      field:
+                        type: assets
+                        container: main
+                        folder: /
+                        restrict: false
+                        width: 50
+                        display: Bild
+                        max_files: 1
+                    -
+                      handle: caption
+                      field:
+                        type: textarea
+                        width: 50
+                        display: Caption
+          -
+            handle: downloads
+            field:
+              type: replicator
+              localizable: true
+              display: Downloads
+              sets:
+                download:
+                  display: Download
+                  fields:
+                    -
+                      handle: file
+                      field:
+                        type: assets
+                        container: main
+                        folder: /
+                        restrict: false
+                        max_files: 1
+                        width: 50
+                        display: Datei
+                    -
+                      handle: title
+                      field:
+                        type: text
+                        instructions: 'optional, wenn leer wird Dateiname angezeigt'
+                        width: 50
+                        display: Titel
+  'SEO Meta':
+    display: 'SEO Meta'
+    sections:
       -
-        handle: downloads
-        field:
-          type: replicator
-          sets:
-            download:
-              display: Download
-              fields:
-                -
-                  handle: file
-                  field:
-                    type: assets
-                    container: main
-                    folder: /
-                    restrict: false
-                    max_files: 1
-                    width: 50
-                    display: Datei
-                -
-                  handle: title
-                  field:
-                    type: text
-                    instructions: 'optional, wenn leer wird Dateiname angezeigt'
-                    width: 50
-                    display: Titel
-          localizable: true
-          display: Downloads
-taxonomies: false
-title: 'Post in Aktuelles'
+        fields:
+          -
+            handle: seo
+            field:
+              type: seo_pro
+              listable: false
+              display: SEO
+              localizable: false
+  'SEO Previews':
+    display: 'SEO Previews'
+    sections:
+      -
+        fields:
+          -
+            handle: seo_previews
+            field:
+              type: seo_pro_previews
+              listable: false
+              display: 'SEO Previews'
+              localizable: false
+              hide_display: true
+              if: 'custom showSeoProPreviews'

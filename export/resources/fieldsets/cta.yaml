@@ -1,0 +1,29 @@
+title: CTA
+fields:
+  -
+    handle: cta
+    field:
+      type: replicator
+      display: CTA
+      sets:
+        cta:
+          display: CTA
+          fields:
+            -
+              handle: title
+              field:
+                type: text
+                display: Titel
+                width: 50
+            -
+              handle: link
+              field:
+                type: link
+                display: Link
+                instructions: 'Seite oder URL'
+                width: 50
+            -
+              handle: subtitle
+              field:
+                type: text
+                display: Untertitel

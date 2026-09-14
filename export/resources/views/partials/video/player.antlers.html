@@ -4,7 +4,7 @@
     and the accept button from site_settings (video_consent_text/_button) until
     third-party videos are accepted (localStorage); then the `videoPlayer`
     component (resources/js/video-player.js) inserts the Vimeo/YouTube iframe.
-    The privacy link opens the footer's datenschutz overlay (partials/footer).
+    The privacy link leads to the page chosen in site_settings (privacy_page, Videos tab); without one there is no link.
     Deliberately client-side: the HTML is the same for every visitor, so the
     page stays static-cacheable. Fills the width at the video's ratio (default 16:9).
     Params: key (Vimeo/YouTube URL), ratio ("4:3", optional), autoplay (optional),
@@ -35,11 +35,12 @@
                 @click="accept()"
                 class="inline-block border border-white px-4 py-2.5 font-headline font-bold uppercase tracking-wider text-[0.7rem] leading-none cursor-pointer transition-colors hover:bg-white hover:text-ink tablet:px-6 tablet:py-3 tablet:text-[0.8rem]"
             >{{ site_settings:video_consent_button }}</button>
-            <a
-                href="#kontakt"
-                @click.prevent="$dispatch('overlay-open', 'datenschutz')"
-                class="font-main italic text-off text-[0.7rem] underline hover:text-white tablet:text-[0.8rem]"
-            >{{ trans:frontend.privacy }}</a>
+            {{ if site_settings:privacy_page }}
+                <a
+                    href="{{ site_settings:privacy_page:url }}"
+                    class="font-main italic text-off text-[0.7rem] underline hover:text-white tablet:text-[0.8rem]"
+                >{{ trans:frontend.privacy }}</a>
+            {{ /if }}
         </div>
     </template>
 </div>

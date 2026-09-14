@@ -1,0 +1,19 @@
+{{#
+    Call-to-action links (intro, the page's `cta` replicator: title, link,
+    subtitle). Big headline-style link; the optional subtitle is a second,
+    smaller link to the same target. Param: cta (the replicator value).
+#}}
+<div class="mb-6">
+{{ cta }}
+    {{ if link }}
+        <a
+            href="{{ link }}"
+            class="inline-flex items-center min-h-9 tablet:min-h-9.5 font-headline font-bold uppercase tracking-wider not-italic no-underline text-[0.85rem] tablet:text-[1.05rem]"
+        >{{ title }}</a>
+        {{ if subtitle }}
+            <br>
+            <a href="{{ link }}">{{ subtitle }}</a>
+        {{ /if }}
+    {{ /if }}
+{{ /cta }}
+</div>

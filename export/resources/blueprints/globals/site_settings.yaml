@@ -122,114 +122,6 @@ sections:
           type: text
           display: Newsletter-Link
           width: 50
-  legal:
-    display: Rechtliches
-    fields:
-      -
-        handle: imprint_topline
-        field:
-          type: text
-          display: 'Topline Impressum'
-          width: 50
-          localizable: true
-      -
-        handle: imprint
-        field:
-          type: bard
-          buttons:
-            - h2
-            - h3
-            - bold
-            - italic
-            - underline
-            - unorderedlist
-            - orderedlist
-            - removeformat
-            - quote
-            - anchor
-          style: sans
-          spellcheck: true
-          allow_source: true
-          allow_internal_links: true
-          link_noopener: false
-          link_noreferrer: false
-          target_blank: false
-          semantic_elements: true
-          restrict_assets: false
-          display: Impressum
-          localizable: true
-      -
-        handle: liability_topline
-        field:
-          type: text
-          display: 'Topline Haftungsausschuss'
-          width: 50
-          localizable: true
-      -
-        handle: liability
-        field:
-          type: bard
-          buttons:
-            - h2
-            - h3
-            - bold
-            - italic
-            - unorderedlist
-            - orderedlist
-            - removeformat
-            - quote
-            - anchor
-          style: sans
-          spellcheck: true
-          allow_source: true
-          allow_internal_links: true
-          link_noopener: false
-          link_noreferrer: false
-          target_blank: false
-          semantic_elements: true
-          restrict_assets: false
-          display: Haftungsausschuss
-          localizable: true
-      -
-        handle: privacy_topline
-        field:
-          type: text
-          display: 'Topline Datenschutz'
-          width: 50
-          localizable: true
-      -
-        handle: privacy
-        field:
-          type: bard
-          buttons:
-            - h2
-            - h3
-            - bold
-            - italic
-            - unorderedlist
-            - orderedlist
-            - removeformat
-            - quote
-            - anchor
-          style: sans
-          spellcheck: true
-          allow_source: true
-          allow_internal_links: true
-          link_noopener: false
-          link_noreferrer: false
-          target_blank: false
-          semantic_elements: true
-          restrict_assets: false
-          display: Datenschutz
-          localizable: true
-      -
-        handle: AGB_topline
-        field:
-          type: text
-          display: 'Topline AGB'
-          localizable: true
-      -
-        import: downloads
   images:
     display: Grafiken
     fields:
@@ -338,10 +230,20 @@ sections:
         field:
           type: text
           display: 'Button: Zustimmung widerrufen (Footer)'
-          instructions: 'Erscheint im Footer unter dem Datenschutz-Text, sobald Videos akzeptiert wurden.'
+          instructions: 'Erscheint im Footer, sobald Videos akzeptiert wurden.'
           localizable: true
           width: 50
           default: 'Drittanbieter-Videos nicht mehr laden'
+      -
+        handle: privacy_page
+        field:
+          type: entries
+          display: Datenschutzseite
+          instructions: 'Wird im Hinweis vor eingebetteten Videos verlinkt.'
+          collections:
+            - pages
+          max_items: 1
+          width: 50
   embed_codes:
     display: 'Embed Codes'
     fields:

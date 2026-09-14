@@ -2,11 +2,10 @@
 // are registered in a <script> at the end of their Antlers file. Alpine itself
 // ships with Livewire.
 import './project-card'
-import './overlay'
 import './video-consent'
 import './video-player'
 
-// Vimeo player SDK for the Alpine components (intro showreel, video-player.js).
+// Vimeo player SDK for the videoPlayer component (video-player.js).
 import VimeoPlayer from '@vimeo/player'
 window.Vimeo = { Player: VimeoPlayer }
 

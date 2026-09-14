@@ -39,40 +39,18 @@
     x-data="site"
     @site-close-menu.window="menuOpen = false"
     @site-close-overlays.window="partnersOpen = false"
-    @scroll.window.passive="if (window.scrollY > 100) showLogo()"
 >
     {{ template_content }}
     {{ livewire:scriptConfig }}
     {{#
-        Global Alpine component on <body>: menu and partners drawer state, intro
-            state. Section links are plain #anchors (see partials/navi); the browser
-            handles scrolling and the address bar.
+        Global Alpine component on <body>: menu and partners drawer state.
+        Section links are plain #anchors; the browser handles scrolling and the address bar.
     #}}
     <script>
         document.addEventListener('alpine:init', () => {
             Alpine.data('site', () => ({
                 menuOpen: false,
                 partnersOpen: false,
-                // the showreel layer was clicked away (intro only)
-                introDone: false,
-                // the navi logo was revealed on the start page (startSite(), showLogo())
-                logoRevealed: false,
-
-                // a site's start page: `/` or `/{lang}` (`/en`), trailing slash tolerated –
-                // the only pages with an intro that hides the navi logo
-                get isStartPage() {
-                    return /^\/([a-z]{2}\/?)?$/.test(location.pathname)
-                },
-
-                // logo (site name in the navi) shown: always off the start page (project and post pages
-                // have no intro), on the start page once revealed
-                get logoVisible() {
-                    return !this.isStartPage || this.logoRevealed
-                },
-
-                init() {
-                    if (location.hash) this.showLogo()
-                },
 
                 toggleMenu() {
                     this.menuOpen = !this.menuOpen
@@ -84,25 +62,12 @@
                     if (this.partnersOpen) this.menuOpen = false
                 },
 
-                // Following a section link: close the menu, the partners drawer and the
-                // overlays listening for site-close-overlays (gallery, legal texts).
+                // Following a navi link: close the menu, the partners drawer and the
+                // overlays listening for site-close-overlays (gallery).
                 closeOverlays() {
                     this.menuOpen = false
                     this.partnersOpen = false
                     this.$dispatch('site-close-overlays')
-                },
-
-                // Clicking the showreel's logo layer fades it out and the sound button
-                // and arrow in (v2 behaviour); the navi logo comes along.
-                startSite() {
-                    this.introDone = true
-                    this.logoRevealed = true
-                },
-
-                // Scrolling, a #hash deep link or the arrow only reveal the logo –
-                // the showreel layer stays until it is clicked.
-                showLogo() {
-                    this.logoRevealed = true
                 },
             }))
         })

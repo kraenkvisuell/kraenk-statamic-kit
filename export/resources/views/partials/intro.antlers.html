@@ -1,47 +1,19 @@
-{{# `intro` component (below): showreel player (partials/intro/movie), sound toggle, arrow pulse. Content comes from the page's intro fieldset (resources/fieldsets/intro.yaml: showreel, intro_headline, intro_text, downloads, downloadscta); the Vimeo key is read from the movie partial's data-key. introDone/startSite()/showLogo() come from the global `site` component: clicking the layer starts the site, the arrow only scrolls. #}}
+{{# `intro` component (below): background video (partials/intro/video), pulsing "scroll down" arrow to the intro text. Content comes from the page's intro fieldset (resources/fieldsets/intro.yaml: video, intro_headline, intro_text, cta). #}}
 <div
     x-data="intro"
-    @click="startSite()"
     class="intro w-screen overflow-hidden z-20 text-white mt-12.5 h-[calc(100dvh_-_50px)] tablet:mt-17.5 tablet:h-[calc(100dvh_-_70px)]"
 >
-    <div
-        :class="{ 'is-faded-out': introDone }"
-        class="absolute top-0 left-0 w-screen h-screen z-20 bg-overlay transition-opacity duration-1200 ease-in-out is-faded-out:opacity-0"
-    ></div>
-
-    {{ partial:intro/intro-logo }}
     <div class="w-full h-full z-10">
-        {{ partial:intro/movie }}
-    </div>
-
-    {{# sound toggle: two icon layers switched by .is-on #}}
-    <div
-        :class="{ 'is-faded-in': introDone, 'is-on': soundOn }"
-        @click.stop="toggleSound()"
-        class="
-        absolute top-1 right-2 z-100 w-10 h-10 cursor-pointer
-        hidden tablet:block opacity-0 transition-opacity duration-1200 ease-in-out tablet:is-faded-in:opacity-100
-    "
-    >
-        <div
-            class="absolute inset-0 bg-center bg-no-repeat bg-size-[18px_auto] in-[.is-on]:hidden"
-            style="background-image:url('/images/sound-on.svg')"
-        ></div>
-        <div
-            class="absolute inset-0 bg-center bg-no-repeat bg-size-[18px_auto] hidden in-[.is-on]:block"
-            style="background-image:url('/images/sound-off.svg')"
-        ></div>
+        {{ partial:intro/video }}
     </div>
 
     <div class="absolute bottom-5 left-0 w-screen h-7.5 z-100 flex items-center justify-center">
         <a
             href="#intro"
             title="Go to Intro"
-            :class="{ 'is-faded-in': introDone, active: arrowActive }"
-            @click.stop="showLogo()"
+            :class="{ active: arrowActive }"
             class="
                 block w-7.5 h-7.5 z-100 cursor-pointer
-                opacity-30 transition-opacity duration-1200 ease-in-out is-faded-in:opacity-100
                 before:content-[''] before:absolute before:left-0 before:top-[calc(50%_-_3px)] before:w-1/2 before:h-1.25 before:bg-white before:transition-all before:duration-400 before:ease-in-out
                 after:content-[''] after:absolute after:left-1/2 after:top-[calc(50%_-_3px)] after:w-1/2 after:h-1.25 after:bg-white after:transition-all after:duration-400 after:ease-in-out
                 is-active:before:left-1 is-active:before:top-[calc(75%_-_3px)] is-active:before:rotate-45
@@ -71,16 +43,10 @@
         >
             {{ page:intro_text }}
         </div>
-        {{ if page:downloads }}
+        {{ if page:cta }}
             <div class="editor-content is-faded-in">
                 <br><br>
-                {{ partial:downloads :downloads="page:downloads" }}
-            </div>
-        {{ /if }}
-        {{ if page:downloadscta }}
-            <div class="editor-content is-faded-in">
-                <br><br>
-                {{ partial:downloadscta :downloads="page:downloadscta" }}
+                {{ partial:cta :cta="page:cta" }}
             </div>
         {{ /if }}
     </div>
@@ -98,43 +64,13 @@
     document.addEventListener('alpine:init', () => {
         Alpine.data('intro', () => ({
             arrowActive: false,
-            soundOn: false,
-            vimeo: null,
 
             init() {
-                this.startShowreel()
-
                 // nudge the "scroll down" arrow every 4 seconds
                 setInterval(() => {
                     this.arrowActive = true
                     setTimeout(() => this.arrowActive = false, 1000)
                 }, 4000)
-            },
-
-            // Vimeo showreel as a muted background player (`Vimeo` comes from site.js, the key from the movie partial's data-key);
-            // a local file is a plain <video> in the markup. Sizing is CSS, see partials/intro/movie.
-            startShowreel() {
-                if (!this.$refs.vimeo) return
-
-                const key = this.$refs.vimeo.dataset.key ?? ''
-
-                this.vimeo = new Vimeo.Player(this.$refs.vimeo, {
-                    ...(key.startsWith('http') ? {
-                        url: key
-                    } : {
-                        id: Number(key)
-                    }),
-                    background: true,
-                    autoplay: true,
-                    muted: true,
-                })
-            },
-
-            toggleSound() {
-                this.soundOn = !this.soundOn
-
-                this.vimeo?.setVolume(this.soundOn ? 0.7 : 0)
-                if (this.$refs.video) this.$refs.video.muted = !this.soundOn
             },
         }))
     })

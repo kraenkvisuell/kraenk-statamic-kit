@@ -159,7 +159,7 @@ class Invalidator extends DefaultInvalidator
 
     /**
      * Global sets render through the layout on every page (contact section,
-     * footer, legal texts). The default invalidator only flushes URLs listed in
+     * footer, video consent). The default invalidator only flushes URLs listed in
      * the config rules, so without this a global edit would silently serve
      * stale pages everywhere.
      */

@@ -51,9 +51,7 @@
  * `opacity-0 is-faded-in:opacity-100`.
  */
 @custom-variant is-faded-in (&.is-faded-in);
-@custom-variant is-faded-out (&.is-faded-out);
 @custom-variant is-hidden (&.is-hidden);
-@custom-variant is-on (&.is-on);                 /* intro sound toggle */
 @custom-variant on (&.on);                       /* partners panel */
 @custom-variant is-active (&.active);            /* navi opener, intro arrow */
 @custom-variant menu-open (&.open);              /* navi menu wrapper */

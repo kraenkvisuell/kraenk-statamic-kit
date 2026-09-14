@@ -1,14 +1,5 @@
 title: Website
 sections:
-  main:
-    display: Hauptseite
-    fields:
-      -
-        handle: site_name
-        field:
-          type: text
-          display: 'Website Name'
-          instructions: 'Der Name der Website'
   address:
     display: Kontakt
     fields:

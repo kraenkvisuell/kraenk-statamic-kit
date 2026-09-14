@@ -12,6 +12,7 @@ use Kraenkvisuell\StatamicKit\Database\Seeders\DemoPartnersSeeder;
 use Kraenkvisuell\StatamicKit\Database\Seeders\DemoPostsSeeder;
 use Kraenkvisuell\StatamicKit\Database\Seeders\DemoProjectsSeeder;
 use Kraenkvisuell\StatamicKit\Database\Seeders\SeoDefaultsSeeder;
+use Kraenkvisuell\StatamicKit\Database\Seeders\SiteSettingsSeeder;
 use Kraenkvisuell\StatamicKit\Database\Seeders\TestUserSeeder;
 use Statamic\Facades\Collection;
 use Statamic\Facades\GlobalSet;
@@ -22,8 +23,8 @@ use function Laravel\Prompts\confirm;
 /**
  * Sets a freshly installed site up to the point where the control panel and
  * the starter website work: the steps in `handle()` run in order (sites,
- * demo pages, blog posts, projects and partners, SEO Pro site defaults, test
- * user),
+ * demo pages, site settings, blog posts, projects and partners, SEO Pro site
+ * defaults, test user),
  * each one idempotent; add further steps at the end. The test user
  * (test@kraenk.de / password, super) is only seeded in the local and staging
  * environments; elsewhere add your login with `php please make:user --super`.
@@ -48,7 +49,7 @@ use function Laravel\Prompts\confirm;
     {--force : Start over: drop all tables and migrate fresh first (local and staging only)}
     {--multisite : Keep both sites (default at / with /de/… routes, en at /en) without asking}
     {--single-site : Reduce the site to the default site without language prefix, without asking}')]
-#[Description('Set up a fresh site: choose single- or multisite, seed the demo pages, posts, projects, partners, SEO defaults and the test user')]
+#[Description('Set up a fresh site: choose single- or multisite, seed the demo pages, site settings, posts, projects, partners, SEO defaults and the test user')]
 class Init extends Command
 {
     protected array $freshEnvironments = ['local', 'staging'];
@@ -79,6 +80,9 @@ class Init extends Command
 
         $this->components->info('Seeding the demo pages and navigations');
         $this->call('db:seed', ['--class' => DemoPagesSeeder::class]);
+
+        $this->components->info('Seeding the site settings');
+        $this->call('db:seed', ['--class' => SiteSettingsSeeder::class]);
 
         $this->components->info('Seeding the demo blog posts, projects and partners');
         $this->call('db:seed', ['--class' => DemoPostsSeeder::class]);

@@ -1,0 +1,23 @@
+# Creates a GitHub Release for every pushed v* tag, with notes generated from the
+# commits since the previous tag. Tags alone are enough for Packagist; the release
+# is what the repo sidebar and the "Releases" page show.
+#
+# Lives in the sandbox's package/ folder and is exported to the kit repo root.
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create the release for the pushed tag
+        run: gh release create "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --title "$GITHUB_REF_NAME" --generate-notes
+        env:
+          GH_TOKEN: ${{ github.token }}

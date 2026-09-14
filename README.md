@@ -82,10 +82,10 @@ The kit is developed inside a *sandbox* site (a "dummy" Statamic site), never in
 3. **Export and publish.**
 
    ```bash
-   php please starter-kit:export ~/Code/kraenk-statamic-kit --clear
+   composer export   # php please starter-kit:export ../kraenk-statamic-kit --clear, then copies package/.github over
    cd ~/Code/kraenk-statamic-kit && git add -A && git commit -m "…" && git push
    ```
 
-   `--clear` empties the clone (except `.git`) before writing, so removed files disappear too. `starter-kit.yaml` is written with the dependency versions from the sandbox's `composer.json`. Packagist updates from GitHub (auto-update hook), so sites pick the change up with `composer update kraenkvisuell/kraenk-statamic-kit` (package code). Tag releases as `vX.Y.Z` and push the tag; `.github/workflows/release.yml` (exported from the sandbox's `package/`) then creates the GitHub Release with generated notes.
+   `--clear` empties the clone (except `.git`) before writing, so removed files disappear too. `starter-kit.yaml` is written with the dependency versions from the sandbox's `composer.json`. Packagist updates from GitHub (auto-update hook), so sites pick the change up with `composer update kraenkvisuell/kraenk-statamic-kit` (package code). Tag releases as `vX.Y.Z` and push the tag; `.github/workflows/release.yml` then creates the GitHub Release with generated notes. The exporter skips dot-files in `package/`, which is why `composer export` copies `package/.github` separately.
 
 Rules of thumb: whether a file belongs in `src/` or in `export_paths` depends on who should be able to change it later – the kit (`src/`) or the site (`export_paths`). Anything in neither place is not part of the kit.

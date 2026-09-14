@@ -15,7 +15,7 @@ document.addEventListener('alpine:init', () => {
         isOpen: false,
 
         open() {
-            this.$dispatch('site-close-overlays') // other overlays, awards drawer – before isOpen so we don't close ourselves
+            this.$dispatch('site-close-overlays') // other overlays, partners drawer – before isOpen so we don't close ourselves
             this.isOpen = true
             lockPage(true)
         },

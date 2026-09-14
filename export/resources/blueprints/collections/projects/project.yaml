@@ -48,16 +48,6 @@ sections:
           taxonomies:
             - clients
       -
-        handle: own_directors
-        field:
-          type: entries
-          max_items: '99'
-          mode: tags
-          display: 'Team Directors'
-          width: 50
-          collections:
-            - team
-      -
         handle: year
         field:
           type: text
@@ -110,8 +100,8 @@ sections:
           localizable: true
       -
         import: downloads
-  film:
-    display: Film
+  media:
+    display: Medien
     fields:
       -
         handle: key
@@ -146,16 +136,16 @@ sections:
           restrict: false
           max_files: 1
           width: 50
-          display: Thumb-Filmchen
+          display: Thumb-Video
       -
         handle: similar
         field:
           type: entries
           max_items: '99'
           mode: panes
-          display: 'Ähnliche Filme'
+          display: 'Ähnliche Projekte'
           collections:
-            - portfolio
+            - projects
       -
         handle: images
         field:
@@ -165,16 +155,16 @@ sections:
           restrict: false
           max_files: 99
           display: Bilder
-  awards:
-    display: Awards
+  partners:
+    display: Partner
     fields:
       -
-        handle: awards
+        handle: partners
         field:
           type: replicator
           sets:
-            award:
-              display: Award
+            partner:
+              display: Partner
               fields:
                 -
                   handle: title
@@ -201,6 +191,6 @@ sections:
                     max_files: 1
                     width: 50
                     display: 'Icon groß'
-          display: Awards
-title: Film
+          display: Partner
+title: Project
 taxonomies: false

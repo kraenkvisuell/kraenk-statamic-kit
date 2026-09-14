@@ -30,7 +30,7 @@
     --color-off: #b3b398;            /* $grey-medium – off text (language switch) */
     --color-important: #707870;      /* $tinted-grey – important/blockquote text */
     --color-footer-text: #838f82;    /* $green-grey */
-    --color-navi: #f0f2f1;           /* $grey-lightest – navi/awards background */
+    --color-navi: #f0f2f1;           /* $grey-lightest – navi/partners background */
     --color-footer-bg: #1c1a1b;      /* $grey-dark */
     --color-card-1: #faf9f7;
     --color-card-2: #f0f2f1;
@@ -54,7 +54,7 @@
 @custom-variant is-faded-out (&.is-faded-out);
 @custom-variant is-hidden (&.is-hidden);
 @custom-variant is-on (&.is-on);                 /* intro sound toggle */
-@custom-variant on (&.on);                       /* awards panel */
+@custom-variant on (&.on);                       /* partners panel */
 @custom-variant is-active (&.active);            /* navi opener, intro arrow */
 @custom-variant menu-open (&.open);              /* navi menu wrapper */
 @custom-variant playing-by-scroll (:where(.playing-by-scroll) &);

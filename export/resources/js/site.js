@@ -1,7 +1,7 @@
 // Alpine components that need no Antlers live in these modules; components that do
 // are registered in a <script> at the end of their Antlers file. Alpine itself
 // ships with Livewire.
-import './film-card'
+import './project-card'
 import './overlay'
 import './video-consent'
 import './video-player'

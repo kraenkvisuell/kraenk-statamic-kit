@@ -1,34 +1,30 @@
 {{#
-    Film page – one portfolio entry at /portfolio/{slug} (collection route,
-    template set in content/collections/portfolio.yaml). Until 2026-09-06 this
-    was a popup dropped over the single page; the layout is kept (the shared
-    page header with its back link replaces the popup's close button), the
-    content is rendered server-side now.
+    Project page – one projects entry at /projects/{slug} (collection route,
+    template set in content/collections/projects.yaml): video player, partner
+    badges, stills, similar projects, description and facts.
     Head metadata comes from SEO Pro (layout); the navi logo shows right away (the `site` component checks the URL).
-    Components: x-fade, filmCard (similar films), videoConsent + videoPlayer (partials/video/player), backLink (partials/page/header).
+    Components: x-fade, projectCard (similar projects), videoConsent + videoPlayer (partials/video/player), backLink (partials/page/header).
 #}}
 {{ partial:navi }}
 
 {{# below the fixed navi (50/70px) #}}
 <main class="w-full pt-12.5 tablet:pt-17.5">
-    {{ partial:page/header back_to="portfolio" back_set="portfolio" }}
+    {{ partial:page/header back_to="projects" back_set="projects" }}
         {{ title }}{{ if categories }} - {{ categories }}{{ title }}{{ if !last }} / {{ /if }}{{ /categories }}{{ /if }}
     {{ /partial:page/header }}
 
     {{# player, capped so the header and the top of the text stay in view #}}
     {{ partial:video/player :key="key" :ratio="ratio" autoplay="true" classes="mb-9 max-h-[calc(100vh_-_250px)]" }}
 
-    {{ if awards }}
+    {{ if partners }}
         <div class="-mt-17.5 w-full h-27.5 overflow-visible text-right pr-4.25 tablet:pr-9.25 notebook:pr-13">
-            {{ awards }}
+            {{ partners }}
                 {{ if large_icon }}
                     <div class="inline-block w-15 ml-5" title="{{ (title) | sanitize }}">
                         <img src="{{ glide :src="large_icon" width="200" }}" alt="{{ (large_icon.alt or title) | sanitize }}" class="w-full h-auto">
                     </div>
-                {{ /if }}| sanitize }}">
-                    <img src="{{ large_icon }}" alt="{{ (large_icon.alt or title) | sanitize }}" class="w-full h-auto">
-                </div>
-            {{ /awards }}
+                {{ /if }}
+            {{ /partners }}
         </div>
     {{ /if }}
 
@@ -56,12 +52,12 @@
 
             {{ if similar }}
                 <div class="mb-12.5">
-                    <h2 class="{{ _subheadline }}">{{ trans:frontend.similar_films }}</h2>
+                    <h2 class="{{ _subheadline }}">{{ trans:frontend.similar_projects }}</h2>
 
-                    <div class="small-films tablet:grid tablet:grid-cols-2">
+                    <div class="small-projects tablet:grid tablet:grid-cols-2">
                         {{ similar }}
                             {{ if id != page:id }}
-                                {{ partial:portfolio/film }}
+                                {{ partial:projects/project }}
                             {{ /if }}
                         {{ /similar }}
                     </div>
@@ -91,13 +87,6 @@
                     <div class="flex items-start">
                         <dt class="w-37.5 shrink-0">{{ trans:frontend.created }}:</dt>
                         <dd>{{ year }}</dd>
-                    </div>
-                {{ /if }}
-
-                {{ if own_directors }}
-                    <div class="flex items-start">
-                        <dt class="w-37.5 shrink-0">Director:</dt>
-                        <dd>{{ own_directors }}{{ title }}{{ if !last }} / {{ /if }}{{ /own_directors }}</dd>
                     </div>
                 {{ /if }}
 

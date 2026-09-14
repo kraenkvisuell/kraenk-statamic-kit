@@ -82,8 +82,8 @@ sections:
           display: Inhalt
           localizable: true
           sets:
-            film:
-              display: Film
+            video:
+              display: Video
               fields:
                 -
                   handle: url

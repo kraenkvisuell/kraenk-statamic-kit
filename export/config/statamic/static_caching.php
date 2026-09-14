@@ -100,21 +100,18 @@ return [
         // page-builder sets or reference fields change.
         'content_graph' => [
             // Entries of this collection render other entries and terms (cards, "similar" entries).
-            'referencing_collection' => 'portfolio',
+            'referencing_collection' => 'projects',
             // collection => field on the referencing collection holding that collection's entry ids
             'references' => [
-                'team' => 'own_directors',
-                'portfolio' => 'similar',
+                'projects' => 'similar',
             ],
             // collection => page-builder set(s) listing it
             'listing_sets' => [
                 'blog' => ['blog'],
-                'jobs' => ['team'],
-                'team' => ['team'],
-                'portfolio' => ['portfolio'],
+                'projects' => ['projects'],
             ],
             // Collections rendered on every page: a save flushes everything.
-            'global_collections' => ['awards'],
+            'global_collections' => ['partners'],
             // Collections whose blueprint carries the page builder, and its field handle.
             'builder_collections' => ['pages'],
             'builder_field' => 'main_content',

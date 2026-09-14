@@ -1,6 +1,6 @@
-title: Work
-route: '/portfolio/{slug}'
-template: film
+title: Projects
+route: '/projects/{slug}'
+template: project
 sites:
   - default
   - en

@@ -1,5 +1,5 @@
 /*
- * Film card (partials/portfolio/film): the thumb video plays on hover, and while
+ * Project card (partials/projects/project): the thumb video plays on hover, and while
  * cards are in view one of them plays "by scroll" at a time, switching every
  * 3 s in document order (was small-films.js). Lives here instead of the partial
  * because the partial renders once per card and needs no Antlers; imported by
@@ -57,7 +57,7 @@ const inView = new IntersectionObserver((entries) => {
 })
 
 document.addEventListener('alpine:init', () => {
-    Alpine.data('filmCard', () => ({
+    Alpine.data('projectCard', () => ({
         hovered: false,
         byScroll: false, // → playing-by-scroll class, fades the video in like a hover
 

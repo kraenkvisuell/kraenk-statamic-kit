@@ -1,10 +1,10 @@
 {{#
-    Film card, linking to the film page (/portfolio/{slug}). Also rendered on the
-    film page ("similar films"), where the in-[.small-films] variants shrink the titles.
-    `filmCard` component (resources/js/film-card.js): thumb video on hover / by scroll.
+    Project card, linking to the project page (/projects/{slug}). Also rendered on the
+    project page ("similar projects"), where the in-[.small-projects] variants shrink the titles.
+    `projectCard` component (resources/js/project-card.js): thumb video on hover / by scroll.
 #}}
 <div
-    x-data="filmCard"
+    x-data="projectCard"
     @mouseenter="hover(true)"
     @mouseleave="hover(false)"
     :class="{ 'playing-by-scroll': byScroll }"
@@ -16,7 +16,7 @@
     {{ if still.alt }}<span class="sr-only">{{ still.alt | sanitize }}</span>{{ /if }}{{# the still is a CSS background #}}
     <div class="absolute inset-0">
         <div class="z-10 text-white transition-all duration-300 ease-in-out pt-[12%] pr-[3%] pl-5 tablet:pl-10 notebook:pl-17.5 [&_a]:underline group-hover:opacity-0">
-            <div class="italic text-[0.55rem] mb-[0.3em] tablet:text-[0.75rem] tablet:mb-[0.6em] tablet:in-[.small-films]:text-[0.55rem]">
+            <div class="italic text-[0.55rem] mb-[0.3em] tablet:text-[0.75rem] tablet:mb-[0.6em] tablet:in-[.small-projects]:text-[0.55rem]">
                 {{ categories }}
                     {{ title }}
                     {{ if !last }}
@@ -28,7 +28,7 @@
             <div class="
                 font-headline font-bold uppercase tracking-wider leading-[1.4] mb-[0.5em] tablet:mb-[1em]
                 text-[1.3rem] tablet:text-[0.8rem] tl:text-[1.3rem] desktop:text-[0.8rem] cinema:text-[1.3rem] giant:text-[0.8rem]
-                in-[.small-films]:text-[0.8rem] tl:in-[.small-films]:text-[0.8rem] cinema:in-[.small-films]:text-[0.8rem]
+                in-[.small-projects]:text-[0.8rem] tl:in-[.small-projects]:text-[0.8rem] cinema:in-[.small-projects]:text-[0.8rem]
             ">
                 {{ clients }}
                     {{ title }}
@@ -41,22 +41,20 @@
             <div class="
                 italic leading-normal
                 text-[0.75rem] tl:text-[0.9rem] desktop:text-[0.75rem] cinema:text-[0.9rem] giant:text-[0.75rem]
-                tl:in-[.small-films]:text-[0.75rem] cinema:in-[.small-films]:text-[0.75rem]
+                tl:in-[.small-projects]:text-[0.75rem] cinema:in-[.small-projects]:text-[0.75rem]
             ">
                 {{ headline|nl2br or title }}
             </div>
         </div>
 
         <div class="absolute top-0 right-0 z-4 w-full text-right pr-[1%]">
-            {{ awards }}
+            {{ partners }}
                 {{ if small_icon }}
                     <div class="inline-block w-[9%] mr-[3%]" title="{{ (title) | sanitize }}">
                         <img src="{{ glide :src="small_icon" width="200" }}" alt="{{ (small_icon.alt or title) | sanitize }}" class="w-full h-auto">
                     </div>
-                {{ /if }}| sanitize }}">
-                    <img src="{{ small_icon }}" alt="{{ (small_icon.alt or title) | sanitize }}" class="w-full h-auto">
-                </div>
-            {{ /awards }}
+                {{ /if }}
+            {{ /partners }}
         </div>
 
         <a href="{{ url }}" class="absolute inset-0 z-10 block" aria-label="{{ (title) | sanitize }}"></a>

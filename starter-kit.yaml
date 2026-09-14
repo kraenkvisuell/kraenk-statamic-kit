@@ -18,12 +18,10 @@ export_paths:
   - config/statamic/users.php
   - database/migrations
   - content/assets/main.yaml
-  - content/collections/awards.yaml
   - content/collections/blog.yaml
-  - content/collections/jobs.yaml
   - content/collections/pages.yaml
-  - content/collections/portfolio.yaml
-  - content/collections/team.yaml
+  - content/collections/partners.yaml
+  - content/collections/projects.yaml
   - content/globals/site_settings.yaml
   - content/navigation/footer.yaml
   - content/navigation/main.yaml

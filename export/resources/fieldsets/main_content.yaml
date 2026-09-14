@@ -11,8 +11,8 @@ fields:
         neue_setgruppe:
           display: 'Neue Setgruppe'
           sets:
-            portfolio:
-              display: Portfolio
+            projects:
+              display: Projekte
               icon: fieldtype-video
               fields:
                 -
@@ -91,45 +91,6 @@ fields:
                     container: main
                     folder: /
                     max_files: 1
-                    localizable: false
-            team:
-              display: Team
-              icon: users
-              fields:
-                -
-                  import: set_navigation
-                -
-                  handle: topline
-                  field:
-                    type: text
-                    display: Topline
-                    instructions: 'Optional – kleine Zeile über der Überschrift.'
-                    width: 50
-                    localizable: false
-                -
-                  handle: headline
-                  field:
-                    type: text
-                    display: Überschrift
-                    validate:
-                      - required
-                    width: 50
-                    localizable: false
-                -
-                  handle: copy
-                  field:
-                    type: bard
-                    display: 'Text (optional)'
-                    buttons:
-                      - bold
-                      - italic
-                      - anchor
-                    style: sans
-                    spellcheck: true
-                    allow_source: false
-                    allow_internal_links: true
-                    semantic_elements: false
-                    restrict_assets: false
                     localizable: false
             blog:
               display: Blog

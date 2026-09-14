@@ -1,12 +1,12 @@
 {{#
-    Embedded video (film page, blog "film" set) behind a consent gate. The
+    Embedded video (project page, blog "video" set) behind a consent gate. The
     `videoConsent` component (resources/js/video-consent.js) shows the notice
     and the accept button from site_settings (video_consent_text/_button) until
     third-party videos are accepted (localStorage); then the `videoPlayer`
     component (resources/js/video-player.js) inserts the Vimeo/YouTube iframe.
     The privacy link opens the footer's datenschutz overlay (partials/footer).
     Deliberately client-side: the HTML is the same for every visitor, so the
-    page stays static-cacheable. Fills the width at the film's ratio (default 16:9).
+    page stays static-cacheable. Fills the width at the video's ratio (default 16:9).
     Params: key (Vimeo/YouTube URL), ratio ("4:3", optional), autoplay (optional),
     classes (extra classes for the wrapper, e.g. margins / max height).
 #}}

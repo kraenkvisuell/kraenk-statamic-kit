@@ -38,13 +38,13 @@
 <body
     x-data="site"
     @site-close-menu.window="menuOpen = false"
-    @site-close-overlays.window="awardsOpen = false"
+    @site-close-overlays.window="partnersOpen = false"
     @scroll.window.passive="if (window.scrollY > 100) showLogo()"
 >
     {{ template_content }}
     {{ livewire:scriptConfig }}
     {{#
-        Global Alpine component on <body>: menu and awards drawer state, intro
+        Global Alpine component on <body>: menu and partners drawer state, intro
             state. Section links are plain #anchors (see partials/navi); the browser
             handles scrolling and the address bar.
     #}}
@@ -52,7 +52,7 @@
         document.addEventListener('alpine:init', () => {
             Alpine.data('site', () => ({
                 menuOpen: false,
-                awardsOpen: false,
+                partnersOpen: false,
                 // the showreel layer was clicked away (intro only)
                 introDone: false,
                 // the navi logo was revealed on the start page (startSite(), showLogo())
@@ -64,7 +64,7 @@
                     return /^\/([a-z]{2}\/?)?$/.test(location.pathname)
                 },
 
-                // logo (site name in the navi) shown: always off the start page (film, job, post pages
+                // logo (site name in the navi) shown: always off the start page (project and post pages
                 // have no intro), on the start page once revealed
                 get logoVisible() {
                     return !this.isStartPage || this.logoRevealed
@@ -76,19 +76,19 @@
 
                 toggleMenu() {
                     this.menuOpen = !this.menuOpen
-                    if (this.menuOpen) this.awardsOpen = false
+                    if (this.menuOpen) this.partnersOpen = false
                 },
 
-                toggleAwards() {
-                    this.awardsOpen = !this.awardsOpen
-                    if (this.awardsOpen) this.menuOpen = false
+                togglePartners() {
+                    this.partnersOpen = !this.partnersOpen
+                    if (this.partnersOpen) this.menuOpen = false
                 },
 
-                // Following a section link: close the menu, the awards drawer and the
+                // Following a section link: close the menu, the partners drawer and the
                 // overlays listening for site-close-overlays (gallery, legal texts).
                 closeOverlays() {
                     this.menuOpen = false
-                    this.awardsOpen = false
+                    this.partnersOpen = false
                     this.$dispatch('site-close-overlays')
                 },
 

@@ -27,7 +27,7 @@ document.addEventListener('alpine:init', () => {
         open({ gallery, index }) {
             if (gallery !== name) return
 
-            this.$dispatch('site-close-overlays') // awards drawer, before isOpen so we don't close ourselves
+            this.$dispatch('site-close-overlays') // partners drawer, before isOpen so we don't close ourselves
             this.isOpen = true
             lockPage(true)
 

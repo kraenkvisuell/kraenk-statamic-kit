@@ -27,21 +27,19 @@ class Invalidator extends DefaultInvalidator
 {
     /**
      * The collection whose entries render other entries and terms (cards on
-     * listing pages, "similar" entries on detail pages). Theme: films.
+     * listing pages, "similar" entries on detail pages). Theme: projects.
      */
-    protected string $referencingCollection = 'portfolio';
+    protected string $referencingCollection = 'projects';
 
     /**
      * Collection handle => field of the referencing collection that holds ids
      * of that collection's entries. Saving such an entry also invalidates every
-     * referencing entry that renders it. Theme: team members as directors,
-     * films as "similar films".
+     * referencing entry that renders it. Theme: projects as "similar projects".
      *
      * @var array<string, string>
      */
     protected array $references = [
-        'team' => 'own_directors',
-        'portfolio' => 'similar',
+        'projects' => 'similar',
     ];
 
     /**
@@ -54,19 +52,17 @@ class Invalidator extends DefaultInvalidator
      */
     protected array $listingSets = [
         'blog' => ['blog'],
-        'jobs' => ['team'],
-        'team' => ['team'],
-        'portfolio' => ['portfolio'],
+        'projects' => ['projects'],
     ];
 
     /**
-     * Collections rendered in an every-page region (theme: awards in the
+     * Collections rendered in an every-page region (theme: partners in the
      * layout). A saved entry flushes everything; these are typically routeless,
      * so the default invalidator would do nothing at all for them.
      *
      * @var list<string>
      */
-    protected array $globalCollections = ['awards'];
+    protected array $globalCollections = ['partners'];
 
     /**
      * Collections whose blueprint carries the page builder, i.e. whose entries

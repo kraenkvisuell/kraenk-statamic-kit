@@ -16,21 +16,6 @@ tabs:
               validate:
                 - required
           -
-            handle: slug
-            field:
-              type: text
-              localizable: true
-              validate: 'max:200'
-              display: Slug
-              width: 50
-          -
-            handle: published
-            field:
-              type: toggle
-              width: 50
-              display: Veröffentlicht
-              localizable: false
-          -
             handle: date
             field:
               type: date
@@ -41,16 +26,6 @@ tabs:
               localizable: false
               validate:
                 - required
-          -
-            handle: image
-            field:
-              type: assets
-              container: main
-              folder: /
-              max_files: 1
-              width: 50
-              display: Bild
-              localizable: false
           -
             handle: teaser
             field:
@@ -67,92 +42,21 @@ tabs:
               semantic_elements: false
               restrict_assets: false
               display: Teaser
+              instructions: 'Kurztext in der Blog-Übersicht'
               localizable: true
           -
-            handle: copy
-            field:
-              type: bard
-              buttons:
-                - h3
-                - bold
-                - italic
-                - anchor
-                - quote
-                - unorderedlist
-                - orderedlist
-                - assets
-              style: sans
-              spellcheck: true
-              allow_source: true
-              allow_internal_links: true
-              semantic_elements: false
-              restrict_assets: false
-              display: Inhalt
-              localizable: true
-              sets:
-                video:
-                  display: Video
-                  fields:
-                    -
-                      handle: url
-                      field:
-                        type: text
-                        instructions: 'URL inkl. "https://" am Anfang'
-                        display: 'Vimeo- oder YouTube-URL'
-                        width: 50
-                    -
-                      handle: ratio
-                      field:
-                        type: text
-                        instructions: 'Z.B. "4:3" - nur notwendig wenn nicht 16:9'
-                        width: 50
-                        display: Original-Seitenverhältnis
-                image:
-                  display: Bild
-                  fields:
-                    -
-                      handle: file
-                      field:
-                        type: assets
-                        container: main
-                        folder: /
-                        restrict: false
-                        width: 50
-                        display: Bild
-                        max_files: 1
-                    -
-                      handle: caption
-                      field:
-                        type: textarea
-                        width: 50
-                        display: Caption
+            import: main_content
+  sidebar:
+    display: Sidebar
+    sections:
+      -
+        fields:
           -
-            handle: downloads
+            handle: slug
             field:
-              type: replicator
+              type: slug
               localizable: true
-              display: Downloads
-              sets:
-                download:
-                  display: Download
-                  fields:
-                    -
-                      handle: file
-                      field:
-                        type: assets
-                        container: main
-                        folder: /
-                        restrict: false
-                        max_files: 1
-                        width: 50
-                        display: Datei
-                    -
-                      handle: title
-                      field:
-                        type: text
-                        instructions: 'optional, wenn leer wird Dateiname angezeigt'
-                        width: 50
-                        display: Titel
+              validate: 'max:200'
   'SEO Meta':
     display: 'SEO Meta'
     sections:

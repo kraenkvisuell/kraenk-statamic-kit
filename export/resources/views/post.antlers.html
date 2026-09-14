@@ -1,8 +1,9 @@
 {{#
     Blog post page – one blog entry at /blog/{slug} (collection route, template
     set in content/collections/blog.yaml), linked from the teasers in the blog
-    section. Was the post popup until 2026-09-06.
-    Head metadata comes from SEO Pro (layout); the navi logo shows right away (the `site` component checks the URL).
+    set: the page header with its back link, then the entry's main_content sets
+    like on a page.
+    Head metadata comes from SEO Pro (layout).
 #}}
 {{ partial:navi }}
 
@@ -12,27 +13,9 @@
         {{ title }}
     {{ /partial:page/header }}
 
-    {{# text left, image right on tablet-landscape and up (image first on phones) #}}
-    <article class="px-5 pb-12.5 tablet:px-10 notebook:px-17.5 tl:flex tl:flex-row-reverse tl:justify-between [&_:is(h2,h3,h4)]:text-[1em]">
-        {{ if image }}
-            <div class="mb-17.5 tl:mb-0 tl:w-[40%] tl:max-w-[800px]">
-                <img src="{{ glide :src="image" width="1600" }}" alt="{{ (image.alt or title) | sanitize }}" class="w-full h-auto">
-            </div>
-        {{ /if }}
-
-        <div class="tl:w-[55%] tl:max-w-[1024px]">
-            <div class="editor-content is-faded-in">
-                {{ copy }}
-                    {{ partial src="blog/copy-{type}" }}
-                {{ /copy }}
-
-                {{ if downloads }}
-                    <br>
-                    {{ partial:downloads :downloads="downloads" }}
-                {{ /if }}
-            </div>
-        </div>
-    </article>
+    {{ main_content scope="set" }}
+        {{ partial src="sets/{set.type}" }}
+    {{ /main_content }}
 
     {{ partial:contact from='page' }}
     {{ partial:footer }}

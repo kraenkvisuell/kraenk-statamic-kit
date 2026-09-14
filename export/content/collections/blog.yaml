@@ -12,5 +12,4 @@ sort_dir: desc
 inject:
   seo:
     description: '@seo:teaser'
-    image: '@seo:image'
     og_type: article

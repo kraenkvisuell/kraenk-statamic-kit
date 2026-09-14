@@ -8,14 +8,19 @@
     Deliberately client-side: the HTML is the same for every visitor, so the
     page stays static-cacheable. Fills the width at the video's ratio (default 16:9).
     Params: key (Vimeo/YouTube URL), ratio ("4:3", optional), still (asset shown
-    behind the notice until accepted, optional), autoplay (optional), classes
+    behind the notice until accepted; the placeholder image while none is selected), autoplay (optional), classes
     (extra classes for the wrapper, e.g. margins / max height).
 #}}
 {{ _ratio = ratio ?? "16:9" }}
+{{ if still }}
+    {{ _still = {glide :src="still" width="1600"} }}
+{{ else }}
+    {{ _still = "/placeholders/image01.jpg" }}
+{{ /if }}
 <div
     x-data="videoConsent"
     class="relative w-full bg-ink bg-cover bg-center overflow-hidden [&_iframe]:absolute [&_iframe]:inset-0 [&_iframe]:w-full [&_iframe]:h-full [&_iframe]:border-0 {{ classes }}"
-    style="aspect-ratio:{{ _ratio | replace(':', '/') }};{{ if still }}background-image:url('{{ glide :src="still" width="1600" }}'){{ /if }}"
+    style="aspect-ratio:{{ _ratio | replace(':', '/') }};background-image:url('{{ _still }}')"
 >
     <template x-if="accepted">
         <div

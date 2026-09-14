@@ -30,6 +30,7 @@ export_paths:
   - resources
   - lang
   - public/images
+  - public/placeholders
   - package.json
   - package-lock.json
   - vite.config.js

@@ -1,0 +1,20 @@
+{{#
+    An <img> for a single-image asset field, with the placeholder from
+    public/placeholders when the field is empty (so demo pages and unfinished
+    content still show a picture). Assets go through Glide; the placeholder is
+    a plain file. Params: image (asset, may be empty), width (Glide, default
+    1600), height + fit (optional, e.g. fit="crop_focal" for fixed boxes), alt
+    (fallback text when the asset has no alt), class, loading (default lazy).
+#}}
+{{ _width = width ?? "1600" }}
+{{ _loading = loading ?? "lazy" }}
+{{ if image }}
+    {{ if height }}
+        {{ _src = {glide :src="image" :width="_width" :height="height" :fit="fit"} }}
+    {{ else }}
+        {{ _src = {glide :src="image" :width="_width"} }}
+    {{ /if }}
+    <img src="{{ _src }}" alt="{{ (image:alt or alt) | sanitize }}" loading="{{ _loading }}" class="{{ class }}">
+{{ else }}
+    <img src="/placeholders/image01.jpg" alt="{{ alt | sanitize }}" loading="{{ _loading }}" class="{{ class }}">
+{{ /if }}

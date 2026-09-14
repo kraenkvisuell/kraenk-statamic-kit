@@ -86,6 +86,6 @@ The kit is developed inside a *sandbox* site (a "dummy" Statamic site), never in
    cd ~/Code/kraenk-statamic-kit && git add -A && git commit -m "…" && git push
    ```
 
-   `--clear` empties the clone (except `.git`) before writing, so removed files disappear too. `starter-kit.yaml` is written with the dependency versions from the sandbox's `composer.json`. Packagist updates from GitHub (auto-update hook), so sites pick the change up with `composer update kraenkvisuell/kraenk-statamic-kit` (package code) – tag releases once the kit is stable and switch sites from `dev-main` to a version constraint.
+   `--clear` empties the clone (except `.git`) before writing, so removed files disappear too. `starter-kit.yaml` is written with the dependency versions from the sandbox's `composer.json`. Packagist updates from GitHub (auto-update hook), so sites pick the change up with `composer update kraenkvisuell/kraenk-statamic-kit` (package code). Tag releases as `vX.Y.Z` and push the tag; `.github/workflows/release.yml` (exported from the sandbox's `package/`) then creates the GitHub Release with generated notes.
 
 Rules of thumb: whether a file belongs in `src/` or in `export_paths` depends on who should be able to change it later – the kit (`src/`) or the site (`export_paths`). Anything in neither place is not part of the kit.

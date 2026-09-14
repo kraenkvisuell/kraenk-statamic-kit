@@ -35,7 +35,7 @@
 
         & :is(p, ul, ol, table, blockquote) {
             font-family: var(--font-main);
-            font-weight: 300;
+            font-weight: 400;
             font-size: 0.9rem;
             font-style: italic;
             line-height: 1.5;
@@ -48,7 +48,7 @@
 
         :where(.is-footer) & :is(p, ul, ol, table, blockquote) {
             line-height: 1.6;
-            font-weight: 200;
+            font-weight: 400;
             letter-spacing: 0.05em;
 
             @variant tablet {

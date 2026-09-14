@@ -1,5 +1,6 @@
-/* Typekit: noto-serif (copy) + josefin-sans (headlines/navi) */
-@import url("https://use.typekit.net/itj0abl.css?v3");
+/* Google Fonts while designing: PT Sans (copy) + Domine (headlines/navi). Before
+   production the fonts are downloaded and served from this site (coding-guidelines). */
+@import url("https://fonts.googleapis.com/css2?family=Domine:wght@400..700&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 @import "tailwindcss";
 @import "./editor-content.css";
 
@@ -22,8 +23,8 @@
     --breakpoint-cinema: 1921px;
     --breakpoint-giant: 2500px;   /* giant-cinema */
 
-    --font-main: noto-serif, serif;
-    --font-headline: josefin-sans, sans-serif;
+    --font-main: "PT Sans", sans-serif;
+    --font-headline: Domine, serif;
 
     /* hsb() values from variables/_colors.scss, converted */
     --color-ink: #0a0b0d;            /* $black – text, dark backgrounds */
@@ -76,7 +77,7 @@
 
     body {
         font-family: var(--font-main);
-        font-weight: 300;
+        font-weight: 400;
         font-size: 0.9rem;
         color: var(--color-ink);
         overflow-x: hidden;

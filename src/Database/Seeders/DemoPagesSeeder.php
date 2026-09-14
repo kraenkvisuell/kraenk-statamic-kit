@@ -11,7 +11,8 @@ use Statamic\Facades\Site;
 /**
  * Demo pages for a fresh site: a start page, five main pages, an "area" (a
  * text-only navigation item) with three sub pages, and the footer pages
- * Impressum, Datenschutz and Kontakt. Every page is localized into every site
+ * Impressum and Datenschutz (contact is a jump to the contact section on
+ * every page, not a page). Every page is localized into every site
  * of the `pages` collection, placed in the collection tree (start page as root)
  * and in the `main` or `footer` navigation. The start page also gets the
  * `projects` and `blog` listing sets, so the seeded projects and posts show.
@@ -49,7 +50,6 @@ class DemoPagesSeeder extends DemoSeeder
     protected array $footerPages = [
         'impressum' => ['default' => 'Impressum', 'en' => 'Imprint'],
         'datenschutz' => ['default' => 'Datenschutz', 'en' => 'Privacy'],
-        'kontakt' => ['default' => 'Kontakt', 'en' => 'Contact'],
     ];
 
     public function run(): void

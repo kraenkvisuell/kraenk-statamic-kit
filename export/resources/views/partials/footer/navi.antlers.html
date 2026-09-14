@@ -2,12 +2,13 @@
     Footer link row from the `footer` navigation (content/navigation/footer.yaml,
     one tree per site, max_depth 1): legal pages, social profiles, external links.
     Renders nothing while the site's tree is empty; external items open in a new tab.
+    Sits in the footer's bottom row (partials/footer), which sets padding and type.
     Uses the global `site` component (layout): closeOverlays().
 #}}
 {{ _links = {nav:footer} }}
 
 {{ if _links }}
-    <nav aria-label="{{ trans:frontend.footer_navigation }}" class="flex flex-wrap gap-x-5 gap-y-2.5 px-5 pb-12.5 md:px-10 xl:px-17.5 font-headline font-bold uppercase tracking-wider text-[0.7rem] leading-none">
+    <nav aria-label="{{ trans:frontend.footer_navigation }}" class="flex flex-wrap gap-x-5 gap-y-2.5">
         {{ _links }}
             <a href="{{ url }}" class="hover:underline" @click="closeOverlays()"{{ if is_external }} target="_blank" rel="noopener"{{ /if }}>{{ title }}</a>
         {{ /_links }}

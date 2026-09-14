@@ -6,7 +6,7 @@ return [
     'table_prefix' => env('STATAMIC_ELOQUENT_PREFIX', ''),
 
     'addon_settings' => [
-        'driver' => 'file',
+        'driver' => 'eloquent',
         'model' => \Statamic\Eloquent\AddonSettings\AddonSettingsModel::class,
     ],
 

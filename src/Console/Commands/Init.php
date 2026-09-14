@@ -6,6 +6,8 @@ use Illuminate\Console\Attributes\Description;
 use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
 use Kraenkvisuell\StatamicKit\Database\Seeders\DemoPagesSeeder;
+use Kraenkvisuell\StatamicKit\Database\Seeders\DemoPostsSeeder;
+use Kraenkvisuell\StatamicKit\Database\Seeders\DemoProjectsSeeder;
 use Kraenkvisuell\StatamicKit\Database\Seeders\SeoDefaultsSeeder;
 use Statamic\Facades\User;
 
@@ -14,7 +16,7 @@ use function Laravel\Prompts\confirm;
 /**
  * Sets a freshly installed site up to the point where the control panel and
  * the starter website work: the steps in `handle()` run in order (demo pages,
- * SEO Pro site defaults, user), each one idempotent, and the last one always
+ * blog posts and projects, SEO Pro site defaults, user), each one idempotent, and the last one always
  * asks the person initializing the site for their own login. Add further
  * steps between the seeders and the user.
  *
@@ -25,7 +27,7 @@ use function Laravel\Prompts\confirm;
  * CI) skip the user step.
  */
 #[Signature('kit:init {--force : Start over: drop all tables and migrate fresh first (local and staging only)}')]
-#[Description('Set up a fresh site: seed the demo pages, navigations and SEO defaults, then create your user')]
+#[Description('Set up a fresh site: seed the demo pages, posts, projects and SEO defaults, then create your user')]
 class Init extends Command
 {
     protected array $freshEnvironments = ['local', 'staging'];
@@ -38,6 +40,10 @@ class Init extends Command
 
         $this->components->info('Seeding the demo pages and navigations');
         $this->call('db:seed', ['--class' => DemoPagesSeeder::class]);
+
+        $this->components->info('Seeding the demo blog posts and projects');
+        $this->call('db:seed', ['--class' => DemoPostsSeeder::class]);
+        $this->call('db:seed', ['--class' => DemoProjectsSeeder::class]);
 
         $this->components->info('Seeding the SEO Pro site defaults');
         $this->call('db:seed', ['--class' => SeoDefaultsSeeder::class]);

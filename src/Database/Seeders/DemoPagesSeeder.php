@@ -2,12 +2,9 @@
 
 namespace Kraenkvisuell\StatamicKit\Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 use Statamic\Contracts\Entries\Entry as EntryContract;
-use Statamic\Contracts\Structures\Structure;
 use Statamic\Facades\Collection;
-use Statamic\Facades\Entry;
 use Statamic\Facades\Nav;
 use Statamic\Facades\Site;
 
@@ -23,9 +20,11 @@ use Statamic\Facades\Site;
  *
  *   php artisan db:seed --class="Kraenkvisuell\StatamicKit\Database\Seeders\DemoPagesSeeder"
  */
-class DemoPagesSeeder extends Seeder
+class DemoPagesSeeder extends DemoSeeder
 {
     protected string $collection = 'pages';
+
+    protected string $blueprint = 'default';
 
     /** slug => title per site handle (the default site's slug identifies the page) */
     protected array $home = ['default' => 'Startseite', 'en' => 'Home'];
@@ -101,76 +100,11 @@ class DemoPagesSeeder extends Seeder
         ));
     }
 
-    /**
-     * The page with this slug in the origin site, created with one text_image
-     * set when missing, plus a localization per further site.
-     */
+    /** The page with this slug, created with one text_image set when missing (see DemoSeeder::entry). */
     protected function page(string $slug, array $titles, array $sites, string $origin): EntryContract
     {
         $title = $titles[$origin] ?? reset($titles);
 
-        $entry = Entry::query()
-            ->where('collection', $this->collection)
-            ->where('site', $origin)
-            ->where('slug', $slug)
-            ->first();
-
-        if (! $entry) {
-            $entry = Entry::make()
-                ->collection($this->collection)
-                ->blueprint('default')
-                ->locale($origin)
-                ->slug($slug)
-                ->published(true)
-                ->data(['title' => $title, 'main_content' => [$this->textImageSet($title)]]);
-
-            $entry->save();
-        }
-
-        foreach ($sites as $site) {
-            if ($site === $origin || $entry->in($site)) {
-                continue;
-            }
-
-            $entry->makeLocalization($site)
-                ->slug($slug)
-                ->published(true)
-                ->data(['title' => $titles[$site] ?? $title])
-                ->save();
-        }
-
-        return $entry;
-    }
-
-    /** A `text_image` set of the main_content page builder with a lorem paragraph (Bard = ProseMirror). */
-    protected function textImageSet(string $headline): array
-    {
-        return [
-            'id' => Str::random(8),
-            'type' => 'text_image',
-            'enabled' => true,
-            'headline' => $headline,
-            'text' => [[
-                'type' => 'paragraph',
-                'content' => [['type' => 'text', 'text' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.']],
-            ]],
-        ];
-    }
-
-    protected function ensureTree(Structure $structure, string $site): void
-    {
-        if (! $structure->in($site)) {
-            $structure->makeTree($site)->save();
-        }
-    }
-
-    /**
-     * Replace a site's tree. The eloquent driver stores a brand-new tree as
-     * empty on its first save, so the tree is created first (ensureTree) and
-     * filled here.
-     */
-    protected function saveTree(Structure $structure, string $site, array $tree): void
-    {
-        $structure->in($site)->tree($tree)->save();
+        return $this->entry($slug, $titles, $sites, $origin, ['main_content' => [$this->textImageSet($title)]]);
     }
 }

@@ -21,7 +21,7 @@
     :aria-expanded="menuOpen"
     aria-controls="site-menu"
     aria-label="{{ trans:frontend.menu }}"
-    class="fixed top-2.5 right-2.5 tablet:top-5 tablet:right-5 notebook:right-11.5 z-40 w-10 h-10 tablet:w-12 tablet:h-12 flex flex-col items-center justify-center gap-1.5 rounded-full bg-ink text-white border-2 border-white cursor-pointer"
+    class="fixed top-2.5 right-2.5 md:top-5 md:right-5 xl:right-11.5 z-40 w-10 h-10 md:w-12 md:h-12 flex flex-col items-center justify-center gap-1.5 rounded-full bg-neutral-950 text-white border-2 border-white cursor-pointer"
 >
     <span class="block w-5 h-0.5 bg-current transition-transform duration-300 ease-in-out in-[.active]:translate-y-2 in-[.active]:rotate-45"></span>
     <span class="block w-5 h-0.5 bg-current transition-opacity duration-300 ease-in-out in-[.active]:opacity-0"></span>
@@ -39,12 +39,12 @@
     x-transition:leave="transition-transform duration-300 ease-in-out"
     x-transition:leave-start="translate-y-0"
     x-transition:leave-end="-translate-y-full"
-    class="fixed inset-0 z-30 flex flex-col bg-navi"
+    class="[&[x-cloak]]:hidden fixed inset-0 z-30 flex flex-col bg-neutral-100"
 >
-    {{ _item = "block py-3 font-headline font-bold uppercase leading-none tracking-wider text-[1.4rem] tablet:text-[1.8rem]" }}
-    {{ _child = "block py-2 font-headline uppercase leading-none tracking-wider text-[1rem] tablet:text-[1.2rem] text-off" }}
+    {{ _item = "block py-3 font-headline font-bold uppercase leading-none tracking-wider text-[1.4rem] md:text-[1.8rem]" }}
+    {{ _child = "block py-2 font-headline uppercase leading-none tracking-wider text-[1rem] md:text-[1.2rem] text-stone-400" }}
 
-    <nav aria-label="{{ trans:frontend.main_navigation }}" class="flex-1 flex flex-col items-center justify-center gap-4 px-5 pt-16 pb-8 overflow-y-auto text-center tablet:pt-20">
+    <nav aria-label="{{ trans:frontend.main_navigation }}" class="flex-1 flex flex-col items-center justify-center gap-4 px-5 pt-16 pb-8 overflow-y-auto text-center md:pt-20">
         {{ nav:main }}
             <div>
                 {{# an area item has no URL of its own (a text-only item); its children follow underneath #}}
@@ -61,7 +61,7 @@
         {{ /nav:main }}
     </nav>
 
-    <div class="shrink-0 flex justify-center pb-8 tablet:pb-12">
+    <div class="shrink-0 flex justify-center pb-8 md:pb-12">
         {{ partial:navi/language-switch }}
     </div>
 </div>

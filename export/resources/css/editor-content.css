@@ -1,7 +1,6 @@
 /*
  * `.editor-content` wraps HTML rendered from Bard/Markdown fields, so its
- * children can't carry utility classes. Ported from _editor-content.scss,
- * _post.scss (h4) and the blockquote rules of _popup.scss.
+ * children can't carry utility classes. Default Tailwind tokens only.
  * `.is-footer` marks the footer/contact sections (lighter, smaller copy).
  */
 @layer components {
@@ -51,11 +50,11 @@
             font-weight: 400;
             letter-spacing: 0.05em;
 
-            @variant tablet {
+            @variant md {
                 font-size: 0.75rem;
             }
 
-            @variant tl {
+            @variant lg {
                 font-size: 0.9rem;
             }
         }
@@ -68,6 +67,7 @@
             padding-left: 0;
 
             & li {
+                position: relative;
                 list-style: none;
                 padding-left: 25px;
 
@@ -78,7 +78,7 @@
                     left: 0;
                     width: 14px;
                     height: 1px;
-                    background-color: var(--color-ink);
+                    background-color: var(--color-neutral-950);
                 }
             }
         }
@@ -89,6 +89,7 @@
             counter-reset: item;
 
             & li {
+                position: relative;
                 list-style: none;
                 padding-left: 25px;
                 counter-increment: item;
@@ -113,7 +114,7 @@
     /* project/post pages: description copy with pull quotes */
     .popup-description blockquote {
         font-size: 1.2rem;
-        color: var(--color-important);
+        color: var(--color-neutral-500);
         margin: 2em 0;
 
         & p {
@@ -123,6 +124,7 @@
 
     /* blog post / services copy: h4 with a bar in front */
     .post h4 {
+        position: relative;
         padding-left: 40px;
 
         &::before {
@@ -132,7 +134,7 @@
             top: 7px;
             width: 30px;
             height: 5px;
-            background-color: var(--color-ink);
+            background-color: var(--color-neutral-950);
         }
     }
 }

@@ -2,18 +2,18 @@
 <a
     href="{{ url }}"
     x-fade
-    class="group block aspect-video bg-ink text-white opacity-0 transition-opacity duration-1500 ease-out is-faded-in:opacity-100"
+    class="group relative block aspect-video bg-neutral-950 text-white opacity-0 transition-opacity duration-1500 ease-out [&.is-faded-in]:opacity-100"
 >
     <div class="absolute inset-0">
-        <div class="z-10 pt-[12%] pr-[3%] pl-5 tablet:pl-10 notebook:pl-17.5">
+        <div class="z-10 pt-[12%] pr-[3%] pl-5 md:pl-10 xl:pl-17.5">
             <div class="
                 font-headline font-bold uppercase tracking-wider leading-[1.4]
-                text-[1.3rem] tablet:text-[0.8rem] tl:text-[1.3rem] desktop:text-[0.8rem] cinema:text-[1.3rem] giant:text-[0.8rem]
+                text-[1.3rem] md:text-[0.8rem] lg:text-[1.3rem] 2xl:text-[0.8rem]
             ">
                 {{ title }}
             </div>
         </div>
 
-        <div class="absolute inset-0 z-5 block bg-overlay-light transition-all duration-300 ease-in-out group-hover:opacity-0"></div>
+        <div class="absolute inset-0 z-5 block bg-black/40 transition-all duration-300 ease-in-out group-hover:opacity-0"></div>
     </div>
 </a>

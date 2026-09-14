@@ -10,13 +10,13 @@
 </div>
 
 <div>
-    <div x-fade class="post editor-content mb-12.5 tablet:flex tablet:justify-between">
-        <div class="grow-0 max-w-[900px] px-5 tablet:px-10 notebook:px-17.5 {{ if set:image }} tablet:pr-5 notebook:pr-10 {{ /if }}">
+    <div x-fade class="post editor-content mb-12.5 md:flex md:justify-between">
+        <div class="grow-0 max-w-[900px] px-5 md:px-10 xl:px-17.5 {{ if set:image }} md:pr-5 xl:pr-10 {{ /if }}">
             {{ set:text }}
         </div>
 
         {{ if set:image }}
-            <div class="shrink-0 mb-7.5 tablet:w-[50vw] tablet:mb-0">
+            <div class="shrink-0 mb-7.5 md:w-[50vw] md:mb-0">
                 <img src="{{ glide :src="set:image" width="1600" }}" alt="{{ (set:image:alt or set:headline) | sanitize }}" class="w-full h-auto">
             </div>
         {{ /if }}

@@ -6,21 +6,21 @@
     Uses x-fade (site.js).
 #}}
 {{ if {collection:count in="partners" published:is="true"} > 0 }}
-    <div class="section px-5 py-12.5 tablet:px-10 tablet:py-17.5 notebook:px-17.5">
-        <ul class="flex flex-wrap items-center justify-center gap-x-12 gap-y-8 tablet:gap-x-17.5">
+    <div class="section px-5 py-12.5 md:px-10 md:py-17.5 xl:px-17.5">
+        <ul class="flex flex-wrap items-center justify-center gap-x-12 gap-y-8 md:gap-x-17.5">
             {{ collection:partners scope="partner" published:is="true" }}
                 {{ if partner.icon.extension == "svg" }}
                     {{ _src = partner.icon.url }}
                 {{ else }}
                     {{ _src = {glide :src="partner.icon" width="320"} }}
                 {{ /if }}
-                <li x-fade class="opacity-0 transition-opacity duration-1500 ease-out is-faded-in:opacity-100">
+                <li x-fade class="opacity-0 transition-opacity duration-1500 ease-out [&.is-faded-in]:opacity-100">
                     <img
                         src="{{ _src }}"
                         alt="{{ (partner.icon.alt or partner.title) | sanitize }}"
                         title="{{ partner.title | sanitize }}"
                         loading="lazy"
-                        class="h-10 w-auto max-w-40 object-contain tablet:h-12"
+                        class="h-10 w-auto max-w-40 object-contain md:h-12"
                     >
                 </li>
             {{ /collection:partners }}

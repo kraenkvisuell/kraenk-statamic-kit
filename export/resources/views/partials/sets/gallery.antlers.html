@@ -12,7 +12,7 @@
     {{ _anchor = {partial:sets/anchor} }}
 
     <div
-        class="section mb-7.5 tablet:mb-17.5"
+        class="section mb-7.5 md:mb-17.5"
         id="{{ _anchor }}"
     >
         {{ partial:section/heading :headline="set:title" }}
@@ -30,13 +30,13 @@
         {{ /partial:section/heading }}
 
         <div x-data="galleryGrid({{ set:images | count }})" class="pb-12.5">
-            <div class="grid grid-cols-2 tablet:grid-cols-4">
+            <div class="grid grid-cols-2 md:grid-cols-4">
                 {{ set:images }}
                     <a
                         href="#{{ _anchor }}"
                         x-fade
-                        class="block aspect-[10/12] cursor-pointer overflow-hidden
-                            opacity-0 transition-opacity duration-1500 ease-out is-faded-in:opacity-100 is-hidden:hidden
+                        class="relative block aspect-[10/12] cursor-pointer overflow-hidden
+                            opacity-0 transition-opacity duration-1500 ease-out [&.is-faded-in]:opacity-100 [&.is-hidden]:hidden
                             {{ if count > 8 }} is-hidden {{ /if }}"
                         :class="{ 'is-hidden': {{ count }} > visible }"
                         @click.prevent="$dispatch('gallery-open', { gallery: '{{ _gallery }}', index: {{ count }} })"
@@ -49,14 +49,14 @@
             </div>
 
             {{ if (set:images | count) > 8 }}
-                <div x-fade x-show="visible < total" class="opacity-0 transition-opacity duration-1500 ease-out is-faded-in:opacity-100">
-                    <div class="grid grid-cols-2 tablet:grid-cols-4">
-                        <div class="min-h-7.5 bg-card-1"></div>
-                        <div class="min-h-7.5 bg-card-2"></div>
-                        <div class="min-h-7.5 bg-card-3 hidden tablet:block"></div>
-                        <div class="min-h-7.5 bg-card-4 hidden tablet:block"></div>
+                <div x-fade x-show="visible < total" class="relative opacity-0 transition-opacity duration-1500 ease-out [&.is-faded-in]:opacity-100">
+                    <div class="grid grid-cols-2 md:grid-cols-4">
+                        <div class="min-h-7.5 bg-neutral-50"></div>
+                        <div class="min-h-7.5 bg-neutral-100"></div>
+                        <div class="min-h-7.5 bg-stone-100 hidden md:block"></div>
+                        <div class="min-h-7.5 bg-neutral-200 hidden md:block"></div>
                     </div>
-                    <div @click="showMore()" class="absolute top-0 min-w-full h-7.5 flex items-center justify-center cursor-pointer font-headline font-bold uppercase tracking-wider text-[0.8rem] text-ink">
+                    <div @click="showMore()" class="absolute top-0 min-w-full h-7.5 flex items-center justify-center cursor-pointer font-headline font-bold uppercase tracking-wider text-[0.8rem] text-neutral-950">
                         <div class="min-w-5.5 h-5.5 cursor-pointer bg-no-repeat bg-position-[0px_0px]" style="background-image:url('/images/show-more.svg')"></div>
                         <div class="min-w-5.5 cursor-pointer">show more</div>
                         <div class="min-w-5.5 h-5.5 cursor-pointer bg-no-repeat bg-position-[0px_0px]" style="background-image:url('/images/show-more.svg')"></div>
@@ -84,15 +84,15 @@
         x-transition:leave="transition-transform duration-600 ease-in"
         x-transition:leave-start="translate-y-0"
         x-transition:leave-end="-translate-y-full"
-        class="fixed inset-0 z-20 w-full h-dvh bg-white overflow-hidden"
+        class="[&[x-cloak]]:hidden fixed inset-0 z-20 w-full h-dvh bg-white overflow-hidden"
     >
         {{ partial:gallery/title :close_to="_anchor" on_close="close()" }}
             <div x-text="caption"></div>
         {{ /partial:gallery/title }}
 
-        {{ _swiper_height = "h-[calc(100dvh_-_50px)] tablet:h-[calc(100dvh_-_70px)]" }}
-        <div class="relative z-100 bg-overlay text-white {{ _swiper_height }}">
-            <div x-ref="swiper" class="swiper w-full bg-overlay {{ _swiper_height }}">
+        {{ _swiper_height = "h-[calc(100dvh_-_50px)] md:h-[calc(100dvh_-_70px)]" }}
+        <div class="relative z-100 bg-black/65 text-white {{ _swiper_height }}">
+            <div x-ref="swiper" class="swiper w-full bg-black/65 {{ _swiper_height }}">
                 <div class="swiper-wrapper h-full">
                     {{ set:images }}
                         <div class="swiper-slide h-full bg-contain bg-no-repeat bg-center"
@@ -103,7 +103,7 @@
                 </div>
 
                 {{# own arrows; Swiper's Navigation module toggles swiper-button-disabled/-lock on them #}}
-                {{ _arrow = "absolute z-120 top-[calc(50%_-_43px)] w-21.5 h-21.5 cursor-pointer hidden tablet:block bg-center bg-no-repeat bg-size-[36px_36px] [&.swiper-button-disabled]:hidden [&.swiper-button-lock]:hidden" }}
+                {{ _arrow = "absolute z-120 top-[calc(50%_-_43px)] w-21.5 h-21.5 cursor-pointer hidden md:block bg-center bg-no-repeat bg-size-[36px_36px] [&.swiper-button-disabled]:hidden [&.swiper-button-lock]:hidden" }}
                 <div x-ref="prev" class="{{ _arrow }} left-0" style="background-image:url('/images/arrow-to-the-left.svg')"></div>
                 <div x-ref="next" class="{{ _arrow }} right-0" style="background-image:url('/images/arrow-to-the-right.svg')"></div>
             </div>

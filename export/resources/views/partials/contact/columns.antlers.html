@@ -1,6 +1,6 @@
 {{# Social links / newsletter + company address. Param: alt ("light" for the phone-only footer, else "dark"). #}}
-<div class="tablet:grid tablet:grid-cols-2 tablet:gap-x-5">
-    <div class="mb-10 tablet:mb-0">
+<div class="md:grid md:grid-cols-2 md:gap-x-5">
+    <div class="mb-10 md:mb-0">
         <p class="leading-[1.6]">
             {{ if alt == 'light' }}<br>{{ /if }}
             {{ if site_settings:social_links }}
@@ -28,7 +28,7 @@
         </p>
     </div>
 
-    <div class="mb-10 tablet:mb-0">
+    <div class="mb-10 md:mb-0">
         <p class="leading-[1.6]">
             {{ site_settings:company }}<br><br>
             {{ site_settings:address | trim | nl2br }}

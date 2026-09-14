@@ -11,7 +11,7 @@
     the href is always the real URL.
 #}}
 {{ _set_label = {partial:sets/label :set_type="back_set"} }}
-<header class="px-5 py-6 tablet:px-10 tablet:py-8 notebook:px-17.5 font-headline font-bold uppercase tracking-wider">
+<header class="px-5 py-6 md:px-10 md:py-8 xl:px-17.5 font-headline font-bold uppercase tracking-wider">
     <a href="{{ site:url }}#{{ back_to }}" x-data="backLink" @click="back($event)" class="inline-flex items-center gap-2 mb-4 text-[0.8rem] leading-none">
         <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M13 7H1.5M6.5 2 1.5 7l5 5"/>
@@ -19,7 +19,7 @@
         <span>{{ if _set_label | trim }}{{ _set_label | trim }}{{ else }}{{ back_label }}{{ /if }}</span>
     </a>
 
-    <h1 class="text-[0.8rem] tablet:text-[1.3rem] tracking-wider leading-none">
+    <h1 class="text-[0.8rem] md:text-[1.3rem] tracking-wider leading-none">
         {{ slot }}
     </h1>
 </header>

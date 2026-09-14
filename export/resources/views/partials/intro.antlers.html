@@ -1,7 +1,7 @@
 {{# `intro` component (below): background video (partials/intro/video), pulsing "scroll down" arrow to the intro text. Content comes from the page's intro fieldset (resources/fieldsets/intro.yaml: video, intro_headline, intro_text, cta). #}}
 <div
     x-data="intro"
-    class="intro w-screen overflow-hidden z-20 text-white h-dvh"
+    class="intro relative w-screen overflow-hidden z-20 text-white h-dvh"
 >
     <div class="w-full h-full z-10">
         {{ partial:intro/video }}
@@ -13,11 +13,11 @@
             title="Go to Intro"
             :class="{ active: arrowActive }"
             class="
-                block w-7.5 h-7.5 z-100 cursor-pointer
+                relative block w-7.5 h-7.5 z-100 cursor-pointer
                 before:content-[''] before:absolute before:left-0 before:top-[calc(50%_-_3px)] before:w-1/2 before:h-1.25 before:bg-white before:transition-all before:duration-400 before:ease-in-out
                 after:content-[''] after:absolute after:left-1/2 after:top-[calc(50%_-_3px)] after:w-1/2 after:h-1.25 after:bg-white after:transition-all after:duration-400 after:ease-in-out
-                is-active:before:left-1 is-active:before:top-[calc(75%_-_3px)] is-active:before:rotate-45
-                is-active:after:left-[calc(50%_-_4px)] is-active:after:top-[calc(75%_-_3px)] is-active:after:-rotate-45
+                [&.active]:before:left-1 [&.active]:before:top-[calc(75%_-_3px)] [&.active]:before:rotate-45
+                [&.active]:after:left-[calc(50%_-_4px)] [&.active]:after:top-[calc(75%_-_3px)] [&.active]:after:-rotate-45
                 hover:before:left-1 hover:before:top-[calc(75%_-_3px)] hover:before:rotate-45
                 hover:after:left-[calc(50%_-_4px)] hover:after:top-[calc(75%_-_3px)] hover:after:-rotate-45
             "
@@ -26,20 +26,20 @@
 </div>
 
 <div
-    class="section mb-7.5 tablet:mb-17.5"
+    class="section mb-7.5 md:mb-17.5"
     id="intro"
 >
-    <div class="max-w-[1024px] px-5 py-12.5 tablet:px-10 notebook:px-17.5">
+    <div class="max-w-[1024px] px-5 py-12.5 md:px-10 xl:px-17.5">
         <div
             x-fade
             class="editor-content"
         >
-            <h1 class="pr-12.5 tablet:pr-30">{{ page:intro_headline | nl2br }}</h1>
+            <h1 class="pr-12.5 font-headline font-bold uppercase tracking-wider text-[2rem] xl:text-[2.5rem] md:pr-30">{{ page:intro_headline | nl2br }}</h1>
         </div>
 
         <div
             x-fade
-            class="text-[1.2rem] italic leading-[1.45] text-important opacity-0 transition-opacity duration-1500 ease-out is-faded-in:opacity-100 pr-12.5 tablet:pr-30"
+            class="text-[1.2rem] italic leading-[1.45] text-neutral-500 opacity-0 transition-opacity duration-1500 ease-out [&.is-faded-in]:opacity-100 pr-12.5 md:pr-30"
         >
             {{ page:intro_text }}
         </div>

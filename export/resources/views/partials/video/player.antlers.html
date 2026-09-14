@@ -14,7 +14,7 @@
 {{ _ratio = ratio ?? "16:9" }}
 <div
     x-data="videoConsent"
-    class="w-full bg-ink bg-cover bg-center overflow-hidden [&_iframe]:absolute [&_iframe]:inset-0 [&_iframe]:w-full [&_iframe]:h-full [&_iframe]:border-0 {{ classes }}"
+    class="relative w-full bg-neutral-950 bg-cover bg-center overflow-hidden [&_iframe]:absolute [&_iframe]:inset-0 [&_iframe]:w-full [&_iframe]:h-full [&_iframe]:border-0 {{ classes }}"
     style="aspect-ratio:{{ _ratio | replace(':', '/') }};{{ if still }}background-image:url('{{ glide :src="still" width="1600" }}'){{ /if }}"
 >
     <template x-if="accepted">
@@ -30,17 +30,17 @@
     </template>
 
     <template x-if="! accepted">
-        <div class="absolute inset-0 flex flex-col items-center justify-center gap-4 p-5 text-center text-white tablet:gap-6 {{ if still }} bg-overlay {{ /if }}">
-            <p class="max-w-[36rem] font-main italic text-[0.75rem] leading-[1.5] tablet:text-[0.95rem]">{{ site_settings:video_consent_text | nl2br }}</p>
+        <div class="absolute inset-0 flex flex-col items-center justify-center gap-4 p-5 text-center text-white md:gap-6 {{ if still }} bg-black/65 {{ /if }}">
+            <p class="max-w-[36rem] font-main italic text-[0.75rem] leading-[1.5] md:text-[0.95rem]">{{ site_settings:video_consent_text | nl2br }}</p>
             <button
                 type="button"
                 @click="accept()"
-                class="inline-block border border-white px-4 py-2.5 font-headline font-bold uppercase tracking-wider text-[0.7rem] leading-none cursor-pointer transition-colors hover:bg-white hover:text-ink tablet:px-6 tablet:py-3 tablet:text-[0.8rem]"
+                class="inline-block border border-white px-4 py-2.5 font-headline font-bold uppercase tracking-wider text-[0.7rem] leading-none cursor-pointer transition-colors hover:bg-white hover:text-neutral-950 md:px-6 md:py-3 md:text-[0.8rem]"
             >{{ site_settings:video_consent_button }}</button>
             {{ if site_settings:privacy_page }}
                 <a
                     href="{{ site_settings:privacy_page:url }}"
-                    class="font-main italic text-off text-[0.7rem] underline hover:text-white tablet:text-[0.8rem]"
+                    class="font-main italic text-stone-400 text-[0.7rem] underline hover:text-white md:text-[0.8rem]"
                 >{{ trans:frontend.privacy }}</a>
             {{ /if }}
         </div>

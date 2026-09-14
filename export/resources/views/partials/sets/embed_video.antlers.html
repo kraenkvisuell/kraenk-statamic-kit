@@ -6,7 +6,7 @@
 #}}
 {{ _anchor = {partial:sets/anchor} }}
 
-<div class="section mb-7.5 tablet:mb-17.5" id="{{ _anchor }}">
+<div class="section mb-7.5 md:mb-17.5" id="{{ _anchor }}">
     {{ if set:key }}
         {{ partial:video/player :key="set:key" :ratio="set:ratio" :still="set:still" }}
     {{ /if }}

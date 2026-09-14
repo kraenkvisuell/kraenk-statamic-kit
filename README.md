@@ -2,7 +2,7 @@
 
 Updatable [Statamic starter kit](https://statamic.dev/starter-kits/creating-a-starter-kit) for kraenkvisuell's eloquent-driven Statamic 6 sites. It carries the setup every site shares – content in the database (statamic/eloquent-driver, Postgres, uuid ids), asset container and Glide cache on Bunny Storage behind Bunny CDN, static caching, Horizon, Livewire-shipped Alpine, SEO Pro – the PHP that goes with it, and a complete theme as the starting point: the vollbild.film site (blueprints, fieldsets, Antlers views, Tailwind CSS, Alpine JS), to be made generic step by step. The conventions themselves live in `~/Code/coding-guidelines`.
 
-**This repo is generated.** Its source of truth is the `package/` folder of a sandbox site plus that site's files; `php please starter-kit:export` writes this repo (see "Working on the kit"). Don't edit files here by hand – they are overwritten by the next export.
+**This repo is generated.** Its source of truth is the `package/` folder of a sandbox site plus that site's files; `php please starter-kit:export` writes this repo (see "Working on the kit"). Don't edit files here by hand – they are overwritten by the next export. The exception is `.github/`, which lives only here.
 
 ## Two kinds of content
 
@@ -82,10 +82,10 @@ The kit is developed inside a *sandbox* site (a "dummy" Statamic site), never in
 3. **Export and publish.**
 
    ```bash
-   composer export   # php please starter-kit:export ../kraenk-statamic-kit --clear, then copies package/.github over
+   composer export   # php please starter-kit:export ../kraenk-statamic-kit --clear, then restores .github from git
    cd ~/Code/kraenk-statamic-kit && git add -A && git commit -m "…" && git push
    ```
 
-   `--clear` empties the clone (except `.git`) before writing, so removed files disappear too. `starter-kit.yaml` is written with the dependency versions from the sandbox's `composer.json`. Packagist updates from GitHub (auto-update hook), so sites pick the change up with `composer update kraenkvisuell/kraenk-statamic-kit` (package code). Tag releases as `vX.Y.Z` and push the tag; `.github/workflows/release.yml` then creates the GitHub Release with generated notes. The exporter skips dot-files in `package/`, which is why `composer export` copies `package/.github` separately.
+   `--clear` empties the clone (except `.git`) before writing, so removed files disappear too. `starter-kit.yaml` is written with the dependency versions from the sandbox's `composer.json`. Packagist updates from GitHub (auto-update hook), so sites pick the change up with `composer update kraenkvisuell/kraenk-statamic-kit` (package code). Tag releases as `vX.Y.Z` and push the tag; `.github/workflows/release.yml` then creates the GitHub Release with generated notes. `.github/` is the one folder maintained in this repo by hand: `--clear` removes it on every export and `composer export` restores it with `git checkout -- .github`.
 
 Rules of thumb: whether a file belongs in `src/` or in `export_paths` depends on who should be able to change it later – the kit (`src/`) or the site (`export_paths`). Anything in neither place is not part of the kit.

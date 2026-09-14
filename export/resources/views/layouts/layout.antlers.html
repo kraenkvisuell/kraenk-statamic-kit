@@ -39,39 +39,11 @@
     x-data="site"
     @site-close-menu.window="menuOpen = false"
     @site-close-overlays.window="partnersOpen = false"
+    @keydown.escape.window="menuOpen = false"
 >
     {{ template_content }}
     {{ livewire:scriptConfig }}
-    {{#
-        Global Alpine component on <body>: menu and partners drawer state.
-        Section links are plain #anchors; the browser handles scrolling and the address bar.
-    #}}
-    <script>
-        document.addEventListener('alpine:init', () => {
-            Alpine.data('site', () => ({
-                menuOpen: false,
-                partnersOpen: false,
-
-                toggleMenu() {
-                    this.menuOpen = !this.menuOpen
-                    if (this.menuOpen) this.partnersOpen = false
-                },
-
-                togglePartners() {
-                    this.partnersOpen = !this.partnersOpen
-                    if (this.partnersOpen) this.menuOpen = false
-                },
-
-                // Following a navi link: close the menu, the partners drawer and the
-                // overlays listening for site-close-overlays (gallery).
-                closeOverlays() {
-                    this.menuOpen = false
-                    this.partnersOpen = false
-                    this.$dispatch('site-close-overlays')
-                },
-            }))
-        })
-    </script>
+    {{# the `site` component on <body> is registered in resources/js/site-component.js #}}
 </body>
 
 </html>

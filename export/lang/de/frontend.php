@@ -11,6 +11,7 @@ return [
     'news' => 'Aktuelles',
     'newsletter_subscription' => 'Newsletter-Abo',
     'open_gallery' => 'Hier ist die Galerie zum Durchklicken',
+    'menu' => 'Menü',
     'main_navigation' => 'Hauptnavigation',
     'footer_navigation' => 'Footer-Navigation',
 ];

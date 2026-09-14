@@ -54,7 +54,6 @@
 @custom-variant is-hidden (&.is-hidden);
 @custom-variant on (&.on);                       /* partners panel */
 @custom-variant is-active (&.active);            /* navi opener, intro arrow */
-@custom-variant menu-open (&.open);              /* navi menu wrapper */
 @custom-variant playing-by-scroll (:where(.playing-by-scroll) &);
 
 @layer base {

@@ -24,8 +24,10 @@ use function Laravel\Prompts\confirm;
  * idempotent, and the last one always asks the person initializing the site
  * for their own login. Add further steps between the seeders and the user.
  *
- * The kit ships two sites, `de` at /de and `en` at /en. The first step asks
- * whether the site needs them; a single-language site keeps `de` alone at `/`
+ * The kit ships two sites, `default` (German) at /de and `en` at /en; the
+ * default site keeps Statamic's handle so a single-language site of any
+ * language needs no rename. The first step asks whether the site needs both;
+ * a single-language site keeps the default site alone at `/`
  * (sites, collections, globals, `multisite` in config/statamic/system.php)
  * and loses the language switch in the navi. `--multisite` / `--single-site`
  * answer that question up front (CI, scripts); without either, a
@@ -39,8 +41,8 @@ use function Laravel\Prompts\confirm;
  */
 #[Signature('kit:init
     {--force : Start over: drop all tables and migrate fresh first (local and staging only)}
-    {--multisite : Keep both sites (de at /de, en at /en) without asking}
-    {--single-site : Reduce the site to de at / without asking}')]
+    {--multisite : Keep both sites (default at /de, en at /en) without asking}
+    {--single-site : Reduce the site to the default site at / without asking}')]
 #[Description('Set up a fresh site: choose single- or multisite, seed the demo pages, posts, projects and SEO defaults, then create your user')]
 class Init extends Command
 {

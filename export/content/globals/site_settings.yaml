@@ -1,4 +1,4 @@
 title: Website
 sites:
-  de: null
-  en: de
+  default: null
+  en: default

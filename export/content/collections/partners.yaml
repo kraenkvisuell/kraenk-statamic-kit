@@ -1,7 +1,7 @@
 title: Partner
 icon: collections
 sites:
-  - de
+  - default
   - en
 propagate: false
 template: default

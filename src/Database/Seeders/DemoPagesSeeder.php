@@ -13,7 +13,8 @@ use Statamic\Facades\Site;
  * text-only navigation item) with three sub pages, and the footer pages
  * Impressum, Datenschutz and Kontakt. Every page is localized into every site
  * of the `pages` collection, placed in the collection tree (start page as root)
- * and in the `main` or `footer` navigation.
+ * and in the `main` or `footer` navigation. The start page also gets the
+ * `projects` and `blog` listing sets, so the seeded projects and posts show.
  *
  * Idempotent: existing pages are matched by slug in the default site and
  * reused; the trees are rebuilt on every run.
@@ -65,6 +66,7 @@ class DemoPagesSeeder extends DemoSeeder
         }
 
         $home = $this->page('home', $this->home, $sites, $origin);
+        $this->ensureSets($home, [$this->listingSet('projects', 'Dolor sit amet'), $this->listingSet('blog', 'Consectetur adipiscing')]);
         $main = collect($this->mainPages)->map(fn ($titles, $slug) => $this->page($slug, $titles, $sites, $origin));
         $area = collect($this->areaPages)->map(fn ($titles, $slug) => $this->page($slug, $titles, $sites, $origin));
         $footer = collect($this->footerPages)->map(fn ($titles, $slug) => $this->page($slug, $titles, $sites, $origin));
@@ -98,6 +100,35 @@ class DemoPagesSeeder extends DemoSeeder
             1 + $main->count() + $area->count() + $footer->count(),
             count($sites)
         ));
+    }
+
+    /**
+     * Append the given main_content sets to the entry unless a set of that
+     * type is there already (the listings are one-per-page sections).
+     */
+    protected function ensureSets(EntryContract $entry, array $sets): void
+    {
+        $content = collect($entry->get('main_content', []));
+        $missing = collect($sets)->reject(fn ($set) => $content->contains('type', $set['type']));
+
+        if ($missing->isEmpty()) {
+            return;
+        }
+
+        $entry->set('main_content', $content->merge($missing)->values()->all())->save();
+    }
+
+    /** A `projects` or `blog` listing set: topline, headline and a one-sentence copy above the listing. */
+    protected function listingSet(string $type, string $headline): array
+    {
+        return [
+            'id' => Str::random(8),
+            'type' => $type,
+            'enabled' => true,
+            'topline' => 'Lorem ipsum',
+            'headline' => $headline,
+            'copy' => $this->paragraph(1),
+        ];
     }
 
     /** The page with this slug, created with one text_image set when missing (see DemoSeeder::entry). */

@@ -1,16 +1,3 @@
-{{#
-    Embedded video (project page, embed_video and blog "video" sets) behind a consent gate. The
-    `videoConsent` component (resources/js/video-consent.js) shows the notice
-    and the accept button from site_settings (video_consent_text/_button) until
-    third-party videos are accepted (localStorage); then the `videoPlayer`
-    component (resources/js/video-player.js) inserts the Vimeo/YouTube iframe.
-    The privacy link leads to the page chosen in site_settings (privacy_page, Videos tab); without one there is no link.
-    Deliberately client-side: the HTML is the same for every visitor, so the
-    page stays static-cacheable. Fills the width at the video's ratio (default 16:9).
-    Params: key (Vimeo/YouTube URL), ratio ("4:3", optional), still (asset shown
-    behind the notice until accepted; the placeholder image while none is selected), autoplay (optional), classes
-    (extra classes for the wrapper, e.g. margins / max height).
-#}}
 {{ _ratio = ratio ?? "16:9" }}
 {{ if still }}
     {{ _still = {glide :src="still" width="1600"} }}

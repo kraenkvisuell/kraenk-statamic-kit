@@ -1,9 +1,3 @@
-{{#
-    Language switch at the bottom of the menu panel: one link per site
-    (`de / en`), the current site as plain text. Included by partials/navi on
-    its own line; kit:init deletes this partial and that line when the site is
-    set up single-site.
-#}}
 <div class="italic uppercase tracking-wider text-off text-[0.9rem] md:text-[1rem]">
     {{ locales current_first="false" }}
         {{ if current != locale.key }}

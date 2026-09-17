@@ -1,15 +1,7 @@
-{{#
-    Gallery set (main_content replicator): title, intro (Bard) and an assets field.
-    Heading, upright grid with "show more" (galleryGrid), fullscreen Swiper
-    overlay (gallery, resources/js/gallery.js) – the layout of the former
-    behind-the-scenes section.
-    Section id via partials/sets/anchor (default "gallery-{set id}").
-    Several galleries per page: the set id names the gallery, so the cards
-    dispatch gallery-open with { gallery, index } and only its own overlay opens.
-#}}
-{{ if set:images }}
+{{ if set:slides }}
     {{ _gallery = set:id }}
     {{ _anchor = {partial:sets/anchor} }}
+    {{ _total = set:slides | count }}
 
     <div
         class="section mb-7.5 md:mb-17.5"
@@ -29,27 +21,26 @@
             </div>
         {{ /partial:section/heading }}
 
-        <div x-data="galleryGrid({{ set:images | count }})" class="pb-12.5">
+        <div x-data="galleryGrid({{ _total }})" class="pb-12.5">
             <div class="grid grid-cols-2 md:grid-cols-4">
-                {{ set:images }}
+                {{ set:slides scope="slide" }}
+                    {{ _alt = slide:caption ? slide:caption : set:title }}
                     <a
                         href="#{{ _anchor }}"
-                        x-fade
-                        class="relative block aspect-[10/12] cursor-pointer overflow-hidden
-                            opacity-0 transition-opacity duration-1500 ease-out [&.is-faded-in]:opacity-100 [&.is-hidden]:hidden
+                        class="relative block aspect-[10/12] cursor-pointer overflow-hidden [&.is-hidden]:hidden
                             {{ if count > 8 }} is-hidden {{ /if }}"
                         :class="{ 'is-hidden': {{ count }} > visible }"
                         @click.prevent="$dispatch('gallery-open', { gallery: '{{ _gallery }}', index: {{ count }} })"
                     >
                         <div class="absolute inset-0">
-                            <img class="w-full h-full" src="{{ glide :src='id' height='1200' width='1000' fit='crop_focal' }}" alt="{{ (alt or set:title) | sanitize }}" />
+                            {{ partial:image :image="slide:image" width="1000" height="1200" fit="crop_focal" :alt="_alt" class="w-full h-full object-cover" }}
                         </div>
                     </a>
-                {{ /set:images }}
+                {{ /set:slides }}
             </div>
 
-            {{ if (set:images | count) > 8 }}
-                <div x-fade x-show="visible < total" class="relative opacity-0 transition-opacity duration-1500 ease-out [&.is-faded-in]:opacity-100">
+            {{ if _total > 8 }}
+                <div x-show="visible < total" class="relative">
                     <div class="grid grid-cols-2 md:grid-cols-4">
                         <div class="min-h-7.5 bg-card-1"></div>
                         <div class="min-h-7.5 bg-card-2"></div>
@@ -66,7 +57,6 @@
         </div>
     </div>
 
-    {{# fullscreen overlay #}}
     {{ section:head_scripts }}
         {{ vite src="resources/js/gallery.js" }}
     {{ /section:head_scripts }}
@@ -88,21 +78,33 @@
     >
         {{ partial:gallery/title :close_to="_anchor" on_close="close()" }}
             <div x-text="caption"></div>
+            <div
+                x-show="credits"
+                x-text="credits"
+                class="ml-2.5 font-main font-normal normal-case tracking-normal text-[0.7rem] md:text-[0.8rem] text-important"
+            ></div>
         {{ /partial:gallery/title }}
 
         {{ _swiper_height = "h-[calc(100dvh_-_50px)] md:h-[calc(100dvh_-_70px)]" }}
         <div class="relative z-100 bg-overlay text-white {{ _swiper_height }}">
             <div x-ref="swiper" class="swiper w-full bg-overlay {{ _swiper_height }}">
                 <div class="swiper-wrapper h-full">
-                    {{ set:images }}
+                    {{ set:slides scope="slide" }}
+                        {{ if slide:image }}
+                            {{ _src = {glide :src="slide:image" width="2000" height="1400" fit="contain"} }}
+                        {{ else }}
+                            {{ _src = "/placeholders/image01.jpg" }}
+                        {{ /if }}
+                        {{ _alt = slide:caption ? slide:caption : set:title }}
                         <div class="swiper-slide h-full bg-contain bg-no-repeat bg-center"
-                            role="img" aria-label="{{ (alt or set:title) | sanitize }}"
-                            style="background-image:url('{{ glide :src='id' width='2000' height='1400' fit='contain' }}')">
+                            role="img" aria-label="{{ _alt | sanitize }}"
+                            data-caption="{{ slide:caption | sanitize }}"
+                            data-credits="{{ slide:credits | sanitize }}"
+                            style="background-image:url('{{ _src }}')">
                         </div>
-                    {{ /set:images }}
+                    {{ /set:slides }}
                 </div>
 
-                {{# own arrows; Swiper's Navigation module toggles swiper-button-disabled/-lock on them #}}
                 {{ _arrow = "absolute z-120 top-[calc(50%_-_43px)] w-21.5 h-21.5 cursor-pointer hidden md:block bg-center bg-no-repeat bg-size-[36px_36px] [&.swiper-button-disabled]:hidden [&.swiper-button-lock]:hidden" }}
                 <div x-ref="prev" class="{{ _arrow }} left-0" style="background-image:url('/images/arrow-to-the-left.svg')"></div>
                 <div x-ref="next" class="{{ _arrow }} right-0" style="background-image:url('/images/arrow-to-the-right.svg')"></div>

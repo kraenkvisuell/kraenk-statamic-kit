@@ -1,19 +1,18 @@
-{{#
-    Intro background video: the page's `video` asset (intro fieldset), or the
-    placeholder from public/placeholders while none is selected; a plain <video>
-    that plays muted in a loop. Fills the intro's height, centred, wider
-    overflow cropped by the intro's overflow-hidden.
-#}}
-{{ if page:video }}
-    {{ _src = page:video:url }}
-{{ else }}
-    {{ _src = "/placeholders/video01.mp4" }}
-{{ /if }}
-<div class="w-full h-full bg-ink">
+<div class="relative w-full h-full bg-ink">
     <video
-        class="absolute top-0 left-1/2 -translate-x-1/2 h-full w-auto max-w-none"
-        autoplay loop muted playsinline
+        class="absolute top-0 left-1/2 -translate-x-1/2 h-full w-full object-cover"
+        autoplay
+        loop
+        muted
+        playsinline
     >
-        <source src="{{ _src }}" type="video/mp4">
+        <source
+            src="{{ page:video ? page:video:url : '/placeholders/video01.mp4' }}"
+            type="video/mp4"
+        >
     </video>
+
+    <div class="absolute inset-0 bg-black/50">
+
+    </div>
 </div>

@@ -1,12 +1,10 @@
-{{#
-    Logo fixed top left, linking to the site's start page. For now a word mark:
-    the app name (APP_NAME, "Kit Dummy" in the sandbox) in the headline font;
-    replace the text with the site's logo. `mix-blend-difference` keeps it
-    readable over light and dark sections and the menu panel alike.
-    Uses the global `site` component: closeOverlays().
-#}}
 <a
     href="{{ site:url }}"
     @click="closeOverlays()"
-    class="fixed top-2.5 left-5 md:top-4 md:left-10 xl:left-17.5 z-40 block font-headline font-bold leading-none tracking-wider text-white mix-blend-difference text-[1.5rem] md:text-[2.2rem]"
->{{ config:app:name }}</a>
+    class="
+        absolute top-4.5 left-5 md:top-4 md:left-10 xl:left-17.5 z-40 block font-headline font-bold leading-none 
+        tracking-wider text-white mix-blend-difference text-[1.5rem] md:text-[2.2rem]
+    "
+>
+    {{ config:app:name }}
+</a>

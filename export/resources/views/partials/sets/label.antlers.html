@@ -1,11 +1,3 @@
-{{#
-    Label of a section for links back to it (entry pages' back link): the
-    navigation_title, else the headline/title, of the first main_content set of
-    the given type on any page of the site (pages collection). Param: set_type
-    (e.g. "projects", "blog" – not "type", which inside the loop is the set's
-    own type). Outputs nothing when no page has such a set. Use it as a tag,
-    not inside another tag's parameter (that renders empty).
-#}}
 {{ collection:pages }}
     {{ _found = false }}
     {{ main_content scope="set" }}

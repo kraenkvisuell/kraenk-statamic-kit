@@ -5,6 +5,7 @@ namespace Kraenkvisuell\StatamicKit\Console\Commands;
 use Illuminate\Console\Attributes\Description;
 use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Kraenkvisuell\StatamicKit\Database\Seeders\DemoPagesSeeder;
@@ -22,12 +23,22 @@ use function Laravel\Prompts\confirm;
 
 /**
  * Sets a freshly installed site up to the point where the control panel and
- * the starter website work: the steps in `handle()` run in order (sites,
+ * the starter website work: the steps in `handle()` run in order (slug, sites,
  * demo pages, site settings, blog posts, projects and partners, SEO Pro site
  * defaults, test user),
  * each one idempotent; add further steps at the end. The test user
- * (test@kraenk.de / password, super) is only seeded in the local and staging
+ * (test@kraenk.de / gogogoLilien1898!!!, super) is only seeded in the local and staging
  * environments; elsewhere add your login with `php please make:user --super`.
+ *
+ * The first step takes the site's slug from the directory the site lives in
+ * (nothing to answer – the repository is already named after the site) and
+ * writes it into the env files: APP_URL (https://<slug>.test, the Herd host)
+ * in .env and .env.example, the testing database (<slug>_testing, underscores)
+ * and APP_NAME in .env.testing. The site's own DB_DATABASE is only filled in
+ * while it is still empty – by the time kit:init runs the site has usually
+ * been migrated, and repointing it would leave this run talking to a database
+ * that does not exist. The testing database is created when it is missing;
+ * where the login may not do that, the command says so and carries on.
  *
  * The kit ships two sites: `default` (German) at `/` with its collection
  * routes under `/de/…`, so only the start page is `/`, and `en` at `/en`.
@@ -49,7 +60,7 @@ use function Laravel\Prompts\confirm;
     {--force : Start over: drop all tables and migrate fresh first (local and staging only)}
     {--multisite : Keep both sites (default at / with /de/… routes, en at /en) without asking}
     {--single-site : Reduce the site to the default site without language prefix, without asking}')]
-#[Description('Set up a fresh site: choose single- or multisite, seed the demo pages, site settings, posts, projects, partners, SEO defaults and the test user')]
+#[Description('Set up a fresh site: env files from the directory name, single- or multisite, then the demo pages, site settings, posts, projects, partners, SEO defaults and the test user')]
 class Init extends Command
 {
     protected array $freshEnvironments = ['local', 'staging'];
@@ -65,6 +76,8 @@ class Init extends Command
 
             return self::FAILURE;
         }
+
+        $this->configureSlug();
 
         if ($this->option('force') && ! $this->migrateFresh()) {
             return self::FAILURE;
@@ -96,6 +109,149 @@ class Init extends Command
         $this->call('db:seed', ['--class' => TestUserSeeder::class]);
 
         return self::SUCCESS;
+    }
+
+    /**
+     * The site's slug is the name of the directory it lives in – the repository
+     * is already named after the site. It becomes the Herd host and the
+     * database names. The env files are written, not re-read: nothing in this
+     * run depends on the new values.
+     */
+    protected function configureSlug(): void
+    {
+        $env = base_path('.env');
+        $slug = Str::slug(basename(base_path()));
+        $database = str_replace('-', '_', $slug);
+        $changed = [];
+
+        foreach ([$env, base_path('.env.example')] as $file) {
+            if ($this->setEnvValue($file, 'APP_URL', "https://{$slug}.test")) {
+                $changed[] = basename($file).': APP_URL';
+            }
+        }
+
+        if (blank($this->envValue($env, 'DB_DATABASE')) && $this->setEnvValue($env, 'DB_DATABASE', $database)) {
+            $changed[] = '.env: DB_DATABASE';
+        }
+
+        if (File::exists($testing = base_path('.env.testing'))) {
+            if ($this->setEnvValue($testing, 'DB_DATABASE', $database.'_testing')) {
+                $changed[] = '.env.testing: DB_DATABASE';
+            }
+
+            if (filled($name = $this->envValue($env, 'APP_NAME')) && $this->setEnvValue($testing, 'APP_NAME', $name)) {
+                $changed[] = '.env.testing: APP_NAME';
+            }
+        }
+
+        $this->components->info("Slug {$slug}: https://{$slug}.test, databases {$database} and {$database}_testing.");
+
+        foreach ($changed as $line) {
+            $this->line('  '.$line);
+        }
+
+        if (filled($db = $this->envValue($env, 'DB_DATABASE')) && $db !== $database) {
+            $this->components->warn("The site keeps its database \"{$db}\" (DB_DATABASE in .env); only the testing database follows the slug.");
+        }
+
+        $this->ensureTestingDatabase();
+    }
+
+    /**
+     * Create the testing database when it is missing. The credentials come out
+     * of .env.testing, and PostgreSQL needs an existing database to connect to
+     * before it can create one, so this goes through `postgres`. Anywhere the
+     * login may not create databases (a managed server, a shared user) it just
+     * says what to create by hand instead of failing the run.
+     */
+    protected function ensureTestingDatabase(): void
+    {
+        if (! File::exists($testing = base_path('.env.testing'))) {
+            return;
+        }
+
+        $database = $this->envValue($testing, 'DB_DATABASE');
+        $driver = $this->envValue($testing, 'DB_CONNECTION') ?: 'pgsql';
+
+        if (blank($database) || ! preg_match('/^[a-z0-9_]+$/i', $database)) {
+            return;
+        }
+
+        if ($driver !== 'pgsql') {
+            $this->components->warn("Create the testing database \"{$database}\" yourself: .env.testing uses {$driver}, and kit:init only creates PostgreSQL databases.");
+
+            return;
+        }
+
+        config()->set('database.connections.kit_init_testing', [
+            'driver' => 'pgsql',
+            'host' => $this->envValue($testing, 'DB_HOST') ?: '127.0.0.1',
+            'port' => $this->envValue($testing, 'DB_PORT') ?: '5432',
+            'username' => (string) $this->envValue($testing, 'DB_USERNAME'),
+            'password' => (string) $this->envValue($testing, 'DB_PASSWORD'),
+            'database' => 'postgres',
+            'charset' => 'utf8',
+            'search_path' => 'public',
+            'sslmode' => 'prefer',
+        ]);
+
+        try {
+            $connection = DB::connection('kit_init_testing');
+
+            if ($connection->selectOne('select 1 from pg_database where datname = ?', [$database])) {
+                $this->line("  testing database {$database}: there already");
+
+                return;
+            }
+
+            $connection->statement('create database "'.$database.'"');
+            $this->line("  testing database {$database}: created");
+        } catch (\Throwable $e) {
+            $this->components->warn(sprintf(
+                'The testing database "%s" is missing and could not be created (%s). Create it before running php artisan test.',
+                $database,
+                Str::of($e->getMessage())->before("\n")->limit(120)
+            ));
+        } finally {
+            DB::purge('kit_init_testing');
+        }
+    }
+
+    /** The value of a key in an env file, unquoted; null when the file or the key is missing. */
+    protected function envValue(string $file, string $key): ?string
+    {
+        if (! File::exists($file)) {
+            return null;
+        }
+
+        if (! preg_match('/^'.preg_quote($key, '/').'=(.*)$/m', File::get($file), $match)) {
+            return null;
+        }
+
+        return trim(trim($match[1]), '"\'');
+    }
+
+    /** Set a key in an env file (appended when it is missing). Returns whether the file changed. */
+    protected function setEnvValue(string $file, string $key, string $value): bool
+    {
+        if (! File::exists($file)) {
+            return false;
+        }
+
+        $contents = File::get($file);
+        $line = $key.'='.(preg_match('/\s/', $value) ? '"'.$value.'"' : $value);
+
+        $updated = preg_match('/^'.preg_quote($key, '/').'=.*$/m', $contents)
+            ? preg_replace('/^'.preg_quote($key, '/').'=.*$/m', $line, $contents, 1)
+            : rtrim($contents, "\n")."\n".$line."\n";
+
+        if ($updated === $contents) {
+            return false;
+        }
+
+        File::put($file, $updated);
+
+        return true;
     }
 
     /**

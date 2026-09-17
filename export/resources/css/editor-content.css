@@ -5,15 +5,6 @@
  */
 @layer components {
     .editor-content {
-        & :is(p, ul, ol, table, h1, h2, h3, h4, div) {
-            opacity: 0;
-            transition: opacity 1.5s ease-out;
-        }
-
-        &.is-faded-in :is(p, ul, ol, table, h1, h2, h3, h4, div) {
-            opacity: 1;
-        }
-
         & :is(h1, h2, h3, h4) {
             font-family: var(--font-headline);
             font-weight: 700;

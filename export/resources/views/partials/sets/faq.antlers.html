@@ -1,10 +1,3 @@
-{{#
-    FAQ set (main_content replicator): title, Bard intro and a `questions`
-    replicator (question text + Bard answer), rendered as native
-    <details>/<summary> – no JS; the shared `name` lets the browser close the
-    other answers when one opens. Section id via partials/sets/anchor
-    (default "faq-{set id}").
-#}}
 {{ _anchor = {partial:sets/anchor} }}
 
 <div
@@ -18,7 +11,7 @@
     {{ /partial:section/heading }}
 
     {{ if set:questions }}
-        <div x-fade class="editor-content max-w-[1024px] px-5 pt-7.5 pb-12.5 md:px-10 xl:px-17.5">
+        <div class="editor-content max-w-[1024px] px-5 pt-7.5 pb-12.5 md:px-10 xl:px-17.5">
             {{ set:questions }}
                 <details name="{{ _anchor }}" class="group border-t border-ink/20 last:border-b">
                     <summary class="
@@ -26,7 +19,6 @@
                         font-headline font-bold uppercase tracking-wider text-[0.9rem] leading-snug
                     ">
                         <span>{{ question }}</span>
-                        {{# plus sign that turns into a minus when open #}}
                         <span
                             aria-hidden="true"
                             class="

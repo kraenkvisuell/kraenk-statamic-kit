@@ -1,13 +1,5 @@
-{{#
-    Blog post page – one blog entry at /blog/{slug} (collection route, template
-    set in content/collections/blog.yaml), linked from the teasers in the blog
-    set: the page header with its back link, then the entry's main_content sets
-    like on a page.
-    Head metadata comes from SEO Pro (layout).
-#}}
 {{ partial:navi }}
 
-{{# top margin: room for the fixed menu button #}}
 <main class="w-full pt-12.5 md:pt-17.5">
     {{ partial:page/header back_to="blog" back_set="blog" back_label="{trans:frontend.news}" }}
         {{ title }}
@@ -17,6 +9,6 @@
         {{ partial src="sets/{set.type}" }}
     {{ /main_content }}
 
-    {{ partial:contact from='page' }}
+    {{ partial:contact }}
     {{ partial:footer }}
 </main>

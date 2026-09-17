@@ -1,0 +1,28 @@
+title: Slide
+fields:
+  -
+    handle: image
+    field:
+      type: assets
+      display: Bild
+      instructions: 'Ohne Bild erscheint das Platzhalterbild.'
+      container: main
+      folder: /
+      max_files: 1
+      localizable: false
+  -
+    handle: caption
+    field:
+      type: text
+      display: Bildunterschrift
+      instructions: 'Optional – erscheint in der Titelleiste der Galerie.'
+      width: 50
+      localizable: false
+  -
+    handle: credits
+    field:
+      type: text
+      display: Credits
+      instructions: 'Optional – z. B. © Fotograf:in.'
+      width: 50
+      localizable: false

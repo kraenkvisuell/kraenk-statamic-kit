@@ -205,12 +205,20 @@ fields:
                     restrict_assets: false
                     localizable: false
                 -
-                  handle: images
+                  handle: slides
                   field:
-                    type: assets
-                    display: Bilder
-                    container: main
-                    folder: /
-                    mode: grid
+                    type: replicator
+                    display: Slides
                     instructions: 'Reihenfolge per Drag & Drop, Bildausschnitt über den Fokuspunkt des Assets.'
+                    collapse: true
                     localizable: false
+                    sets:
+                      slides:
+                        display: Slides
+                        sets:
+                          slide:
+                            display: Slide
+                            icon: media-image-picture
+                            fields:
+                              -
+                                import: slide

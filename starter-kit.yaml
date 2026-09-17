@@ -2,6 +2,7 @@ updatable: true
 export_paths:
   - .bloom
   - .env.example
+  - .env.testing
   - .npmrc
   - app/Models/User.php
   - app/Providers/HorizonServiceProvider.php
@@ -34,6 +35,8 @@ export_paths:
   - package.json
   - package-lock.json
   - vite.config.js
+  - phpunit.xml
+  - tests
 dependencies:
   bentonow/bento-laravel-sdk: ^1.4
   laravel/horizon: ^5.48

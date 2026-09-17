@@ -9,8 +9,8 @@
 /*
  * Default Tailwind theme (breakpoints, spacing, palette) plus the two font
  * families and the role-named colours; everything else is utilities in resources/views. State classes the
- * JS toggles (is-faded-in, is-hidden, active, x-cloak) are matched with
- * arbitrary variants in the templates, e.g. `opacity-0 [&.is-faded-in]:opacity-100`.
+ * JS toggles (is-hidden, active, x-cloak) are matched with arbitrary variants in
+ * the templates, e.g. `[&.is-hidden]:hidden`, `[&[x-cloak]]:hidden`.
  * editor-content.css covers markup we don't author (Bard output).
  */
 @theme {

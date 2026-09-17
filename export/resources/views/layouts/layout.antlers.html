@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="{{ site:short_locale }}" class="min-h-full overflow-x-hidden scroll-smooth">
+<html
+    lang="{{ site:short_locale }}"
+    class="min-h-full overflow-x-hidden scroll-smooth"
+>
 
 <head>
     <meta charset="utf-8">
@@ -25,11 +28,9 @@
         <!-- / Fathom -->
     {{ /if }}
     {{ site_settings.header_scripts }}
-    {{# head metadata: SEO Pro (site defaults, collection defaults from inject.seo, the entry's SEO tab) #}}
     {{ seo_pro:meta }}
     {{ partial:icons }}
     {{ livewire:styles }}
-    {{# extra Vite entries a template/partial needs (section:head_scripts) – before site.js, so their Alpine components register before Alpine starts #}}
     {{ yield:head_scripts }}
     {{ vite src="resources/js/site.js|resources/css/site.css" }}
 </head>
@@ -38,14 +39,13 @@
 <body
     class="min-h-full overflow-x-hidden bg-paper font-main text-[0.9rem] text-ink"
     x-data="site"
-    @site-close-menu.window="menuOpen = false"
-    @keydown.escape.window="menuOpen = false"
-    @gallery-opened.window="galleryOpen = true"
-    @gallery-closed.window="galleryOpen = false"
+    x-bind="listeners"
 >
+    {{ partial:navi }}
     {{ template_content }}
-    {{ livewire:scriptConfig }}
-    {{# the `site` component on <body> is registered in resources/js/site-component.js #}}
+    {{ partial:contact }}
+    {{ partial:footer }}
+    {{ livewire:scripts }}
 </body>
 
 </html>

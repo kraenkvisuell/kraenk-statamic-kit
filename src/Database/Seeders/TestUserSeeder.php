@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use Statamic\Facades\User;
 
 /**
- * A super user for testing a fresh site: test@kraenk.de / password. Only in
+ * A super user for testing a fresh site: test@kraenk.de / gogogoLilien1898!!!. Only in
  * the local and staging environments – a known login must never reach a
  * production site. Idempotent: an existing user with that email is left alone.
  *
@@ -16,7 +16,7 @@ class TestUserSeeder extends Seeder
 {
     protected string $email = 'test@kraenk.de';
 
-    protected string $password = 'password';
+    protected string $password = 'gogogoLilien1898!!!';
 
     protected array $environments = ['local', 'staging'];
 

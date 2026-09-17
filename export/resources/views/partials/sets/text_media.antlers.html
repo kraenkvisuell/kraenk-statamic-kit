@@ -1,20 +1,10 @@
-{{#
-    Text/Medien set (main_content replicator, fieldset text_media): Bard text
-    and a column of media (fieldset media: `medium` items with file, caption,
-    url), side by side from md, or only one of them (`modus`: text_media,
-    only_text, only_media). Images go through partials/image (Glide, the
-    placeholder image while a file is empty or no medium exists), videos are a
-    plain muted loop; a medium with a url links there. Optional button under
-    the text (button_text + button_url, else it jumps to #kontakt). Section id
-    via partials/sets/anchor (default "text-media-{set id}"). Uses x-fade.
-#}}
 {{ _anchor = {partial:sets/anchor} }}
 {{ _has_text = set:modus != "only_media" }}
 {{ _has_media = set:modus != "only_text" }}
 
-<div x-fade class="section mb-12.5 md:mb-17.5 px-5 md:px-10 xl:px-17.5 opacity-0 transition-opacity duration-1500 ease-out [&.is-faded-in]:opacity-100 {{ if _has_text && _has_media }} md:flex md:gap-10 xl:gap-17.5 {{ /if }}" id="{{ _anchor }}">
+<div class="section mb-12.5 md:mb-17.5 px-5 md:px-10 xl:px-17.5 {{ if _has_text && _has_media }} md:flex md:gap-10 xl:gap-17.5 {{ /if }}" id="{{ _anchor }}">
     {{ if _has_text }}
-        <div class="editor-content is-faded-in max-w-[900px] {{ if _has_media }} md:w-1/2 md:shrink-0 {{ /if }}">
+        <div class="editor-content max-w-[900px] {{ if _has_media }} md:w-1/2 md:shrink-0 {{ /if }}">
             {{ set:text }}
 
             {{ if set:button_text }}
@@ -41,7 +31,7 @@
                         {{ /if }}
                         {{ if medium:url }}</a>{{ /if }}
                         {{ if medium:caption }}
-                            <figcaption class="editor-content is-faded-in mt-2.5 text-[0.8rem] text-important">{{ medium:caption }}</figcaption>
+                            <figcaption class="editor-content mt-2.5 text-[0.8rem] text-important">{{ medium:caption }}</figcaption>
                         {{ /if }}
                     </figure>
                 {{ /set:media }}

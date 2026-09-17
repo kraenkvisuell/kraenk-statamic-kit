@@ -13,7 +13,8 @@ use Statamic\Facades\Site;
  * "Projekte" carry the blog and projects listing sets, the others lorem
  * text –, an "area" (a text-only navigation item) with three sub pages, and
  * the footer pages. Only the start page has the intro (placeholder video,
- * lorem headline and text); every other page switches it off. Then the
+ * lorem headline and text) and the gallery set (five slides without an image,
+ * so the placeholder shows); every other page switches the intro off. Then the
  * footer pages
  * Impressum and Datenschutz (contact is a jump to the contact section on
  * every page, not a page). Every page is localized into every site
@@ -84,6 +85,7 @@ class DemoPagesSeeder extends DemoSeeder
             'intro_headline' => 'Lorem ipsum dolor sit amet',
             'intro_text' => $this->paragraph(2),
         ]);
+        $this->ensureSets($home, [$this->gallerySet('Tempor incididunt')]);
         $main = collect($this->mainPages)->map(fn ($titles, $slug) => $this->page($slug, $titles, $sites, $origin));
 
         foreach ($this->listings as $type => [$slug, $headline]) {
@@ -137,6 +139,29 @@ class DemoPagesSeeder extends DemoSeeder
         }
 
         $entry->set('main_content', $content->merge($missing)->values()->all())->save();
+    }
+
+    /**
+     * A `gallery` set: title, a one-sentence intro and five slides without an
+     * image – the frontend shows the placeholder for those (partials/image),
+     * so the section is complete before the first upload.
+     */
+    protected function gallerySet(string $title, int $slides = 5): array
+    {
+        return [
+            'id' => Str::random(8),
+            'type' => 'gallery',
+            'enabled' => true,
+            'title' => $title,
+            'intro' => $this->paragraph(1),
+            'slides' => collect(range(1, $slides))->map(fn (int $i) => [
+                'id' => Str::random(8),
+                'type' => 'slide',
+                'enabled' => true,
+                'caption' => "Lorem ipsum {$i}",
+                'credits' => '© Lorem Ipsum',
+            ])->all(),
+        ];
     }
 
     /** A `projects` or `blog` listing set: topline, headline and a one-sentence copy above the listing. */

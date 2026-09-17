@@ -8,7 +8,8 @@
  * (`x-data="gallery('id')"`) and opened by the `gallery-open` window event with
  * `{ gallery: 'id', index: n }` (1-based slide number) – every other gallery
  * ignores the event. The overlay drops in and rises out (x-transition in the
- * partial) over the page, which stays put (see lock-page.js for the scroll lock).
+ * partial) over the page, which stays put: the site component locks the page
+ * scroll while gallery-opened/-closed say an overlay is open.
  *
  * `galleryGrid(total)` is the "show more" expander of the set's grid
  * (8 pictures, 8 more per click).
@@ -16,21 +17,20 @@
 import Swiper from 'swiper'
 import { Navigation, Keyboard } from 'swiper/modules'
 import 'swiper/css'
-import { lockPage } from './lock-page'
 
 document.addEventListener('alpine:init', () => {
     Alpine.data('gallery', (name) => ({
         isOpen: false,
         swiper: null,
         caption: '',
+        credits: '',
 
         open({ gallery, index }) {
             if (gallery !== name) return
 
             this.$dispatch('site-close-overlays') // other overlays, before isOpen so we don't close ourselves
             this.isOpen = true
-            lockPage(true)
-            this.$dispatch('gallery-opened') // the site component hides the menu button
+            this.$dispatch('gallery-opened') // the site component hides the menu button and locks the page scroll
 
             // wait for x-show: Swiper needs the popup visible to measure it
             this.$nextTick(() => {
@@ -44,7 +44,6 @@ document.addEventListener('alpine:init', () => {
             if (! this.isOpen) return
 
             this.isOpen = false
-            lockPage(false)
             this.$dispatch('gallery-closed')
         },
 
@@ -60,18 +59,20 @@ document.addEventListener('alpine:init', () => {
                 },
                 keyboard: { enabled: true },
                 on: {
-                    slideChangeTransitionStart: () => this.caption = '',
+                    slideChangeTransitionStart: () => { this.caption = ''; this.credits = '' },
                     slideChangeTransitionEnd: () => this.updateCaption(),
                 },
             })
         },
 
-        // "3 / 12" (+ " – text" when a slide carries data-text)
+        // "3 / 12" (+ " – caption"), and the slide's credits next to it; both
+        // come from the slide fields as data attributes (partials/sets/gallery).
         updateCaption() {
             const { activeIndex, slides } = this.swiper
-            const text = slides[activeIndex]?.dataset.text
+            const { caption = '', credits = '' } = slides[activeIndex]?.dataset ?? {}
 
-            this.caption = `${activeIndex + 1} / ${slides.length}` + (text ? ` – ${text}` : '')
+            this.caption = `${activeIndex + 1} / ${slides.length}` + (caption ? ` – ${caption}` : '')
+            this.credits = credits
         },
     }))
 

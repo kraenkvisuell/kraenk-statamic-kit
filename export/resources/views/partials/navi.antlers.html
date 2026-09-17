@@ -1,20 +1,9 @@
-{{#
-    Navi: the logo top left (partials/logo), top right the contact jump (#kontakt)
-    and the round menu button (three lines, an X while open), and the menu itself, a panel over the whole
-    viewport – the `main` navigation
-    (content/navigation/main.yaml, one tree per site, edited in the CP, max_depth
-    2): one link per item, an item without URL is an area label whose children
-    render beneath it – with the language switch at the bottom
-    (partials/navi/language-switch, removed by kit:init on single-site setups).
-    Uses the global `site` component (body, resources/js/site-component.js):
-    menuOpen, galleryOpen, toggleMenu(), closeOverlays(); it locks page
-    scrolling while the menu is open.
-#}}
 {{ partial:logo }}
-
-{{# fixed top right: the contact jump (pill, #kontakt is the contact section on every page) and the round menu button (three bars; `.active` = menuOpen turns them into an X). Hidden while a gallery overlay is open (its own X sits there). #}}
 {{ _pill = "h-10 md:h-12 flex items-center rounded-full bg-ink text-white border-2 border-white" }}
-<div x-show="!galleryOpen" class="fixed top-2.5 right-2.5 md:top-5 md:right-5 xl:right-11.5 z-40 flex items-center gap-2.5">
+<div
+    x-show="!galleryOpen"
+    class="fixed top-2.5 right-2.5 md:top-5 md:right-5 xl:right-11.5 z-40 flex items-center gap-2.5"
+>
     <a
         href="#kontakt"
         @click="closeOverlays()"
@@ -30,13 +19,17 @@
         aria-label="{{ trans:frontend.menu }}"
         class="{{ _pill }} w-10 md:w-12 flex-col justify-center gap-1.5 cursor-pointer"
     >
-        <span class="block w-5 h-0.5 bg-current transition-transform duration-300 ease-in-out in-[.active]:translate-y-2 in-[.active]:rotate-45"></span>
-        <span class="block w-5 h-0.5 bg-current transition-opacity duration-300 ease-in-out in-[.active]:opacity-0"></span>
-        <span class="block w-5 h-0.5 bg-current transition-transform duration-300 ease-in-out in-[.active]:-translate-y-2 in-[.active]:-rotate-45"></span>
+        <span
+            class="block w-5 h-0.5 bg-current transition-transform duration-300 ease-in-out in-[.active]:translate-y-2 in-[.active]:rotate-45"
+        ></span>
+        <span
+            class="block w-5 h-0.5 bg-current transition-opacity duration-300 ease-in-out in-[.active]:opacity-0"></span>
+        <span
+            class="block w-5 h-0.5 bg-current transition-transform duration-300 ease-in-out in-[.active]:-translate-y-2 in-[.active]:-rotate-45"
+        ></span>
     </button>
 </div>
 
-{{# the menu: covers the viewport, slides in from the top; the buttons stay on top of it #}}
 <div
     id="site-menu"
     x-show="menuOpen"
@@ -51,19 +44,29 @@
 >
     {{ _item = "block py-3 font-headline font-bold uppercase leading-none tracking-wider text-[1.4rem] md:text-[1.8rem]" }}
     {{ _child = "block py-2 font-headline uppercase leading-none tracking-wider text-[1rem] md:text-[1.2rem] text-off" }}
-
-    <nav aria-label="{{ trans:frontend.main_navigation }}" class="flex-1 flex flex-col items-center justify-center gap-4 px-5 pt-16 pb-8 overflow-y-auto text-center md:pt-20">
+    <nav
+        aria-label="{{ trans:frontend.main_navigation }}"
+        class="flex-1 flex flex-col items-center justify-center gap-4 px-5 pt-16 pb-8 overflow-y-auto text-center md:pt-20"
+    >
         {{ nav:main }}
             <div>
-                {{# an area item has no URL of its own (a text-only item); its children follow underneath #}}
                 {{ if url }}
-                    <a href="{{ url }}" class="{{ _item }}" @click="closeOverlays()"{{ if is_current }} aria-current="page"{{ /if }}{{ if is_external }} target="_blank" rel="noopener"{{ /if }}>{{ title }}</a>
+                    <a
+                        href="{{ url }}"
+                        class="{{ _item }}"
+                        @click="closeOverlays()"
+                        {{ if is_current }} aria-current="page"{{ /if }}{{ if is_external }} target="_blank" rel="noopener"{{ /if }}
+                    >{{ title }}</a>
                 {{ else }}
                     <span class="{{ _item }}">{{ title }}</span>
                 {{ /if }}
-
                 {{ children }}
-                    <a href="{{ url }}" class="{{ _child }}" @click="closeOverlays()"{{ if is_current }} aria-current="page"{{ /if }}{{ if is_external }} target="_blank" rel="noopener"{{ /if }}>{{ title }}</a>
+                    <a
+                        href="{{ url }}"
+                        class="{{ _child }}"
+                        @click="closeOverlays()"
+                        {{ if is_current }} aria-current="page"{{ /if }}{{ if is_external }} target="_blank" rel="noopener"{{ /if }}
+                    >{{ title }}</a>
                 {{ /children }}
             </div>
         {{ /nav:main }}

@@ -1,6 +1,5 @@
 updatable: true
 export_paths:
-  - .bloom
   - .env.example
   - .env.testing
   - .npmrc

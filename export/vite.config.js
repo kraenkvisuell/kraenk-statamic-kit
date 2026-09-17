@@ -8,9 +8,9 @@ import tailwindcss from '@tailwindcss/vite';
 const herdCertificates = resolve(homedir(), 'Library/Application Support/Herd/config/valet/Certificates');
 
 // laravel-vite-plugin looks for the Herd certificate under the *directory* name,
-// which in a Bloom workspace is the branch, not the host Herd serves it at. Take
-// the host from APP_URL instead (`.bloom/setup.sh` has Herd write it), and only
-// when that site is actually secured – otherwise Vite serves over plain http.
+// which is not the host Herd serves the site at whenever the two differ. Take the
+// host from APP_URL instead, and only when that site is actually secured –
+// otherwise Vite serves over plain http.
 function herdTlsHost(mode) {
     const appUrl = loadEnv(mode, process.cwd(), '').APP_URL;
 

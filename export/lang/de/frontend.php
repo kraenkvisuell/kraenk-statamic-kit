@@ -10,7 +10,7 @@ return [
     'contact' => 'Kontakt',
     'news' => 'Aktuelles',
     'newsletter_subscription' => 'Newsletter-Abo',
-    'open_gallery' => 'Hier ist die Galerie zum Durchklicken',
+    'close' => 'Schließen',
     'menu' => 'Menü',
     'scroll_down' => 'Nach unten',
     'main_navigation' => 'Hauptnavigation',

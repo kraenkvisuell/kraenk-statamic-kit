@@ -1,0 +1,50 @@
+{{ _pill = {partial:button/pill} }}
+{{ _arrow = "absolute top-1/2 z-10 -translate-y-1/2 hidden md:flex items-center justify-center cursor-pointer [&.swiper-button-disabled]:hidden [&.swiper-button-lock]:hidden" }}
+{{ _chevron = "block w-3 h-3 border-current" }}
+
+<div class="flex flex-col {{ classes }}">
+    <div class="relative flex-1 min-h-0">
+        <div class="absolute inset-0">
+            <div x-ref="swiper" class="swiper w-full h-full">
+                <div class="swiper-wrapper h-full">
+                    {{ slides scope="slide" }}
+                        {{ if slide:image }}
+                            {{ _src = {glide :src="slide:image" width="2000" height="1400" fit="contain"} }}
+                        {{ else }}
+                            {{ _src = "/placeholders/image01.jpg" }}
+                        {{ /if }}
+                        {{ _alt = slide:caption ? slide:caption : fallback_alt }}
+                        <div class="swiper-slide h-full bg-contain bg-no-repeat bg-center"
+                            role="img" aria-label="{{ _alt | sanitize }}"
+                            data-caption="{{ slide:caption | sanitize }}"
+                            data-credits="{{ slide:credits | sanitize }}"
+                            style="background-image:url('{{ _src }}')">
+                        </div>
+                    {{ /slides }}
+                </div>
+
+                <div x-ref="prev" class="{{ _pill }} {{ _arrow }} w-10 md:w-12 left-2.5 md:left-5 xl:left-11.5" aria-hidden="true">
+                    <span class="{{ _chevron }} border-b-2 border-l-2 rotate-45 translate-x-0.5"></span>
+                </div>
+                <div x-ref="next" class="{{ _pill }} {{ _arrow }} w-10 md:w-12 right-2.5 md:right-5 xl:right-11.5" aria-hidden="true">
+                    <span class="{{ _chevron }} border-t-2 border-r-2 rotate-45 -translate-x-0.5"></span>
+                </div>
+            </div>
+        </div>
+
+        {{ slot }}
+    </div>
+
+    <div class="
+        shrink-0 flex items-center gap-2.5 overflow-hidden
+        h-12.5 md:h-17.5 px-5 md:px-10 xl:px-17.5 bg-paper text-ink
+        font-headline font-bold uppercase tracking-wider text-[0.8rem] md:text-[1.3rem]
+    ">
+        <div x-text="caption" class="truncate"></div>
+        <div
+            x-show="credits"
+            x-text="credits"
+            class="shrink-0 font-main font-normal normal-case tracking-normal text-[0.7rem] md:text-[0.8rem] text-important"
+        ></div>
+    </div>
+</div>

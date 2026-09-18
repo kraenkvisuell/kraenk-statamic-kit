@@ -181,6 +181,21 @@ fields:
                 -
                   import: set_navigation
                 -
+                  handle: modus
+                  field:
+                    type: radio
+                    display: Modus
+                    inline: true
+                    default: thumbnails
+                    options:
+                      -
+                        key: thumbnails
+                        value: 'Thumbnails mit Popup-Slideshow'
+                      -
+                        key: inline
+                        value: 'Inline-Slideshow'
+                    localizable: false
+                -
                   handle: title
                   field:
                     type: text

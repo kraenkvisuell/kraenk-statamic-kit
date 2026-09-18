@@ -2,6 +2,8 @@
     {{ _gallery = set:id }}
     {{ _anchor = {partial:sets/anchor} }}
     {{ _total = set:slides | count }}
+    {{ _inline = set:modus == "inline" }}
+    {{ _pill = {partial:button/pill} }}
 
     <div
         class="section mb-7.5 md:mb-17.5"
@@ -10,105 +12,82 @@
         {{ partial:section/heading :headline="set:title" }}
             <div>
                 {{ set:intro }}
-                <p>
-                    <a
-                        href="#{{ _anchor }}"
-                        @click.prevent="$dispatch('gallery-open', { gallery: '{{ _gallery }}', index: 1 })"
-                    >
-                        {{ trans:frontend.open_gallery }}
-                    </a>
-                </p>
             </div>
         {{ /partial:section/heading }}
 
-        <div x-data="galleryGrid({{ _total }})" class="pb-12.5">
-            <div class="grid grid-cols-2 md:grid-cols-4">
-                {{ set:slides scope="slide" }}
-                    {{ _alt = slide:caption ? slide:caption : set:title }}
-                    <a
-                        href="#{{ _anchor }}"
-                        class="relative block aspect-[10/12] cursor-pointer overflow-hidden [&.is-hidden]:hidden
-                            {{ if count > 8 }} is-hidden {{ /if }}"
-                        :class="{ 'is-hidden': {{ count }} > visible }"
-                        @click.prevent="$dispatch('gallery-open', { gallery: '{{ _gallery }}', index: {{ count }} })"
-                    >
-                        <div class="absolute inset-0">
-                            {{ partial:image :image="slide:image" width="1000" height="1200" fit="crop_focal" :alt="_alt" class="w-full h-full object-cover" }}
-                        </div>
-                    </a>
-                {{ /set:slides }}
+        {{ if _inline }}
+            <div x-data="inlineSlideshow" class="pt-7.5 pb-5">
+                {{ partial:gallery/slideshow :slides="set:slides" :fallback_alt="set:title" classes="h-[60dvh] md:h-[75dvh]" }}{{ /partial:gallery/slideshow }}
             </div>
-
-            {{ if _total > 8 }}
-                <div x-show="visible < total" class="relative">
-                    <div class="grid grid-cols-2 md:grid-cols-4">
-                        <div class="min-h-7.5 bg-card-1"></div>
-                        <div class="min-h-7.5 bg-card-2"></div>
-                        <div class="min-h-7.5 bg-card-3 hidden md:block"></div>
-                        <div class="min-h-7.5 bg-card-4 hidden md:block"></div>
-                    </div>
-                    <div @click="showMore()" class="absolute top-0 min-w-full h-7.5 flex items-center justify-center cursor-pointer font-headline font-bold uppercase tracking-wider text-[0.8rem] text-ink">
-                        <div class="min-w-5.5 h-5.5 cursor-pointer bg-no-repeat bg-position-[0px_0px]" style="background-image:url('/images/show-more.svg')"></div>
-                        <div class="min-w-5.5 cursor-pointer">show more</div>
-                        <div class="min-w-5.5 h-5.5 cursor-pointer bg-no-repeat bg-position-[0px_0px]" style="background-image:url('/images/show-more.svg')"></div>
-                    </div>
+        {{ else }}
+            <div x-data="galleryGrid({{ _total }})" class="pb-12.5">
+                <div class="grid grid-cols-2 md:grid-cols-4">
+                    {{ set:slides scope="slide" }}
+                        {{ _alt = slide:caption ? slide:caption : set:title }}
+                        <a
+                            href="#{{ _anchor }}"
+                            class="relative block aspect-[10/12] cursor-pointer overflow-hidden [&.is-hidden]:hidden
+                                {{ if count > 8 }} is-hidden {{ /if }}"
+                            :class="{ 'is-hidden': {{ count }} > visible }"
+                            @click.prevent="$dispatch('gallery-open', { gallery: '{{ _gallery }}', index: {{ count }} })"
+                        >
+                            <div class="absolute inset-0">
+                                {{ partial:image :image="slide:image" width="1000" height="1200" fit="crop_focal" :alt="_alt" class="w-full h-full object-cover" }}
+                            </div>
+                        </a>
+                    {{ /set:slides }}
                 </div>
-            {{ /if }}
-        </div>
+
+                {{ if _total > 8 }}
+                    <div x-show="visible < total" class="relative">
+                        <div class="grid grid-cols-2 md:grid-cols-4">
+                            <div class="min-h-7.5 bg-card-1"></div>
+                            <div class="min-h-7.5 bg-card-2"></div>
+                            <div class="min-h-7.5 bg-card-3 hidden md:block"></div>
+                            <div class="min-h-7.5 bg-card-4 hidden md:block"></div>
+                        </div>
+                        <div @click="showMore()" class="absolute top-0 min-w-full h-7.5 flex items-center justify-center cursor-pointer font-headline font-bold uppercase tracking-wider text-[0.8rem] text-ink">
+                            <div class="min-w-5.5 h-5.5 cursor-pointer bg-no-repeat bg-position-[0px_0px]" style="background-image:url('/images/show-more.svg')"></div>
+                            <div class="min-w-5.5 cursor-pointer">show more</div>
+                            <div class="min-w-5.5 h-5.5 cursor-pointer bg-no-repeat bg-position-[0px_0px]" style="background-image:url('/images/show-more.svg')"></div>
+                        </div>
+                    </div>
+                {{ /if }}
+            </div>
+        {{ /if }}
     </div>
 
     {{ section:head_scripts }}
         {{ vite src="resources/js/gallery.js" }}
     {{ /section:head_scripts }}
 
-    <div
-        x-data="gallery('{{ _gallery }}')"
-        x-show="isOpen"
-        x-cloak
-        @gallery-open.window="open($event.detail)"
-        @site-close-overlays.window="close()"
-        @keydown.escape.window="close()"
-        x-transition:enter="transition-transform duration-600 ease-out"
-        x-transition:enter-start="-translate-y-full"
-        x-transition:enter-end="translate-y-0"
-        x-transition:leave="transition-transform duration-600 ease-in"
-        x-transition:leave-start="translate-y-0"
-        x-transition:leave-end="-translate-y-full"
-        class="[&[x-cloak]]:hidden fixed inset-0 z-20 w-full h-dvh bg-paper overflow-hidden"
-    >
-        {{ partial:gallery/title :close_to="_anchor" on_close="close()" }}
-            <div x-text="caption"></div>
-            <div
-                x-show="credits"
-                x-text="credits"
-                class="ml-2.5 font-main font-normal normal-case tracking-normal text-[0.7rem] md:text-[0.8rem] text-important"
-            ></div>
-        {{ /partial:gallery/title }}
-
-        {{ _swiper_height = "h-[calc(100dvh_-_50px)] md:h-[calc(100dvh_-_70px)]" }}
-        <div class="relative z-100 bg-overlay text-white {{ _swiper_height }}">
-            <div x-ref="swiper" class="swiper w-full bg-overlay {{ _swiper_height }}">
-                <div class="swiper-wrapper h-full">
-                    {{ set:slides scope="slide" }}
-                        {{ if slide:image }}
-                            {{ _src = {glide :src="slide:image" width="2000" height="1400" fit="contain"} }}
-                        {{ else }}
-                            {{ _src = "/placeholders/image01.jpg" }}
-                        {{ /if }}
-                        {{ _alt = slide:caption ? slide:caption : set:title }}
-                        <div class="swiper-slide h-full bg-contain bg-no-repeat bg-center"
-                            role="img" aria-label="{{ _alt | sanitize }}"
-                            data-caption="{{ slide:caption | sanitize }}"
-                            data-credits="{{ slide:credits | sanitize }}"
-                            style="background-image:url('{{ _src }}')">
-                        </div>
-                    {{ /set:slides }}
-                </div>
-
-                {{ _arrow = "absolute z-120 top-[calc(50%_-_43px)] w-21.5 h-21.5 cursor-pointer hidden md:block bg-center bg-no-repeat bg-size-[36px_36px] [&.swiper-button-disabled]:hidden [&.swiper-button-lock]:hidden" }}
-                <div x-ref="prev" class="{{ _arrow }} left-0" style="background-image:url('/images/arrow-to-the-left.svg')"></div>
-                <div x-ref="next" class="{{ _arrow }} right-0" style="background-image:url('/images/arrow-to-the-right.svg')"></div>
-            </div>
+    {{ unless _inline }}
+        <div
+            x-data="gallery('{{ _gallery }}')"
+            x-show="isOpen"
+            x-cloak
+            @gallery-open.window="open($event.detail)"
+            @site-close-overlays.window="close()"
+            @keydown.escape.window="close()"
+            x-transition:enter="transition-transform duration-600 ease-out"
+            x-transition:enter-start="-translate-y-full"
+            x-transition:enter-end="translate-y-0"
+            x-transition:leave="transition-transform duration-600 ease-in"
+            x-transition:leave-start="translate-y-0"
+            x-transition:leave-end="-translate-y-full"
+            class="[&[x-cloak]]:hidden fixed inset-0 z-20 w-full h-dvh bg-paper overflow-hidden"
+        >
+            {{ partial:gallery/slideshow :slides="set:slides" :fallback_alt="set:title" classes="h-full" }}
+                <button
+                    type="button"
+                    @click="close()"
+                    aria-label="{{ trans:frontend.close }}"
+                    class="{{ _pill }} absolute top-2.5 right-2.5 md:top-5 md:right-5 xl:right-11.5 z-20 w-10 md:w-12 flex items-center justify-center cursor-pointer"
+                >
+                    <span class="absolute block w-5 h-0.5 bg-current rotate-45"></span>
+                    <span class="absolute block w-5 h-0.5 bg-current -rotate-45"></span>
+                </button>
+            {{ /partial:gallery/slideshow }}
         </div>
-    </div>
+    {{ /unless }}
 {{ /if }}

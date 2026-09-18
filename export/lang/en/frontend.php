@@ -10,7 +10,7 @@ return [
     'contact' => 'Contact',
     'news' => 'News',
     'newsletter_subscription' => 'Newsletter subscription',
-    'open_gallery' => 'Check out our gallery',
+    'close' => 'Close',
     'menu' => 'Menu',
     'scroll_down' => 'Scroll down',
     'main_navigation' => 'Main navigation',

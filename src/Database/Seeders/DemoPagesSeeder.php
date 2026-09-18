@@ -144,14 +144,16 @@ class DemoPagesSeeder extends DemoSeeder
     /**
      * A `gallery` set: title, a one-sentence intro and five slides without an
      * image – the frontend shows the placeholder for those (partials/image),
-     * so the section is complete before the first upload.
+     * so the section is complete before the first upload. `$modus` is
+     * `thumbnails` (grid with the popup slideshow) or `inline`.
      */
-    protected function gallerySet(string $title, int $slides = 5): array
+    protected function gallerySet(string $title, int $slides = 5, string $modus = 'thumbnails'): array
     {
         return [
             'id' => Str::random(8),
             'type' => 'gallery',
             'enabled' => true,
+            'modus' => $modus,
             'title' => $title,
             'intro' => $this->paragraph(1),
             'slides' => collect(range(1, $slides))->map(fn (int $i) => [

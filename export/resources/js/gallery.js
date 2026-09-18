@@ -15,9 +15,6 @@
  * drops in and rises out (x-transition in the partial) over the page, which
  * stays put: the site component locks the page scroll while gallery-opened/
  * -closed say an overlay is open.
- *
- * `galleryGrid(total)` is the "show more" expander of that grid
- * (8 pictures, 8 more per click).
  */
 import Swiper from 'swiper'
 import { Navigation, Keyboard } from 'swiper/modules'
@@ -92,15 +89,6 @@ document.addEventListener('alpine:init', () => {
 
             this.isOpen = false
             this.$dispatch('gallery-closed')
-        },
-    }))
-
-    Alpine.data('galleryGrid', (total) => ({
-        visible: 8,
-        total,
-
-        showMore() {
-            this.visible += 8
         },
     }))
 })

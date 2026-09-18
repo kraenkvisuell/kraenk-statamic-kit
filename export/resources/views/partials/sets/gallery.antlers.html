@@ -1,7 +1,6 @@
 {{ if set:slides }}
     {{ _gallery = set:id }}
     {{ _anchor = {partial:sets/anchor} }}
-    {{ _total = set:slides | count }}
     {{ _inline = set:modus == "inline" }}
     <div
         class="section mb-7.5 md:mb-17.5"
@@ -21,53 +20,19 @@
                 {{ /partial:gallery/slideshow }}
             </div>
         {{ else }}
-            <div
-                x-data="galleryGrid({{ _total }})"
-                class="pb-12.5"
-            >
-                <div class="grid grid-cols-2 md:grid-cols-4">
-                    {{ set:slides scope="slide" }}
-                        {{ _alt = slide:caption ? slide:caption : set:title }}
-                        <a
-                            href="#{{ _anchor }}"
-                            class="relative block aspect-[10/12] cursor-pointer overflow-hidden [&.is-hidden]:hidden
-                                {{ if count > 8 }} is-hidden {{ /if }}"
-                            :class="{ 'is-hidden': {{ count }} > visible }"
-                            @click.prevent="$dispatch('gallery-open', { gallery: '{{ _gallery }}', index: {{ count }} })"
-                        >
-                            <div class="absolute inset-0">
-                                {{ partial:image :image="slide:image" width="1000" height="1200" fit="crop_focal" :alt="_alt" class="w-full h-full object-cover" }}
-                            </div>
-                        </a>
-                    {{ /set:slides }}
-                </div>
-                {{ if _total > 8 }}
-                    <div
-                        x-show="visible < total"
-                        class="relative"
+            <div class="grid grid-cols-2 md:grid-cols-4 pb-12.5">
+                {{ set:slides scope="slide" }}
+                    {{ _alt = slide:caption ? slide:caption : set:title }}
+                    <a
+                        href="#{{ _anchor }}"
+                        class="relative block aspect-[10/12] cursor-pointer overflow-hidden"
+                        @click.prevent="$dispatch('gallery-open', { gallery: '{{ _gallery }}', index: {{ count }} })"
                     >
-                        <div class="grid grid-cols-2 md:grid-cols-4">
-                            <div class="min-h-7.5 bg-card-1"></div>
-                            <div class="min-h-7.5 bg-card-2"></div>
-                            <div class="min-h-7.5 bg-card-3 hidden md:block"></div>
-                            <div class="min-h-7.5 bg-card-4 hidden md:block"></div>
+                        <div class="absolute inset-0">
+                            {{ partial:image :image="slide:image" width="1000" height="1200" fit="crop_focal" :alt="_alt" class="w-full h-full object-cover" }}
                         </div>
-                        <div
-                            @click="showMore()"
-                            class="absolute top-0 min-w-full h-7.5 flex items-center justify-center cursor-pointer font-headline font-bold uppercase tracking-wider text-[0.8rem] text-ink"
-                        >
-                            <div
-                                class="min-w-5.5 h-5.5 cursor-pointer bg-no-repeat bg-position-[0px_0px]"
-                                style="background-image:url('/images/show-more.svg')"
-                            ></div>
-                            <div class="min-w-5.5 cursor-pointer">show more</div>
-                            <div
-                                class="min-w-5.5 h-5.5 cursor-pointer bg-no-repeat bg-position-[0px_0px]"
-                                style="background-image:url('/images/show-more.svg')"
-                            ></div>
-                        </div>
-                    </div>
-                {{ /if }}
+                    </a>
+                {{ /set:slides }}
             </div>
         {{ /if }}
     </div>
@@ -89,7 +54,7 @@
             x-transition:leave="transition-transform duration-600 ease-in"
             x-transition:leave-start="translate-y-0"
             x-transition:leave-end="-translate-y-full"
-            class="[&[x-cloak]]:hidden fixed inset-0 z-20 w-full h-dvh bg-paper overflow-hidden"
+            class="[&[x-cloak]]:hidden fixed inset-0 z-50 w-full h-dvh bg-paper overflow-hidden"
         >
             {{ partial:gallery/slideshow :slides="set:slides" :fallback_alt="set:title" classes="h-full" }}
                 <button

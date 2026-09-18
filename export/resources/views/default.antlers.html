@@ -1,6 +1,8 @@
 <div class="main w-full h-full z-1">
     {{ if page.has_intro }}
         {{ partial:intro }}
+    {{ else }}
+        <div class="h-30 md:h-40"></div>
     {{ /if }}
     {{ page.main_content scope="set" }}
         {{ partial src="sets/{set.type}" }}

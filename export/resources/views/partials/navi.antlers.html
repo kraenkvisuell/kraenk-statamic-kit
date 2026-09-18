@@ -1,35 +1,5 @@
 {{ partial:logo }}
-{{ _pill = {partial:button/pill} }}
-<div
-    x-show="!galleryOpen"
-    class="fixed top-2.5 right-2.5 md:top-5 md:right-5 xl:right-11.5 z-40 flex items-center gap-2.5"
->
-    <a
-        href="#kontakt"
-        @click="closeOverlays()"
-        class="{{ _pill }} flex items-center px-4 md:px-5 font-headline font-bold uppercase tracking-wider leading-none text-[0.7rem] md:text-[0.8rem]"
-    >{{ trans:frontend.contact }}</a>
-
-    <button
-        type="button"
-        @click="toggleMenu()"
-        :class="menuOpen && 'active'"
-        :aria-expanded="menuOpen"
-        aria-controls="site-menu"
-        aria-label="{{ trans:frontend.menu }}"
-        class="{{ _pill }} w-10 md:w-12 flex flex-col items-center justify-center gap-1.5 cursor-pointer"
-    >
-        <span
-            class="block w-5 h-0.5 bg-current transition-transform duration-300 ease-in-out in-[.active]:translate-y-2 in-[.active]:rotate-45"
-        ></span>
-        <span
-            class="block w-5 h-0.5 bg-current transition-opacity duration-300 ease-in-out in-[.active]:opacity-0"></span>
-        <span
-            class="block w-5 h-0.5 bg-current transition-transform duration-300 ease-in-out in-[.active]:-translate-y-2 in-[.active]:-rotate-45"
-        ></span>
-    </button>
-</div>
-
+{{ partial:hamburger }}
 <div
     id="site-menu"
     x-show="menuOpen"
@@ -54,7 +24,6 @@
                     <a
                         href="{{ url }}"
                         class="{{ _item }}"
-                        @click="closeOverlays()"
                         {{ if is_current }} aria-current="page"{{ /if }}{{ if is_external }} target="_blank" rel="noopener"{{ /if }}
                     >{{ title }}</a>
                 {{ else }}
@@ -64,7 +33,6 @@
                     <a
                         href="{{ url }}"
                         class="{{ _child }}"
-                        @click="closeOverlays()"
                         {{ if is_current }} aria-current="page"{{ /if }}{{ if is_external }} target="_blank" rel="noopener"{{ /if }}
                     >{{ title }}</a>
                 {{ /children }}

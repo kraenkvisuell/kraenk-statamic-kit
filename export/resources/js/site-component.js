@@ -41,12 +41,5 @@ document.addEventListener('alpine:init', () => {
         toggleMenu() {
             this.menuOpen = !this.menuOpen
         },
-
-        // Following a navi link: close the menu and the overlays listening for
-        // site-close-overlays (gallery).
-        closeOverlays() {
-            this.menuOpen = false
-            this.$dispatch('site-close-overlays')
-        },
     }))
 })

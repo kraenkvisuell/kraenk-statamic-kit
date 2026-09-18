@@ -5,6 +5,7 @@ export_paths:
   - .npmrc
   - app/Models/User.php
   - app/Providers/HorizonServiceProvider.php
+  - app/Widgets
   - bootstrap/providers.php
   - config/app.php
   - config/auth.php
@@ -14,6 +15,7 @@ export_paths:
   - config/statamic/assets.php
   - config/statamic/auto-alt-text.php
   - config/statamic/eloquent-driver.php
+  - config/statamic/cp.php
   - config/statamic/seo-pro.php
   - config/statamic/static_caching.php
   - config/statamic/system.php

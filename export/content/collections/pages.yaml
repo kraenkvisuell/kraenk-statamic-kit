@@ -1,4 +1,4 @@
-title: Pages
+title: Seiten
 icon: collections
 sites:
   - default
@@ -7,7 +7,6 @@ propagate: false
 template: default
 layout: layout
 revisions: false
-title_format: null
 route:
   default: '{{ is_root ? "" : "/de" }}/{{ slug }}'
   en: '/{{ slug }}'

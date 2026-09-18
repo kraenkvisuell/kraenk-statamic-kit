@@ -1,9 +1,15 @@
 {{ _links = {nav:footer} }}
-
 {{ if _links }}
-    <nav aria-label="{{ trans:frontend.footer_navigation }}" class="flex flex-wrap gap-x-5 gap-y-2.5">
+    <nav
+        aria-label="{{ trans:frontend.footer_navigation }}"
+        class="flex flex-wrap gap-x-5 gap-y-2.5"
+    >
         {{ _links }}
-            <a href="{{ url }}" class="hover:underline" @click="closeOverlays()"{{ if is_external }} target="_blank" rel="noopener"{{ /if }}>{{ title }}</a>
+            <a
+                href="{{ url }}"
+                class="hover:underline"
+                {{ if is_external }} target="_blank" rel="noopener"{{ /if }}
+            >{{ title }}</a>
         {{ /_links }}
     </nav>
 {{ /if }}
